@@ -1,10 +1,47 @@
+
 <!DOCTYPE html>
-<html lang="en"
-	xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}"
-	>
-	<div layout:fragment="content" class="content">
-		본문 영역
+	layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content" class="content">
+	<div class="caregiver-section">
+		<!-- 요양보호사 정보 및 버튼 -->
+		<div class="caregiver-img">
+			<img src="요양보호사사진주소" alt="요양보호사 사진">
+		</div>
+		<div class="caregiver-info">
+			<h3>요양보호사 정보</h3>
+			<p>
+				이름, 나이, 국적 등 적은 상세정보<input type="text" th:value="${caregiverInfo}">
+			</p>
+			<button>요양보호사 상세보기</button>
+		</div>
+
+		<!-- 기타 인적사항 및 근무조건 -->
+		<div class="additional-info">
+			<h3>기타 인적사항 및 근무조건</h3>
+			<p>인적사항 입력란</p>
+			<p>근무조건 입력란</p>
+			<button>구인신청</button>
+		</div>
 	</div>
+
+	<!-- 공지사항과 자유게시판 -->
+	<div class="announcement-section">
+		<h2>공지사항</h2>
+		<ul>
+			<li><a href="#announcement1">공지사항 1</a></li>
+			<li><a href="#announcement2">공지사항 2</a></li>
+		</ul>
+	</div>
+	<div class="freeboard-section">
+		<h2>자유게시판</h2>
+		<ul>
+			<li><a href="#freeboard1">게시글 1</a></li>
+			<li><a href="#freeboard2">게시글 2</a></li>
+		</ul>
+	</div>
+</div>
+<!-- 로그아웃 상태에서도 THE 홈케어 소개는 볼 수 있게 설정해야할것 같습니다. -->
 </html>

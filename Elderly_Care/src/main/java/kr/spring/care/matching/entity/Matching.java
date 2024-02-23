@@ -1,7 +1,7 @@
 package kr.spring.care.matching.entity;
 
 import jakarta.persistence.*;
-import kr.spring.care.matching.dto.MatchingRequestDto;
+import kr.spring.care.matching.constant.MatchingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,16 +32,6 @@ public class Matching {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    private String status;
-
-    // 팩토리 메소드: MatchingRequestDto를 기반으로 새로운 Matching 객체를 생성
-    public static Matching createMatching(MatchingRequestDto requestDto) {
-        Matching matching = new Matching();
-        matching.setSeniorId(requestDto.getSeniorId());
-        matching.setCaregiverId(requestDto.getCaregiverId());
-        matching.setStartDate(requestDto.getStartDate());
-        matching.setEndDate(requestDto.getEndDate());
-        matching.setStatus(requestDto.getStatus());
-        return matching;
-    }
+    @Enumerated(EnumType.STRING)
+    private MatchingStatus status;
 }

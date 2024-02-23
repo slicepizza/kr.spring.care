@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
-import kr.spring.care.matching.dto.MatchingFormDto;
+import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.service.MatchingService;
 
@@ -52,13 +52,13 @@ public class MatchingController {
 
     // 매칭 생성 (예시)
     @PostMapping("/create")
-    public String createMatching(@Valid MatchingFormDto matchingFormDto, BindingResult bindingResult, Model model) {
+    public String createMatching(@Valid MatchingRequestDto matchingRequestDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "matching/createMatchingForm";
         }
         
         try {
-            Matching matching = matchingService.createMatching(matchingFormDto);
+            Matching matching = matchingService.createMatching(matchingRequestDto);
             return "redirect:/matching/details/" + matching.getId();
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

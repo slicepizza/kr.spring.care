@@ -8,15 +8,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
 import kr.spring.care.member.entity.Member;
 import kr.spring.care.member.service.MemberService;
-import lombok.extern.log4j.Log4j2;
 
 @Controller
-@Log4j2
+//@Log4j2
 @RequestMapping("/member")
 public class MemberController {
 	
@@ -30,10 +30,17 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 	
+	
 	@GetMapping("/register")
 	public String memberForm(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "member/memberForm";
+	}
+	
+	@GetMapping("/login/requireLogin")
+	public String requireLogin(Model model) {
+		model.addAttribute("loginErrorMsg", "로그인이 필요한 기능입니다");
+		return "member/memberLogin";
 	}
 	
 	@GetMapping("/login/error")

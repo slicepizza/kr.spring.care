@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
@@ -29,10 +30,17 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 	
+	
 	@GetMapping("/register")
 	public String memberForm(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "member/memberForm";
+	}
+	
+	@GetMapping("/login/requireLogin")
+	public String requireLogin(Model model) {
+		model.addAttribute("loginErrorMsg", "로그인이 필요한 기능입니다");
+		return "member/memberLogin";
 	}
 	
 	@GetMapping("/login/error")

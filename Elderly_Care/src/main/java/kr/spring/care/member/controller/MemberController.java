@@ -13,10 +13,9 @@ import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
 import kr.spring.care.member.entity.Member;
 import kr.spring.care.member.service.MemberService;
-import lombok.extern.log4j.Log4j2;
 
 @Controller
-@Log4j2
+//@Log4j2
 @RequestMapping("/member")
 public class MemberController {
 	

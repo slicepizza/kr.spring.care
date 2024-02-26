@@ -1,0 +1,91 @@
+html {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+}
+
+.header {
+	position: fixed; /* header를 고정 */
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 60px; /* header 높이 설정 */
+	background-color: #333; /* header 배경색 설정 */
+	z-index: 1000; /* 사이드바와 겹치지않고 슬라이드 쇼보다 위로 표시 */
+}
+
+body {
+	min-height: 100%;
+	margin: 0; /* 기존의 body margin을 제거합니다. */
+}
+
+.footer {
+	position: fixed; /* footer를 고정 */
+	/*position: absolute;*/
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 15px 0;
+	text-align: center;
+	background-color: #f8f9fa; /* footer 배경색 */
+	z-index: 1000; /* 사이드바와 겹치지 않게 위로 표시 */
+}
+
+.content {
+	/*margin-top: 50px;
+	margin-left: 50px;  좌측 마진을 줄입니다. 
+	margin-right: 50px;  우측 마진을 줄입니다. 
+	padding-bottom: 100px;  content 아래에 공간을 확보합니다. */
+	margin-top: 60px; /* 사이드바의 높이만큼 상단 마진 추가 */
+	margin-left: 250px; /* 사이드바 너비만큼 마진 추가 */
+	margin-right: 50px; /* 우측 마진을 줄입니다. */
+	position: relative; /* 상대 위치 */
+	z-index: 950; /* sidebar 위에 위치 */
+	overflow-y: auto; /* 필요할 때 만 세로 스크롤을 활성화 */
+	width: calc(100% - 250px); /* 사이드바 너비를 제외한 영역만큼 content를 설정합니다. */
+	height: calc(100vh - 160px);
+	/* 화면 높이에서 header와 footer 높이를 뺀 값만큼 content의 높이를 설정합니다. */
+}
+
+/*sidebar*/
+.sidebar {
+	background-color: #4e73df; /* 사이드바 배경색 */
+	color: #fff; /* 텍스트 색상 */
+	width: 250px; /* 사이드바 너비 */
+	position: fixed; /* 고정 위치 */
+	height: calc(100% - 60px); /* 전체 높이에서 헤더의 높이만큼 뺀 값 */
+	top: 60px; /* 상단에서부터 고정, header의 높이만큼 여유 공간 추가 */
+	left: 0; /* 왼쪽에서부터 고정 */
+	overflow-y: auto; /* 세로 스크롤을 허용 */
+	z-index: 900; /* header보다 낮은 z-index */
+}
+
+.sidebar ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+	text-decoration: underline;
+}
+
+/*slideshow*/
+.slideshow-container {
+	position: relative; /* 상대 위치 설정 */
+	max-width: 1000px; /* 최대 너비 설정 */
+	margin: auto; /* 가운데 정렬을 위한 자동 마진 설정 */
+	overflow: hidden; /* 넘치는 이미지를 가리기 위해 오버플로우 설정 */
+	z-index: 1;
+}
+
+.mySlides {
+	display: none; /* 기본적으로 슬라이드 숨김 */
+	width: 100%;
+	height: auto;
+}
+
+
+
+/* 이미지 슬라이드에 대한 추가 스타일링은 필요한 경우 여기에 추가하세요 */
+/*좌측 미니 게시판 설정시에 마진이 너무 커서 조정했습니다*/

@@ -2,10 +2,12 @@ package kr.spring.care.member.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +52,13 @@ public class MemberService implements UserDetailsService {
 				.password(member.getPassword())
                 .roles(member.getRole().toString())
 				.build();
+	}
+
+	public boolean login(Member member, PasswordEncoder passwordEncoder) {
+	    Member findMember = memberRepository.findByEmail(member.getEmail());
+	    if(findMember == null || !passwordEncoder.matches(member.getPassword(), findMember.getPassword())){
+	        return false;
+	    }
+	    return true;
 	}
 }

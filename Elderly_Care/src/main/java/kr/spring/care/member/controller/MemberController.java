@@ -6,15 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
 import kr.spring.care.member.entity.Member;
 import kr.spring.care.member.service.MemberService;
-//asdf
+
 @Controller
 //@Log4j2
 @RequestMapping("/member")
@@ -30,7 +29,6 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 
-	
 	@GetMapping("/joinCheck")
 	public String memberCheck() {
 		return "member/memberJoinCheck";
@@ -52,6 +50,15 @@ public class MemberController {
 	public String loginError(Model model) {
 		model.addAttribute("loginErrorMsg", "아이디 또는 패스워드가 잘못되었습니다.");
 		return "member/memberLogin";
+	}
+
+
+	@PostMapping("/login")
+	public String loginId(@ModelAttribute Member member) {
+	    if(memberService.login(member, passwordEncoder)){
+	        return "redirect:/";
+	    }
+	    return "login";
 	}
 	
 

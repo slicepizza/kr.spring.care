@@ -54,7 +54,7 @@ public class Member {
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
-        member.setRole(Role.USER);
+        member.setRole(Role.ROLE_USER);
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
         member.setCreatedAt(LocalDateTime.now()); // 생성 날짜 설정

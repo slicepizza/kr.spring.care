@@ -1,5 +1,5 @@
 package kr.spring.care.member.constant;
 
 public enum Role {
-	USER, CAREGIVER, SENIOR, GUARDIAN, ADMIN
+	ROLE_USER, ROLE_CAREGIVER, ROLE_SENIOR, ROLE_GUARDIAN, ROLE_ADMIN
 }

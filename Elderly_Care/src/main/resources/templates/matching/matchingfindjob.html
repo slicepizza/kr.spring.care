@@ -9,25 +9,46 @@
     <h2>구직 정보</h2>
 
     <div class="job-list">
-        <h3>사용 가능한 구직 목록</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>시간</th>
-                    <th>지역</th>
-                    <th>상태</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="job : ${jobs}">
-                    <td th:text="${job.date}">날짜</td>
-                    <td th:text="${job.time}">시간</td>
-                    <td th:text="${job.location}">지역</td>
-                    <td th:text="${job.status}">상태</td>
-                </tr>
-            </tbody>
-        </table>
+	    <div th:if="${not #lists.isEmpty(jobs)}">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>날짜</th>
+	                    <th>시간</th>
+	                    <th>지역</th>
+	                    <th>상태</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="job : ${jobs}">
+	                    <td th:text="${job.date}">날짜</td>
+	                    <td th:text="${job.time}">시간</td>
+	                    <td th:text="${job.location}">지역</td>
+	                    <td th:text="${job.status}">상태</td>
+	                </tr>
+	            </tbody>
+	        </table>
+ 	   </div>
+	    <div th:if="${#lists.isEmpty(jobs)}">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>날짜</th>
+	                    <th>시간</th>
+	                    <th>지역</th>
+	                    <th>상태</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="job : ${jobs}">
+	                    <td th:text="${job.date}">날짜</td>
+	                    <td th:text="${job.time}">시간</td>
+	                    <td th:text="${job.location}">지역</td>
+	                    <td th:text="${job.status}">상태</td>
+	                </tr>
+	            </tbody>
+	        </table>
+ 	   </div>
     </div>
 
     <div class="profile-info">

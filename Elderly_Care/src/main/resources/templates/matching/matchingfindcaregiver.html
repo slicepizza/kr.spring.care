@@ -31,6 +31,17 @@
 	        </table>
 	    </div>
 	    <div th:if="${#lists.isEmpty(caregivers)}">
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>이름</th>
+	                    <th>경력</th>
+	                    <th>자격증</th>
+	                    <th>사용 가능한 시간</th>
+	                    <th>요청</th>
+	                </tr>
+	            </thead>
+	        </table>
 	        <p>사용 가능한 요양보호사가 없습니다.</p>
 	    </div>
 	

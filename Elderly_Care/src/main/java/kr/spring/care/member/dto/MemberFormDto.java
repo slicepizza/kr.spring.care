@@ -24,6 +24,10 @@ public class MemberFormDto {
 	@Length(min = 4, max = 12, message = "최소 4자, 최대 12자를 입력하세요.")
 	private String password;
 	
+	@NotEmpty(message = "비밀번호 확인은 필수 항목 입니다.")
+	@Length(min = 4, max = 12, message = "최소 4자, 최대 12자를 입력하세요.")
+	private String confirmPassword;
+	
 	@NotEmpty(message = "주소는 필수 항목 입니다.")
 	private String address;
 }

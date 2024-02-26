@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
 import kr.spring.care.member.entity.Member;
 import kr.spring.care.member.service.MemberService;
-
+//asdf
 @Controller
 //@Log4j2
 @RequestMapping("/member")
@@ -29,7 +29,12 @@ public class MemberController {
 	public String login() {
 		return "member/memberLogin";
 	}
+
 	
+	@GetMapping("/joinCheck")
+	public String memberCheck() {
+		return "member/memberJoinCheck";
+	}
 	
 	@GetMapping("/register")
 	public String memberForm(Model model) {
@@ -48,7 +53,7 @@ public class MemberController {
 		model.addAttribute("loginErrorMsg", "아이디 또는 패스워드가 잘못되었습니다.");
 		return "member/memberLogin";
 	}
-
+	
 
 	@PostMapping("/register")
 	public String memberForm(@Valid MemberFormDto memberFormDto,

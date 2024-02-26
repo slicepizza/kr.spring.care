@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content" class="content">
+
+    <h2>요양보호사 상세 정보</h2>
+
+    <div class="caregiver-detail">
+        <div class="caregiver-image">
+            <!-- 이미지 추가 예정 -->
+            <img th:src="@{/images/caregivers/{id}(id=${caregiver.id})}" alt="Caregiver Image" />
+        </div>
+        <div class="caregiver-info">
+            <h3 th:text="${caregiver.name}">이름</h3>
+            <p><strong>경력:</strong> <span th:text="${caregiver.experience}">경력</span></p>
+            <p><strong>자격증:</strong> <span th:text="${caregiver.certifications}">자격증</span></p>
+            <p><strong>사용 가능한 시간:</strong> <span th:text="${caregiver.availableTime}">사용 가능한 시간</span></p>
+        </div>
+        <div class="request-matching">
+            <a th:href="@{/matching/request(caregiverId=${caregiver.id})}" class="btn btn-primary">매칭 요청</a>
+        </div>
+    </div>
+
+</div>
+
+</html>

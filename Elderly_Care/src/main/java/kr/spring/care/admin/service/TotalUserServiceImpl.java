@@ -25,12 +25,12 @@ public class TotalUserServiceImpl implements TotalUserService{
 	@Override
 	public void authChange(long id, Member member) {
 		Member b = totalUserRepository.findById(id).get();
-		if(b.getRole() != member.getRole()) {
-			b.setRole(member.getRole());
+		if(member.getRole().equals(Role.CAREGIVER)) {
+			b.setRole(Role.CAREGIVER);
+		}else if(member.getRole().equals(Role.USER)) {
+			b.setRole(Role.USER);
 		}
-		totalUserRepository.save(b);	
-//		
-			
+		
 	}
 
 }

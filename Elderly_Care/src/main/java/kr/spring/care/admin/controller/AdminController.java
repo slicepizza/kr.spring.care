@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.care.admin.service.TotalUserService;
 import kr.spring.care.member.entity.Member;
@@ -41,7 +42,7 @@ public class AdminController {
 	@PostMapping("authChange/{id}")
 	public String update(@PathVariable("id") long id, Member member) {
 		totalUserService.authChange(id, member);
-		return "redirect:/admin/totalUser";
+		return "redirect:/admin/totUser";
 	}
 	
 }

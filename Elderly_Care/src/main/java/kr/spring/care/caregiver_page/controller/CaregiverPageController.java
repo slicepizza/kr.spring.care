@@ -1,26 +1,25 @@
-package kr.spring.care.elderly_user.controller;
+package kr.spring.care.caregiver_page.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("elderlyUser/*")
+@RequestMapping("/caregiverPage/*")
 @Controller
-public class ElderyUserController {
+public class CaregiverPageController {
 	
 	@GetMapping("mypage")
 	public String mypage() {
-		return "elderly_user/mypage";
+		return "caregiverPage/mypage";
 	}
 	
 	@GetMapping("matchingInfo")
 	public String matchingInfo() {
-		return "elderly_user/matchingInfo";
+		return "caregiverPage/matchingInfo";
 	}
 	
 	@GetMapping("myinfo")
 	public String myinfo() {
-		return "elderly_user/myinfo";
+		return "caregiverPage/myinfo";
 	}
-	
 }

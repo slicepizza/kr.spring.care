@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div class="header" th:fragment="header">
+<div  class="header" th:fragment="header">
 
   <nav class="navbar navbar-expand-lg bg-secondary border-bottom border-body" data-bs-theme="dark">
 
@@ -20,34 +20,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/info">THE 홈케어 소개</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findcaregiver' : '/member/login/requireLogin'}">요양보호사 구인</a>
-			    </li>
-		  <li class="nav-item">
-		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/member/login/requireLogin'}">요양보호사 구직</a>
-		  </li>
-          <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/member/login">로그인</a>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/userPage/matchingInfo">매칭정보</a>
           </li>
-          <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/member/joinCheck">회원가입</a>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/userPage/myinfo">나의정보</a>
           </li>
-          
-          <!-- 노인/보호자용 마이페이지 -->
-          <li class="nav-item" sec:authorize="hasRole('USER')">
+          <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/userPage/mypage">마이페이지</a>
           </li>
-          
-          <!-- 요양보호사용 마이페이지 -->
-          <li class="nav-item" sec:authorize="hasRole('CAREGIVER')">
-            <a class="nav-link" href="/caregiverPage/mypage">마이페이지</a>
-          </li>
-          
-          <!-- 관리자용 마이페이지 -->
-          <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link" href="/admin/mypage">마이페이지</a>
-          </li>
-          
           <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/member/logout">로그아웃</a>
           </li>

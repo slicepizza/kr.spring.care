@@ -1,14 +1,17 @@
-var slideIndex = 0;
-showSlides();
+document.addEventListener("DOMContentLoaded", function() {
+    var slides = document.querySelectorAll('.mySlides');
+    var currentSlide = 0;
 
-function showSlides() {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
+    // Function to go to the next slide
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
     }
-    slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}    
-    slides[slideIndex-1].style.display = "block";  
-    setTimeout(showSlides, 5000); // 5초마다 이미지 변경
-}
+
+    // Set an interval to change slides
+    setInterval(nextSlide, 5000); // Change slide every 4 seconds
+
+    // Initialize the slideshow
+    slides[currentSlide].classList.add('active');
+});

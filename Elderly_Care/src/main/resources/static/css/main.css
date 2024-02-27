@@ -80,10 +80,16 @@ body {
 }
 
 .mySlides {
-	display: none; /* 기본적으로 슬라이드 숨김 */
-	width: 100%;
-	height: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 1s; /* Adjust the duration as needed */
 }
+
+.mySlides.active {
+    display: block;
+    opacity: 1;
+}
+
 
 
 

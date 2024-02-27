@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content" class="content">
+
+    <h2>구직 상세 정보</h2>
+
+    <div class="caregiver-profile">
+        <div class="profile-details">
+            <h3>프로필</h3>
+            <p><strong>이름:</strong> <span th:text="${caregiver.name}">이름</span></p>
+            <p><strong>경력:</strong> <span th:text="${caregiver.experience}">경력</span></p>
+            <p><strong>자격증:</strong> <span th:text="${caregiver.certifications}">자격증</span></p>
+            <p><strong>자기소개:</strong> <span th:text="${caregiver.introduction}">자기소개</span></p>
+        </div>
+        <div class="profile-image">
+            <img th:src="@{/images/caregivers/{id}(id=${caregiver.id})}" alt="요양보호사 이미지" />
+        </div>
+    </div>
+
+    <div class="job-status-update">
+        <h3>구직 상태 변경</h3>
+        <form action="/caregiver/updateStatus" method="post">
+            <select name="newStatus">
+                <option value="AVAILABLE">구직 중</option>
+                <option value="UNAVAILABLE">구직 중단</option>
+            </select>
+            <button type="submit" class="btn btn-primary">상태 업데이트</button>
+        </form>
+    </div>
+
+</div>
+
+</html>

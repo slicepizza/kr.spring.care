@@ -6,10 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import jakarta.validation.Valid;
 import kr.spring.care.member.dto.MemberFormDto;
 import kr.spring.care.member.entity.Member;
@@ -29,7 +28,11 @@ public class MemberController {
 	public String login() {
 		return "member/memberLogin";
 	}
-	
+
+	@GetMapping("/joinCheck")
+	public String memberCheck() {
+		return "member/memberJoinCheck";
+	}
 	
 	@GetMapping("/register")
 	public String memberForm(Model model) {
@@ -49,6 +52,15 @@ public class MemberController {
 		return "member/memberLogin";
 	}
 
+
+	@PostMapping("/login")
+	public String loginId(@ModelAttribute Member member) {
+	    if(memberService.login(member, passwordEncoder)){
+	        return "redirect:/";
+	    }
+	    return "login";
+	}
+	
 
 	@PostMapping("/register")
 	public String memberForm(@Valid MemberFormDto memberFormDto,

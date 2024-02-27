@@ -17,7 +17,7 @@
 	<div th:replace="~{fragments/header::header}"></div>
 	<div th:replace="~{fragments/footer::footer}"></div>
 
-	<!-- 사이드바 및 메인 콘텐츠 -->
+	<!-- 사이드바 및 메인 콘텐츠; announcement >> noticeboard -->
 	<nav
 		class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 		id="accordionSidebar">
@@ -45,25 +45,24 @@
 		<!-- 메인 콘텐츠 : 비주얼 이미지 슬라이드 -->
 		<div class="slideshow-container">
 			<div class="mySlides fade">
-				<img src="/img/care1.jpg" alt = "어필1">
+				<img src="/img/care1.jpg" alt="어필1">
 			</div>
 
 			<div class="mySlides fade">
-				<img src="/img/care2.jpg" alt = "어필2">
+				<img src="/img/care2.jpg" alt="어필2">
 			</div>
 
 			<div class="mySlides fade">
-				<img src="/img/care3.jpg" alt = "어필3">
+				<img src="/img/care3.jpg" alt="어필3">
 			</div>
 			<div class="mySlides fade">
-				<img src="/img/care4.jpg" alt = "어필4">
+				<img src="/img/care4.jpg" alt="어필4">
 			</div>
 			<div class="mySlides fade">
-				<img src="/img/promise.jpg"  alt = "어필5">
+				<img src="/img/promise.jpg" alt="어필5">
 			</div>
 		</div>
 	</div>
-
 	<!-- 추가된 슬라이드 쇼 JavaScript -->
 	<script th:src="@{/js/slideshow.js}"></script>
 </body>

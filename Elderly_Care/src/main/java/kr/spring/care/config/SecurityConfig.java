@@ -18,7 +18,7 @@ public class SecurityConfig {
         http
             .formLogin(form -> form
                 .loginPage("/member/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/", true)
                 .usernameParameter("email")
                 .failureUrl("/member/login/error")
             )
@@ -54,4 +54,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
 }

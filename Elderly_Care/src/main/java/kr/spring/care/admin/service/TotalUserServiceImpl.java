@@ -16,11 +16,14 @@ public class TotalUserServiceImpl implements TotalUserService{
 	
 	private final TotalUserRepository totalUserRepository; 
 	
+	// 리스트(페이지)
 	@Override
-	public List<Member> userList() {
-		return totalUserRepository.findAll();
+	public List<Member> userPageList(int PageStart, int PageSize) {
+		return totalUserRepository.listPage(PageStart, PageSize);
 	}
 	
+	
+	// 권한 변경
 	@Transactional
 	@Override
 	public void authChange(long id, Member member) {
@@ -31,6 +34,12 @@ public class TotalUserServiceImpl implements TotalUserService{
 			b.setRole(Role.USER);
 		}
 		
+	}
+
+	// 전체유저 수
+	@Override
+	public int countAllUser() {
+		return totalUserRepository.countAlluser();
 	}
 
 }

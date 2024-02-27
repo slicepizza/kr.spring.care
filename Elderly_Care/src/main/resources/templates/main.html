@@ -1,48 +1,65 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}">
+	layout:decorate="~{layouts/mainlayout}"
+	>
+<head>
+	<meta charset="UTF-8">
+	<title>Main Page</title>
+</head>
+<!-- fabicon 에러해결용 -->
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<div layout:fragment="content" class="content">
+		<!-- 사이드바 및 메인 콘텐츠; announcement >> noticeboard -->
+		<nav
+			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+			id="accordionSidebar">
+			<div class="noticeboard-section">
+				<h2>
+					<a href="#noticeboard">공지사항</a>
+				</h2>
+				<ul>
+					<li><a href="#noticeboard1">공지사항 1</a></li>
+					<li><a href="#noticeboard2">공지사항 2</a></li>
+				</ul>
+			</div>
+			<div class="freeboard-section">
+				<h2>
+					<a href="#freeboard">자유게시판</a>
+				</h2>
+				<ul>
+					<li><a href="#freeboard1">게시글 1</a></li>
+					<li><a href="#freeboard2">게시글 2</a></li>
+				</ul>
+			</div>
+		</nav>
+	
+		<div class="content">
+			<!-- 메인 콘텐츠 : 비주얼 이미지 슬라이드 -->
+			<div class="slideshow-container">
+				<div class="mySlides fade">
+					<img src="/img/care1.jpg" alt="어필1">
+				</div>
+	
+				<div class="mySlides fade">
+					<img src="/img/care2.jpg" alt="어필2">
+				</div>
+	
+				<div class="mySlides fade">
+					<img src="/img/care3.jpg" alt="어필3">
+				</div>
+				<div class="mySlides fade">
+					<img src="/img/care4.jpg" alt="어필4">
+				</div>
+				<div class="mySlides fade">
+					<img src="/img/promise.jpg" alt="어필5">
+				</div>
+			</div>
 
-<div layout:fragment="content" class="content">
-	<div class="caregiver-section">
-		<!-- 요양보호사 정보 및 버튼 -->
-		<div class="caregiver-img">
-			<img src="/img/care1.jpg" alt="요양보호사 사진">
 		</div>
-		<div class="caregiver-info">
-			<h3>요양보호사 정보</h3>
-			<p>
-				이름, 나이, 국적 등 적은 상세정보<input type="text" th:value="${caregiverInfo}">
-			</p>
-			<button>요양보호사 상세보기</button>
-		</div>
-
-		<!-- 기타 인적사항 및 근무조건 -->
-		<div class="additional-info">
-			<h3>기타 인적사항 및 근무조건</h3>
-			<p>인적사항 입력란</p>
-			<p>근무조건 입력란</p>
-			<button>구인신청</button>
-		</div>
+		<!-- 추가된 슬라이드 쇼 JavaScript -->
+		<script th:src="@{/js/slideshow.js}"></script>
 	</div>
-
-	<!-- 공지사항과 자유게시판 -->
-	<div class="announcement-section">
-		<h2>공지사항</h2>
-		<ul>
-			<li><a href="#announcement1">공지사항 1</a></li>
-			<li><a href="#announcement2">공지사항 2</a></li>
-		</ul>
-	</div>
-	<div class="freeboard-section">
-		<h2>자유게시판</h2>
-		<ul>
-			<li><a href="#freeboard1">게시글 1</a></li>
-			<li><a href="#freeboard2">게시글 2</a></li>
-		</ul>
-	</div>
-</div>
-<!-- 로그아웃 상태에서도 THE 홈케어 소개는 볼 수 있게 설정해야할것 같습니다. -->
-<!-- 변경 테스트 -->
 </html>

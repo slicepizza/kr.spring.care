@@ -33,7 +33,8 @@
                     <tr th:each="user : ${allUser.content}">
                         <form th:action="@{/admin/authChange/{id}(id=${user.id})}" method="post" class="d-flex">
                             <td th:text="${user.id}">1</td>
-                            <td th:text="${user.name}">name</td>
+                            <td><a href="#myModal" th:text="${user.name}" onclick="userModal()"
+                            	data-bs-toggle="modal" data-bs-target="#myModal">name</a></td>
                             <td th:text="${user.email}">email</td>
                             <td th:text="${user.createdAt}">created_at</td>
                             <!-- <td th:text="${user.isAgreeEvent()}">agree_event</td> -->
@@ -56,7 +57,34 @@
             </div>
             <div class="d-flex justify-content">
             <!-- 페이징 -->
-	            <a th:href="@{/admin/totUser(page=1)}">첫 페이지</a>
+            <div class="container mt-3">
+            <ul class="pagination">
+			    <li class="page-item">
+			    	<a th:href="@{/admin/totUser(page=1)}">첫 페이지</a>
+			    </li>
+			    <li class="page-item">
+				    <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number})}">
+				    이전</a>
+			    </li>
+			    <li class="page-item active">
+			    	<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+	            	<span th:if="${page == allUser.number + 1}" th:text="${page}"></span>
+	            	<span th:unless="${page == allUser.number + 1}">
+	            		<a th:href="@{/admin/totUser(page=${page})}" th:text="${page}"></a>
+	            	</span>
+	            </span>
+			    </li>
+			    <li class="page-item">
+				    <a th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2})}">
+				    다음</a>
+			    </li>
+			    <li class="page-item">
+				    <a th:href="@{/admin/totUser(page=${allUser.totalPages})}">
+				    마지막 페이지</a>
+			    </li>
+		    </ul>
+		    </div>
+	            <!-- <a th:href="@{/admin/totUser(page=1)}">첫 페이지</a>
 	            <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number})}">이전</a>
 	            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
 	            	<span th:if="${page == allUser.number + 1}" th:text="${page}"></span>
@@ -65,7 +93,7 @@
 	            	</span>
 	            </span>
 	            <a th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2})}">다음</a>
-	            <a th:href="@{/admin/totUser(page=${allUser.totalPages})}">마지막 페이지</a>
+	            <a th:href="@{/admin/totUser(page=${allUser.totalPages})}">마지막 페이지</a> -->
                 
                 <form class="d-flex justify-content-between" action="/admin/totUser" method="get">
                 	<select class="form-select form-select" name="field">
@@ -78,51 +106,33 @@
             </div> 
             
             <!-- 모달 -->
-            <div class="modal fade" id="viewModal" tabindex="-1"
-              aria-labelledby="viewModalLabel" aria-hidden="true" th:fragments="modalContents"
-              >
+            <div class="modal fade" id="myModal" tabindex="-1"
+              aria-labelledby="myModalLabel" aria-hidden="true">
             	<div class="modal-dialog">
             		<div class="modal-content">
             			
             			<!-- 모달 header -->
             			<div class="modal-header">
-            				<h5 class="modal-title" id="viewModalLabel">상세정보</h5>
+            				<h5 class="modal-title" id="myModalLabel">상세정보</h5>
             				<button type="button" class="btn-close" data-bs-dismiss="modal"
             				  aria-label="Close"></button>
             			</div>
+            			
             			<!-- 모달 body -->
-            			<div class="modal-body" style="text-align:center;">
+            			<div class="modal-body">
+	                        
 	                        <p>#</p>
-	                        <p th:text="${person.name}">Name </p>
+	                        <p>Name</p>
 	                        <p>UserEmail</p>
 	                        <p>Created_at</p>
 	                        <p>Role</p>
 	                        <p>UpdateRole</p>
 	                        <p>Update</p>
-	                        <!-- <form th:action="@{/admin/authChange/{id}(id=${user.id})}" method="post" class="d-flex">
-	                            <td th:text="${user.id}">1</td>
-	                            <td><a href="#" th:text="${user.name}" 
-	                            	data-bs-toggle="modal" data-bs-target="#viewModal"></a></td>
-	                            <td th:text="${user.email}">email</td>
-	                            <td th:text="${user.createdAt}">created_at</td>
-	                            <td th:text="${user.isAgreeEvent()}">agree_event</td>
-	                            <td th:text="${user.role}">role</td>
-	                            <td>    
-	                                <select name="role">
-	                                    <option value="USER">USER</option>
-	                                    <option value="CAREGIVER">CAREGIVER</option>
-	                                </select>
-	                            </td>
-	                            <td>
-	                                <button class="btn btn-outline-dark flex-shrink-0" type="submit">
-	                                    업데이트
-	                                </button>
-	                            </td>
-	                        </form> -->
+                            </form>
             			</div>
             			<!-- 모달 footer -->
             			<div class="modal-footer">
-            				<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+            				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
             			</div>
             		</div>
             	</div>  
@@ -132,10 +142,12 @@
     </div>
 </div>
 <script>
-	function userModal(id){
+	function userModal(){
+		console.log("함수호출");
+		console.log("${allUser.id}");
 		$.ajax({
 			type: "get",
-			url: "/admin/totUser"+ id,
+			url: "/admin/userView/${user.id}"
 		})
 		.done(function(data){
 			$("#viewModalHolder").html(data);

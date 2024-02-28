@@ -75,10 +75,10 @@ public class TotalUserServiceImpl implements TotalUserService{
 	// 유저 상세정보(모달)
 	@Override
 	public UserDTO userView(long id) {
-		Member mid = totalUserRepository.findById(id).get();
-		UserDTO userById = new UserDTO(mid);
-		System.out.println("유저:"+ userById);
-		return userById;
+//		Member mid = totalUserRepository.findById(id).get();
+//		UserDTO userById = new UserDTO(mid);
+//		System.out.println("유저:"+ userById);
+		return null;
 	}
 
 

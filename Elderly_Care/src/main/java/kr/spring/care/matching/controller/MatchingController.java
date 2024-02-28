@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.validation.Valid;
+import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.matching.dto.CaregiverDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
@@ -48,9 +48,9 @@ public class MatchingController {
 
     // 요양보호사 구직 페이지
     @GetMapping("/findjob")
-    public String matchingFindJob(Model model) {
-        List<Matching> matchings = matchingService.findAllMatchings(); // 모든 매칭 데이터 가져오기
-        model.addAttribute("matchings", matchings);
+    public String matchingFindJob(Model model, Pageable pageable) {
+        Page<Matching> matchingsPage = matchingService.findMatchingsPageable(pageable);
+        model.addAttribute("matchingsPage", matchingsPage);
         return "matching/matchingFindJob";
     }
 
@@ -62,20 +62,29 @@ public class MatchingController {
         return "matching/matchingFindJobDetail";
     }
 
-    // 매칭 생성 (예시)
-    @PostMapping("/create")
-    public String createMatching(@Valid MatchingRequestDto matchingRequestDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "matching/createMatchingForm";
+    // 매칭 생성 페이지
+    @GetMapping("/request")
+    public String requestMatching(@RequestParam(required = false) Long caregiverId, Model model) {
+        if (caregiverId != null) {
+            // 요양보호사 ID가 주어진 경우 요양보호사 정보를 가져옵니다.
+            CaregiverDetail caregiverDetail = caregiverService.findCaregiverById(caregiverId);
+            model.addAttribute("caregiver", caregiverDetail);
         }
-        
-        try {
-            Matching matching = matchingService.createMatching(matchingRequestDto);
-            return "redirect:/matching/details/" + matching.getId();
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "matching/createMatchingForm";
-        }
+        return "matching/requestMatching";
     }
-    // 기타 필요한 메소드들을 여기에 추가
+
+	 // 매칭 요청 처리
+	 @PostMapping("/request")
+	 public String processRequestMatching(MatchingRequestDto matchingRequestDto, BindingResult bindingResult) {
+	     if (bindingResult.hasErrors()) {
+	         return "matching/requestMatching";
+	     }
+	     // 매칭 상태 설정 및 저장
+	     MatchingStatus status = matchingRequestDto.getCaregiverId() != null ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
+	     matchingRequestDto.setStatus(status);
+	     matchingService.createMatching(matchingRequestDto);
+	
+	     // 처리 후 리디렉션 또는 적절한 페이지로 이동
+	     return "redirect:/";
+	 }
 }

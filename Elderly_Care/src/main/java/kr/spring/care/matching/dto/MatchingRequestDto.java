@@ -26,6 +26,9 @@ public class MatchingRequestDto {
     private LocalDate endDate;
 
     private MatchingStatus status;
-    
-    // 추가적인 필드나 메소드가 필요할 경우 여기에 구현
+
+    // 노인 관련 추가 필드
+    private String seniorHealth;
+    private String seniorRequirements;
+    private Boolean seniorHasGuardian;
 }

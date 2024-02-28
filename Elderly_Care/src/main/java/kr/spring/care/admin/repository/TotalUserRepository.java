@@ -11,15 +11,16 @@ import org.springframework.data.repository.query.Param;
 import kr.spring.care.member.entity.Member;
 
 public interface TotalUserRepository extends JpaRepository<Member, Long>{
-
-	@Query(value = "select * from member order by member_id desc limit :pageStart, :pageSize", nativeQuery = true)
-	public List<Member> listPage(@Param("pageStart") int PageStart, @Param("pageSize") int PageSize);
 	
-	@Query(value = "select count(*) from member", nativeQuery = true)
-	public int countAlluser();
+	public Page<Member> findByNameContaining(String word, Pageable pageable);
+	public Page<Member> findByEmailContaining(String word, Pageable pageable);
+	public Page<Member> findByRoleContaining(String word, Pageable pageable);
 	
-	Member findByName(String name);
-	Member findByNameAndAddress(String name, String address);
-	List<Member> findByNameLike(String name);
-	Page<Member> findAll(Pageable pageable);
+	@Query(value = "select count(*) from member where name like CONCAT('%',:word,'%')", nativeQuery = true)
+	public long cntNameSearch(@Param("word") String word);
+	
+	@Query(value = "select count(*) from member where email like CONCAT('%',:word,'%')", nativeQuery = true)
+	public long cntEmailSearch(@Param("word") String word);
+	
+	
 }

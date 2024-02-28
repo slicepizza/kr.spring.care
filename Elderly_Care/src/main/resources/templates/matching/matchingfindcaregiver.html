@@ -14,9 +14,9 @@
 		        <input type="text" name="location" placeholder="지역으로 검색">
 		        <button type="submit" class="btn btn-primary">검색</button>
 		    </form>
-		</div>
+		</div>	
 	
-	    <div th:if="${not #lists.isEmpty(caregivers)}">
+	    <div th:if="${caregiversPage.hasContent()}">
 	        <table class="table">
 	            <thead>
 	                <tr>
@@ -24,25 +24,43 @@
 	                    <th>지역</th>
 	                    <th>경력</th>
 	                    <th>자격증</th>
-	                    <th>사용 가능한 시간</th>
+	                    <th>이용 가능 시간</th>
 	                    <th>상세정보</th>
 	                    <th>요청</th>
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <tr th:each="caregiver : ${caregivers}">
+	                <tr th:each="caregiver : ${caregiversPage}">
 	                    <td th:text="${caregiver.user.name}">이름</td>
 	                    <td th:text="${caregiver.user.country}">지역</td>
 	                    <td th:text="${caregiver.caregiver.experience}">경력</td>
 	                    <td th:text="${caregiver.caregiver.certification}">자격증</td>
-	                    <td th:text="${caregiver.caregiver.availableHours}">사용 가능한 시간</td>
+	                    <td th:text="${caregiver.caregiver.availableHours}">이용 가능 시간</td>
 						<td><a th:href="@{/matching/detail(caregiverId=${caregiver.user.userId})}" class="btn btn-info">상세 보기</a></td>
 	                    <td><a th:href="@{/matching/request(caregiverId=${caregiver.user.userId})}" class="btn btn-primary">요청</a></td>
 	                </tr>
 	            </tbody>
 	        </table>
+
+            <nav>
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item" th:classappend="${caregiversPage.first} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="pageNum : ${#numbers.sequence(0, caregiversPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == caregiversPage.number} ? 'active'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${caregiversPage.last} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number + 1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 	    </div>
-	    <div th:if="${#lists.isEmpty(caregivers)}">
+	    <div th:if="${!caregiversPage.hasContent()}">
 	        <table class="table">
 	            <thead>
 	                <tr>

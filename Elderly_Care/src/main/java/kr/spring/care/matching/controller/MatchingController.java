@@ -3,6 +3,8 @@ package kr.spring.care.matching.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import kr.spring.care.matching.dto.CaregiverDetail;
@@ -29,17 +32,17 @@ public class MatchingController {
 
     // 요양보호사 구인 페이지
     @GetMapping("/findcaregiver")
-    public String matchingFindCaregiver(Model model) {
-		List<CaregiverDetail> caregiverDetails = caregiverService.findAllCaregivers();
-		model.addAttribute("caregivers", caregiverDetails);
+    public String matchingFindCaregiver(Model model, Pageable pageable) {
+        Page<CaregiverDetail> caregiversPage = caregiverService.findCaregiversPageable(pageable);
+        model.addAttribute("caregiversPage", caregiversPage);
         return "matching/matchingFindCaregiver";
     }
 
     // 요양보호사 구인 페이지 상세
-    @GetMapping("/findcaregiver/{matchingId}")
-    public String matchingFindCaregiverDetail(@PathVariable Long matchingId, Model model) {
-        Matching matching = matchingService.getMatchingById(matchingId);
-        model.addAttribute("matching", matching);
+    @GetMapping("/detail")
+    public String matchingFindCaregiverDetail(@RequestParam Long caregiverId, Model model) {
+        CaregiverDetail caregiverDetail = caregiverService.findCaregiverById(caregiverId);
+        model.addAttribute("caregiver", caregiverDetail);
         return "matching/matchingFindCaregiverDetail";
     }
 

@@ -9,7 +9,6 @@ import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.repository.MatchingRepository;
-import kr.spring.care.mockdata.repository.CaregiverRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -1,6 +1,10 @@
 package kr.spring.care.matching.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,10 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import kr.spring.care.matching.dto.CaregiverDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
+import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
 
 @Controller
@@ -20,33 +27,38 @@ public class MatchingController {
 
     @Autowired
     MatchingService matchingService;
-    // 기타 필요한 서비스는 여기에 추가
+    @Autowired
+    private CaregiverService caregiverService;
 
     // 요양보호사 구인 페이지
     @GetMapping("/findcaregiver")
-    public String matchingFindCaregiver(Model model) {
-        // 필요한 데이터를 모델에 추가
+    public String matchingFindCaregiver(Model model, Pageable pageable) {
+        Page<CaregiverDetail> caregiversPage = caregiverService.findCaregiversPageable(pageable);
+        model.addAttribute("caregiversPage", caregiversPage);
         return "matching/matchingFindCaregiver";
     }
 
     // 요양보호사 구인 페이지 상세
-    @GetMapping("/findcaregiver/{matchingId}")
-    public String matchingFindCaregiverDetail(@PathVariable Long matchingId, Model model) {
-        // 상세 페이지에 필요한 데이터를 조회하여 모델에 추가
+    @GetMapping("/detail")
+    public String matchingFindCaregiverDetail(@RequestParam Long caregiverId, Model model) {
+        CaregiverDetail caregiverDetail = caregiverService.findCaregiverById(caregiverId);
+        model.addAttribute("caregiver", caregiverDetail);
         return "matching/matchingFindCaregiverDetail";
     }
 
     // 요양보호사 구직 페이지
     @GetMapping("/findjob")
     public String matchingFindJob(Model model) {
-        // 필요한 데이터를 모델에 추가
+        List<Matching> matchings = matchingService.findAllMatchings(); // 모든 매칭 데이터 가져오기
+        model.addAttribute("matchings", matchings);
         return "matching/matchingFindJob";
     }
 
     // 요양보호사 구직 페이지 상세
     @GetMapping("/findjob/{matchingId}")
     public String matchingFindJobDetail(@PathVariable Long matchingId, Model model) {
-        // 상세 페이지에 필요한 데이터를 조회하여 모델에 추가
+        Matching matching = matchingService.getMatchingById(matchingId);
+        model.addAttribute("matching", matching);
         return "matching/matchingFindJobDetail";
     }
 
@@ -65,6 +77,5 @@ public class MatchingController {
             return "matching/createMatchingForm";
         }
     }
-
     // 기타 필요한 메소드들을 여기에 추가
 }

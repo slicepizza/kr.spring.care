@@ -1,6 +1,5 @@
 package kr.spring.care.mockdata.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -29,6 +28,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    
     private String name;
     private String password;
     private String email;

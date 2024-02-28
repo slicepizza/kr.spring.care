@@ -6,6 +6,22 @@
 	layout:decorate="~{layouts/layout1}"
 	>
 	<div layout:fragment="content" class="content">
+	    <div class="profile-info" sec:authorize="hasRole('CAREGIVER')">
+	        <h3>내 프로필</h3>
+	        <a th:href="@{/caregiver/profile}" class="btn btn-primary">프로필 편집</a>
+	    </div>
+	    <div class="job-status" sec:authorize="hasRole('CAREGIVER')"><br></div>
+	    <div class="job-status" sec:authorize="hasRole('CAREGIVER')">
+	        <h3>구직 상태 변경</h3>
+	        <form action="/caregiver/updateStatus" method="post">
+	            <select name="newStatus">
+	                <option value="AVAILABLE">구직 중</option>
+	                <option value="UNAVAILABLE">구직 중단</option>
+	            </select>
+	            <button type="submit" class="btn btn-primary">상태 업데이트</button>
+	        </form>
+	    </div>
+	    <div class="job-status" sec:authorize="hasRole('CAREGIVER')"><br></div>
 	
 	    <h2>요양보호사 찾기</h2>
 	    <div class="search-section">
@@ -73,23 +89,24 @@
 	            </thead>
 	        </table>
 	        <p>사용 가능한 요양보호사가 없습니다.</p>
+
+            <nav>
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item" th:classappend="${caregiversPage.first} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="pageNum : ${#numbers.sequence(0, caregiversPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == caregiversPage.number} ? 'active'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${caregiversPage.last} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number + 1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 	    </div>
-
-    <div class="profile-info" sec:authorize="hasRole('CAREGIVER')">
-        <h3>내 프로필</h3>
-        <a th:href="@{/caregiver/profile}" class="btn btn-primary">프로필 편집</a>
-    </div>
-
-    <div class="job-status" sec:authorize="hasRole('CAREGIVER')">
-        <h3>구직 상태 변경</h3>
-        <form action="/caregiver/updateStatus" method="post">
-            <select name="newStatus">
-                <option value="AVAILABLE">구직 중</option>
-                <option value="UNAVAILABLE">구직 중단</option>
-            </select>
-            <button type="submit" class="btn btn-primary">상태 업데이트</button>
-        </form>
-    </div>
-	
 	</div>
 </html>

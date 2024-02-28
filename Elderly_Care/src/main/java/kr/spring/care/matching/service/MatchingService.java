@@ -1,22 +1,24 @@
 package kr.spring.care.matching.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.repository.MatchingRepository;
+import kr.spring.care.mockdata.repository.CaregiverRepository;
 import lombok.RequiredArgsConstructor;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MatchingService {
 
     private final MatchingRepository matchingRepository;
-
+    
     // 매칭 생성
     public Matching createMatching(@Valid MatchingRequestDto matchingRequestDto) {
         Matching matching = new Matching();
@@ -54,6 +56,8 @@ public class MatchingService {
         matchingRepository.save(matching);
     }
 
+    public List<Matching> findAllMatchings() {
+        return matchingRepository.findAll();
+    }
 
-    // 기타 필요한 메소드들을 여기에 추가
 }

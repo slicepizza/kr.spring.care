@@ -29,6 +29,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    
     private String name;
     private String password;
     private String email;

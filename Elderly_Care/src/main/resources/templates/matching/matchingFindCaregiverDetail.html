@@ -11,16 +11,23 @@
     <div class="caregiver-detail">
         <div class="caregiver-image">
             <!-- 이미지 추가 예정 -->
-            <img th:src="@{/images/caregivers/{id}(id=${caregiver.id})}" alt="Caregiver Image" />
+            <img th:src="@{/images/caregivers/{id}(id=${caregiver.user.userId})}" alt="Caregiver Image" />
         </div>
+        <br>
         <div class="caregiver-info">
-            <h3 th:text="${caregiver.name}">이름</h3>
-            <p><strong>경력:</strong> <span th:text="${caregiver.experience}">경력</span></p>
-            <p><strong>자격증:</strong> <span th:text="${caregiver.certifications}">자격증</span></p>
-            <p><strong>사용 가능한 시간:</strong> <span th:text="${caregiver.availableTime}">사용 가능한 시간</span></p>
+            <h3 th:text="${caregiver.user.name}">이름</h3>
+        	<br>
+            <p><strong>지역:</strong> <span th:text="${caregiver.user.country}">지역</span></p>
+            <p>
+            <strong>경력:</strong> <span th:text="${caregiver.caregiver.experience} + ', '">경력</span>
+            <span th:text="${caregiver.caregiver.experienceYears} + '년'">경력년수</span>
+            </p>
+            <p><strong>자격증:</strong> <span th:text="${caregiver.caregiver.certification}">자격증</span></p>
+            <p><strong>전문분야:</strong> <span th:text="${caregiver.caregiver.specialization}">전문분야</span></p>
+            <p><strong>이용 가능 시간:</strong> <span th:text="${caregiver.caregiver.availableHours}">이용 가능 시간</span></p>
         </div>
         <div class="request-matching">
-            <a th:href="@{/matching/request(caregiverId=${caregiver.id})}" class="btn btn-primary">매칭 요청</a>
+            <a th:href="@{/matching/request(caregiverId=${caregiver.user.userId})}" class="btn btn-primary">매칭 요청</a>
         </div>
     </div>
 

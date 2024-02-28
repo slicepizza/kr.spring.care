@@ -1,91 +1,181 @@
-html {
-	position: relative;
-	min-height: 100%;
+/*슬라이드 쇼 완성 및 케어 섹션추가 + 중복되는 css 정리*/
+html, body {
+	width:100%;
+	height: 100%;
 	margin: 0;
+	padding: 0;
+	overflow-x:hidden /*수평 스크롤 막기*/
 }
 
 .header {
-	position: fixed; /* header를 고정 */
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 60px; /* header 높이 설정 */
-	background-color: #333; /* header 배경색 설정 */
-	z-index: 1000; /* 사이드바와 겹치지않고 슬라이드 쇼보다 위로 표시 */
+	height: 60px;
+	background-color: #333;
+	z-index: 1000;
 }
 
 body {
 	min-height: 100%;
-	margin: 0; /* 기존의 body margin을 제거합니다. */
+	margin: 0;
 }
 
 .footer {
-	position: fixed; /* footer를 고정 */
-	/*position: absolute;*/
+	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	width: 100%;
 	padding: 15px 0;
 	text-align: center;
-	background-color: #f8f9fa; /* footer 배경색 */
-	z-index: 1000; /* 사이드바와 겹치지 않게 위로 표시 */
+	background-color: #f8f9fa;
+	z-index: 1000;
+}
+
+/* Media Queries */
+
+@media ( max-width : 1600px) {
+	.care-section {
+		width: 100%; /* 최대 너비를 100%로 설정하여 화면 크기에 맞게 조절합니다. */
+		padding: 6rem 20px; /* 양쪽 여백을 조정합니다. */
+	}
+}
+
+@media ( max-width : 1200px) {
+	.portfolio-item {
+		width: calc(33.33% - 20px); /* 화면 폭이 좁아질 때 포트폴리오 항목의 크기를 조정합니다. */
+	}
+}
+
+@media ( max-width : 768px) {
+	.sidebar {
+		width: 150px; /* 사이드바 너비 조정 */
+	}
+	.content {
+		margin-left: 170px; /* 사이드바 너비만큼 컨텐츠 영역을 이동 */
+		margin-right: 20px; /* 우측 여백을 조정합니다. */
+		width: calc(100% - 190px); /* 컨텐츠 영역의 너비를 조정합니다. */
+	}
+	.care-section {
+		padding: 4rem 20px; /* 작은 화면에서 섹션의 패딩을 조정합니다. */
+	}
+	.portfolio-item {
+		width: calc(50% - 20px); /* 작은 화면에서 포트폴리오 항목의 크기를 조정합니다. */
+	}
 }
 
 .content {
-	/*margin-top: 50px;
-	margin-left: 50px;  좌측 마진을 줄입니다. 
-	margin-right: 50px;  우측 마진을 줄입니다. 
-	padding-bottom: 100px;  content 아래에 공간을 확보합니다. */
-	margin-top: 60px; /* 사이드바의 높이만큼 상단 마진 추가 */
-	margin-left: 250px; /* 사이드바 너비만큼 마진 추가 */
-	margin-right: 50px; /* 우측 마진을 줄입니다. */
-	position: relative; /* 상대 위치 */
-	z-index: 950; /* sidebar 위에 위치 */
-	overflow-y: auto; /* 필요할 때 만 세로 스크롤을 활성화 */
-	width: calc(100% - 250px); /* 사이드바 너비를 제외한 영역만큼 content를 설정합니다. */
+	margin-top: 60px;
+	margin-left: 150px;
+	margin-right: 20px;
+	position: relative;
+	z-index: 950;
+	overflow-y: auto;
+	width: 100%;
 	height: calc(100vh - 160px);
-	/* 화면 높이에서 header와 footer 높이를 뺀 값만큼 content의 높이를 설정합니다. */
 }
 
-/*sidebar*/
-.sidebar {
-	background-color: #4e73df; /* 사이드바 배경색 */
-	color: #fff; /* 텍스트 색상 */
-	width: 250px; /* 사이드바 너비 */
-	position: fixed; /* 고정 위치 */
-	height: calc(100% - 60px); /* 전체 높이에서 헤더의 높이만큼 뺀 값 */
-	top: 60px; /* 상단에서부터 고정, header의 높이만큼 여유 공간 추가 */
-	left: 0; /* 왼쪽에서부터 고정 */
-	overflow-y: auto; /* 세로 스크롤을 허용 */
-	z-index: 900; /* header보다 낮은 z-index */
+/* Sidebar */
+.sidebar-1 {
+	background-color: #4e73df;
+	color: #fff;
+	width: 150px;/*250>150*/
+	position: fixed;
+	 height: calc(50% - 110px); /* 화면의 50% 높이에서 위아래 여백을 제외한 영역 차지 */
+	top: 60px;/*header아래에서 시작*/
+	left: 0;
+	overflow-y: auto;
+	z-index: 900;
 }
 
-.sidebar ul li a {
+.sidebar-2 {
+	background-color: #4e73df;
+	color: #fff;
+	width: 150px;/*250>150*/
+	position: fixed;
+	height: calc(50% - 30px); /* footer와 겹치지 않도록 조정 */
+	bottom: 85px; /* footer 위에서 시작 */
+	left: 0;
+	overflow-y: auto;
+	z-index: 900;
+}
+
+.sidebar-1 h2 a, .sidebar-1 ul li a,
+.sidebar-2 h2 a, .sidebar-2 ul li a {
 	color: #fff;
 	text-decoration: none;
 }
 
-.sidebar ul li a:hover {
+.sidebar-1 h2 a:hover, .sidebar-1 ul li a:hover,
+.sidebar-2 h2 a:hover, .sidebar-2 ul li a:hover {
 	text-decoration: underline;
 }
 
-/*slideshow*/
+/* Slideshow */
 .slideshow-container {
-	position: relative; /* 상대 위치 설정 */
-	max-width: 1000px; /* 최대 너비 설정 */
-	margin: auto; /* 가운데 정렬을 위한 자동 마진 설정 */
-	overflow: hidden; /* 넘치는 이미지를 가리기 위해 오버플로우 설정 */
-	z-index: 1;
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+	overflow-x: hidden;
 }
 
 .mySlides {
-	display: none; /* 기본적으로 슬라이드 숨김 */
-	width: 100%;
-	height: auto;
+	display: none;
 }
 
+.mySlides img {
+	width: 100%;
+	height: 600px;
+	object-fit: cover;
+}
 
+/* Dot */
+.dot-container {
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+}
+
+.dot {
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+}
+
+.active {
+	background-color: #717171;
+}
+
+/* Section -- 슬라이드쇼 아래의 services와 portfolio*/
+.care-section {
+	padding: 6rem 0;
+	max-width: 1600px;
+	margin: auto; /* 가운데 정렬 */
+}
+
+/*포트폴리오*/
+.row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.portfolio-item {
+	margin-bottom: 30px; /* 각 포트폴리오 아이템 간의 간격 조절 */
+	text-align: center;
+}
+
+.portfolio-caption {
+	margin-top: 15px; /* 필요한 경우 상단 여백 조절 */
+}
 
 /* 이미지 슬라이드에 대한 추가 스타일링은 필요한 경우 여기에 추가하세요 */
 /*좌측 미니 게시판 설정시에 마진이 너무 커서 조정했습니다*/

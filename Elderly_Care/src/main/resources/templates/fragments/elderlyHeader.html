@@ -3,34 +3,32 @@
 
 <div  class="header" th:fragment="header">
 
-  <nav class="navbar navbar-expand-lg bg-secondary border-bottom border-body" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg" style= "background-color: #0c3549;">
 
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">THE 홈케어</font>
-        </font>
+         <img src="/img/logo2.png" alt="THE 홈케어">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      <button class="navbar-toggler custom-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="탐색 전환">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="/info">THE 홈케어 소개</a>
+            <a class="nav-link" href="/info" style="color: #fff;">THE 홈케어 소개</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/elderlyUser/matchingInfo">매칭정보</a>
+            <a class="nav-link" href="/elderlyUser/matchingInfo" style="color: #fff;">매칭정보</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/elderlyUser/myinfo">나의정보</a>
+            <a class="nav-link" href="/elderlyUser/myinfo" style="color: #fff;">나의정보</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/elderlyUser/mypage">마이페이지</a>
+            <a class="nav-link" href="/elderlyUser/mypage" style="color: #fff;">마이페이지</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/member/logout">로그아웃</a>
+            <a class="nav-link" href="/member/logout" style="color: #fff;">로그아웃</a>
           </li>
         </ul>
         <form class="d-flex" role="search">

@@ -2,22 +2,25 @@ package kr.spring.care.admin.DTO;
 
 import java.time.LocalDateTime;
 
-import kr.spring.care.member.constant.Role;
-import kr.spring.care.member.entity.Member;
+import kr.spring.care.mockdata.constant.Role;
+import kr.spring.care.mockdata.entity.User;
 import lombok.Getter;
 
 @Getter
 public class UserDTO {
 
-	private Long id;
+	private Long userId;
 	private String name;
 	private String email;
+	private String phoneNumber;
 	private String address;
 	private Role role;
+	private String country;
+	
 	private LocalDateTime createdAt;
 	
-	public UserDTO(Member entity) {
-		this.id = entity.getId();
+	public UserDTO(User entity) {
+		this.userId = entity.getUserId();
 		this.name = entity.getName();
 		this.email = entity.getEmail();
 		this.address = entity.getAddress();

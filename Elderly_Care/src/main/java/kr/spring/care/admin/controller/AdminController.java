@@ -1,10 +1,8 @@
 package kr.spring.care.admin.controller;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.spring.care.admin.DTO.PageVO;
 import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.service.TotalUserService;
-import kr.spring.care.member.entity.Member;
+import kr.spring.care.mockdata.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RequestMapping("/admin/*")
 @Controller
@@ -50,7 +47,7 @@ public class AdminController {
 		long allCount = totalUserService.countAllUser();
 		long count = totalUserService.countUser(field, word);
 		
-		int blockLimit = 3;
+		int blockLimit = 5;
 		int startPage = (((int)Math.ceil((double)pageable.getPageNumber() / blockLimit)) -1) * blockLimit +1;   
 		int endPage = Math.min((startPage + blockLimit -1), alluser.getTotalPages());	
 		
@@ -60,13 +57,14 @@ public class AdminController {
 		model.addAttribute("AlluserCnt", allCount);
 		model.addAttribute("userCnt", count);
 		
+		
 		return "admin/totalUser";
 	}
 	
 	// 회원권한 업데이트
-	@PostMapping("authChange/{id}")
-	public String update(@PathVariable("id") long id, Member member) {
-		totalUserService.authChange(id, member);
+	@PostMapping("authChange/{userId}")
+	public String update(@PathVariable("userId") long userId, User user) {
+		totalUserService.authChange(userId, user);
 		return "redirect:/admin/totUser";
 	}
 	

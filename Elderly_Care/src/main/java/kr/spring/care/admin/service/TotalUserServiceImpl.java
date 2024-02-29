@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.repository.TotalUserRepository;
-import kr.spring.care.member.constant.Role;
-import kr.spring.care.member.entity.Member;
+import kr.spring.care.mockdata.constant.Role;
+import kr.spring.care.mockdata.entity.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -28,11 +28,11 @@ public class TotalUserServiceImpl implements TotalUserService{
 		int page = pageable.getPageNumber() -1;
 		int pageLimit = 10;
 		
-		Page<Member> allUserPages = totalUserRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "id")));
+		Page<User> allUserPages = totalUserRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "userId")));
 		if(field.equals("name")) {
-			allUserPages = totalUserRepository.findByNameContaining(word, PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "id")));
+			allUserPages = totalUserRepository.findByNameContaining(word, PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "userId")));
 		}else if(field.equals("email")) {
-			allUserPages = totalUserRepository.findByEmailContaining(word, PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "id")));
+			allUserPages = totalUserRepository.findByEmailContaining(word, PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "userId")));
 		}
 		Page<UserDTO> UserDTOs = allUserPages.map(
 				allUserPage -> new UserDTO(allUserPage));
@@ -43,12 +43,18 @@ public class TotalUserServiceImpl implements TotalUserService{
 	// 권한 변경
 	@Transactional
 	@Override
-	public void authChange(long id, Member member) {
-		Member b = totalUserRepository.findById(id).get();
-		if(member.getRole().equals(Role.CAREGIVER)) {
+	public void authChange(long userId, User user) {
+		User b = totalUserRepository.findById(userId).get();
+		if(user.getRole().equals(Role.CAREGIVER)) {
 			b.setRole(Role.CAREGIVER);
-		}else if(member.getRole().equals(Role.USER)) {
+		}else if(user.getRole().equals(Role.USER)) {
 			b.setRole(Role.USER);
+		}
+		else if(user.getRole().equals(Role.SENIOR)) {
+			b.setRole(Role.SENIOR);
+		}
+		else if(user.getRole().equals(Role.GUARDIAN)) {
+			b.setRole(Role.GUARDIAN);
 		}
 		
 	}

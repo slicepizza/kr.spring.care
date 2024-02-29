@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	>
+	<div layout:fragment="content" class="content">
+	
+	    <h2 class="mb-4">매칭 요청</h2>
+
+	    <!-- 요양보호사 정보가 있을 경우 표시 -->
+	    <div th:if="${caregiver != null}" class="card mb-4">
+	        <div class="card-body">
+	            <h3 class="card-title">요양보호사 정보</h3>
+		        <div class="caregiver-image">
+		            <!-- 이미지 추가 예정 -->
+		            <img th:src="@{/images/caregivers/{id}(id=${caregiver.user.userId})}" alt="Caregiver Image" />
+		        </div>
+	            <p><strong>이름:</strong> <span th:text="${caregiver.user.name}"></span></p>
+	            <p><strong>지역:</strong> <span th:text="${caregiver.user.country}"></span></p>
+	            <p><strong>경력:</strong> <span th:text="${caregiver.caregiver.experience}"></span></p>
+	            <p><strong>자격증:</strong> <span th:text="${caregiver.caregiver.certification}"></span></p>
+	        </div>
+	    </div>
+	
+	    <!-- 매칭 요청 폼 -->
+	    <form th:action="@{/matching/request}" method="post" class="card">
+			<!-- Senior 정보 입력 폼 -->
+			<div class="card-body">
+			    <h3 class="card-title">노인 정보 입력</h3>
+			    <div class="form-group mb-3">
+			        <label for="health">건강 상태:</label>
+			        <input type="text" class="form-control" id="health" name="health" placeholder="건강 상태 입력" required>
+			    </div>
+			    <div class="form-group mb-3">
+			        <label for="requirements">요구 사항:</label>
+			        <input type="text" class="form-control" id="requirements" name="requirements" placeholder="요구 사항 입력" required>
+			    </div>
+			    <div class="form-group mb-3">
+			        <label for="hasGuardian">보호자 유무:</label>
+			        <select class="form-select" id="hasGuardian" name="hasGuardian">
+			            <option value="true">있음</option>
+			            <option value="false" selected>없음</option>
+			        </select>
+			    </div>
+			</div>
+				        
+	        <div class="card-body">
+	            <input type="hidden" name="caregiverId" th:value="${caregiver != null ? caregiver.user.userId : null}" />
+	            <div class="form-group mb-3">
+	                <label for="startDate" class="form-label">시작 날짜</label>
+	                <input type="date" id="startDate" name="startDate" class="form-control" required />
+	            </div>
+	            <div class="form-group mb-3">
+	                <label for="endDate" class="form-label">종료 날짜</label>
+	                <input type="date" id="endDate" name="endDate" class="form-control" required />
+	            </div>
+	            <button type="submit" class="btn btn-primary">매칭 요청</button>
+	        </div>
+	    </form>
+	
+	</div>
+</html>

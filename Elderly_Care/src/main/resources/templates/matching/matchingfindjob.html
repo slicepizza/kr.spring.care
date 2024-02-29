@@ -5,49 +5,48 @@
     layout:decorate="~{layouts/layout1}">
 
 <div layout:fragment="content" class="content">
-
     <h2>구직 정보</h2>
-
-    <div class="job-list">
-	    <div th:if="${not #lists.isEmpty(jobs)}">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>날짜</th>
-	                    <th>시간</th>
-	                    <th>지역</th>
-	                    <th>상태</th>
-	                    <th>상세정보</th>
-	                    <th>요청</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr th:each="job : ${jobs}">
-	                    <td th:text="${job.date}">날짜</td>
-	                    <td th:text="${job.time}">시간</td>
-	                    <td th:text="${job.location}">지역</td>
-	                    <td th:text="${job.status}">상태</td>
-	                    <td><a th:href="@{/matching/detail(jobId=${job.id})}" class="btn btn-info">상세 보기</a></td>
-	                    <td><a th:href="@{/matching/request(jobId=${job.id})}" class="btn btn-primary">요청</a></td>
-	                </tr>
-	            </tbody>
-	        </table>
- 	   </div>
-	    <div th:if="${#lists.isEmpty(jobs)}">
-	        <table class="table">
-	            <thead>
-	                <tr>
-	                    <th>날짜</th>
-	                    <th>시간</th>
-	                    <th>지역</th>
-	                    <th>상태</th>
-	                </tr>
-	            </thead>
-	        </table>
-	        <p>사용 가능한 구직정보가 없습니다.</p>
- 	   </div>
-    </div>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>시작 날짜</th>
+                <th>종료 날짜</th>
+                <th>상태</th>
+                <th>상세정보</th>
+                <th>요청</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="matching : ${matchingsPage}">
+                <td th:text="${matching.startDate}"></td>
+                <td th:text="${matching.endDate}"></td>
+                <td th:text="${matching.status.toString() == 'POSTED' ? '구직 중' : 
+                              matching.status.toString() == 'REQUESTED' ? '요청 중' : 
+                              matching.status.toString() == 'IN_PROGRESS' ? '진행 중' : 
+                              matching.status.toString() == 'COMPLETED' ? '완료됨' : 
+                              matching.status.toString() == 'CANCELLED' ? '취소됨' : '?'}"></td>
+                <td><a th:href="@{/matching/detail(matchingId=${matching.id})}" class="btn btn-info">상세 보기</a></td>
+                <td><a th:if="${matching.status.toString() == 'POSTED'}" th:href="@{/matching/request(matchingId=${matching.id})}" class="btn btn-primary">요청</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 페이지네이션 -->
+            <nav>
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item" th:classappend="${matchingsPage.first} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:each="pageNum : ${#numbers.sequence(0, matchingsPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == matchingsPage.number} ? 'active'">
+                        <a class="page-link" th:href="@{/matching/findjob(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${matchingsPage.last} ? 'disabled'">
+                        <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number + 1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 </div>
-
 </html>

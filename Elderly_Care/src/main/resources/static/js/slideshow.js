@@ -34,3 +34,4 @@ for (var j = 0; j < dots.length; j++) {
 		}
 	});
 }
+

@@ -1,0 +1,50 @@
+html {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+}
+
+body {
+	min-height: 100%;
+	margin: 0; /* 기존의 body margin을 제거합니다. */
+}
+
+.footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 15px 0;
+	text-align: center;
+}
+
+.content {
+	margin-top: 50px;
+	margin-left: 50px; /* 좌측 마진을 줄입니다. */
+	margin-right: 50px; /* 우측 마진을 줄입니다. */
+	padding-bottom: 100px; /* content 아래에 공간을 확보합니다. */
+}
+
+.additional-info {
+	order: 1; /* 우선순위 설정 */
+}
+
+.caregiver-section {
+	display: flex;
+	justify-content: space-between; /* 요소들을 좌우에 정렬 */
+	align-items: center; /* 요소들을 수직 가운데로 정렬 */
+}
+
+.caregiver-img, .caregiver-info, .additional-info {
+	flex: 1; /* 가로 공간을 동일하게 나눔 */
+}
+
+.caregiver-info {
+	margin-left: 20px; /* 요양보호사 정보와의 간격 설정 */
+}
+
+.announcement-section, .freeboard-section {
+	flex: 1;
+}
+/*좌측 미니 게시판 설정시에 마진이 너무 커서 조정했습니다*/

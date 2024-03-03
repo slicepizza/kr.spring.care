@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CaregiverPageController {
 	
-	@GetMapping("mypage")
-	public String mypage() {
-		return "caregiverPage/mypage";
-	}
-	
 	@GetMapping("matchingInfo")
 	public String matchingInfo() {
 		return "caregiverPage/matchingInfo";

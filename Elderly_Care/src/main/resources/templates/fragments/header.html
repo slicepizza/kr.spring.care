@@ -34,20 +34,20 @@
           <!-- 노인/보호자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('USER')">
 
-            <a class="nav-link" href="/userPage/mypage">마이페이지</a>
+            <a class="nav-link" href="/userPage/myinfo">마이페이지</a>
 
           </li>
           
           <!-- 요양보호사용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('CAREGIVER')">
 
-            <a class="nav-link" href="/caregiverPage/mypage">마이페이지</a>
+            <a class="nav-link" href="/caregiverPage/myinfo">마이페이지</a>
 
           </li>
           
           <!-- 관리자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link" href="/admin/mypage" style="color: #fff;">마이페이지</a>
+            <a class="nav-link" href="/admin/totUser" style="color: #fff;">마이페이지</a>
           </li>
           
           <li class="nav-item" sec:authorize="isAuthenticated()">

@@ -14,18 +14,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="/info" style="color: #fff;">THE 홈케어 소개</a>
-          </li>
+          </li> -->
           <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/admin/totBoard" style="color: #fff;">돌봄관리</a>
           </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/admin/totUser" style="color: #fff;">회원관리</a>
-          </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/admin/mypage" style="color: #fff;">마이페이지</a>
-          </li>
           <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/member/logout" style="color: #fff;">로그아웃</a>
           </li>

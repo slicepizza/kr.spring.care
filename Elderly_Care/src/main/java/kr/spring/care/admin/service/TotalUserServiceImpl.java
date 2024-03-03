@@ -1,6 +1,7 @@
 package kr.spring.care.admin.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,7 +37,6 @@ public class TotalUserServiceImpl implements TotalUserService{
 		}
 		Page<UserDTO> UserDTOs = allUserPages.map(
 				allUserPage -> new UserDTO(allUserPage));
-		System.out.println("유저dto"+ UserDTOs);
 		return UserDTOs;
 	}
 	
@@ -80,11 +80,23 @@ public class TotalUserServiceImpl implements TotalUserService{
 	
 	// 유저 상세정보(모달)
 	@Override
-	public UserDTO userView(long id) {
-//		Member mid = totalUserRepository.findById(id).get();
-//		UserDTO userById = new UserDTO(mid);
-//		System.out.println("유저:"+ userById);
-		return null;
+	public UserDTO userView(long userId) {
+		Optional<User> userOptional = totalUserRepository.findById(userId);
+	    return userOptional.map(UserDTO::new).orElse(null);
+		
+		/*
+		 * Optional<User> userOptional = totalUserRepository.findById(userId); if
+		 * (userOptional.isPresent()) { User user = userOptional.get(); return new
+		 * UserDTO(user); } else { return null; // 또는 원하는 대응 방법에 따라 다른 처리를 수행할 수 있습니다. }
+		 */
+	}
+
+	@Override
+	public void updateRole(long userId, String role) {
+		Optional<User> optionalUser = totalUserRepository.findById(userId);
+		User user = optionalUser.get();
+		user.setRole(Role.valueOf(role));
+		totalUserRepository.save(user);
 	}
 
 

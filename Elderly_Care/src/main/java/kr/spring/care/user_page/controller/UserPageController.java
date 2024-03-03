@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserPageController {
 	
-	@GetMapping("mypage")
-	public String mypage() {
-		return "userPage/mypage";
-	}
-	
 	@GetMapping("matchingInfo")
 	public String matchingInfo() {
 		return "userPage/matchingInfo";

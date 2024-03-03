@@ -25,4 +25,7 @@ public interface TotalUserService {
 	// 유저 상세정보(모달)
 	public UserDTO userView(long userId);
 	
+	// 권한 변경(모달)
+	public void updateRole(long userId, String role);
+	
 }

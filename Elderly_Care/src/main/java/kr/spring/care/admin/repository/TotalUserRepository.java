@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.entity.User;
 
 
 public interface TotalUserRepository extends JpaRepository<User, Long>{

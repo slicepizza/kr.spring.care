@@ -25,10 +25,10 @@
 		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/member/login/requireLogin'}" style="color: #fff;">요양보호사 구직</a>
 		  </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/member/login" style="color: #fff;">로그인</a>
+            <a class="nav-link" href="/user/login" style="color: #fff;">로그인</a>
           </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/member/joinCheck" style="color: #fff;">회원가입</a>
+            <a class="nav-link" href="/user/joinCheck" style="color: #fff;">회원가입</a>
           </li>
           
           <!-- 노인/보호자용 마이페이지 -->
@@ -51,7 +51,7 @@
           </li>
           
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/member/logout" style="color: #fff;">로그아웃</a>
+            <a class="nav-link" href="/user/logout" style="color: #fff;">로그아웃</a>
           </li>
         </ul>
         <form class="d-flex" role="search">

@@ -2,8 +2,8 @@ package kr.spring.care.admin.DTO;
 
 import java.time.LocalDateTime;
 
-import kr.spring.care.mockdata.constant.Role;
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.constant.Role;
+import kr.spring.care.user.entity.User;
 import lombok.Getter;
 
 @Getter

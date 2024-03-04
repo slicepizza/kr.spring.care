@@ -1,8 +1,8 @@
-package kr.spring.care.mockdata.repository;
+package kr.spring.care.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.spring.care.mockdata.entity.Caregiver;
+import kr.spring.care.user.entity.Caregiver;
 
 public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
 

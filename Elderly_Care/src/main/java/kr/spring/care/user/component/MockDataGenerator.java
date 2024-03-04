@@ -1,14 +1,14 @@
-package kr.spring.care.mockdata.component;
+package kr.spring.care.user.component;
 
 import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
-import kr.spring.care.mockdata.constant.Role;
-import kr.spring.care.mockdata.entity.Caregiver;
-import kr.spring.care.mockdata.entity.Guardian;
-import kr.spring.care.mockdata.entity.Senior;
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.constant.Role;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Guardian;
+import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

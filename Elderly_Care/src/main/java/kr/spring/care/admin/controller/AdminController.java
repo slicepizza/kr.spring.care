@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.service.TotalUserService;
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.entity.User;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/admin/*")

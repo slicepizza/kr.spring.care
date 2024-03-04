@@ -1,4 +1,4 @@
-package kr.spring.care.mockdata.entity;
+package kr.spring.care.user.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,24 +11,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Senior {
+public class Caregiver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seniorId;
-    private String health;
-    private String requirements;
-    private Boolean hasGuardian;
+    private Long caregiverId;
+    private String certification;
+    private String specialization;
+    private String experience;
+    private int experienceYears;
+    private String availableHours;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToOne(mappedBy = "senior")
-    private Guardian guardian;
 }

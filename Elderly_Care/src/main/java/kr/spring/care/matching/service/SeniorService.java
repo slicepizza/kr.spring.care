@@ -3,10 +3,10 @@ package kr.spring.care.matching.service;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import kr.spring.care.mockdata.entity.Senior;
-import kr.spring.care.mockdata.entity.User;
-import kr.spring.care.mockdata.repository.SeniorRepository;
-import kr.spring.care.mockdata.repository.UserRepository;
+import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.entity.User;
+import kr.spring.care.user.repository.SeniorRepository;
+import kr.spring.care.user.repository.UserRepository;
 
 public class SeniorService {
     private final SeniorRepository seniorRepository;

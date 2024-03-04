@@ -1,9 +1,9 @@
 package kr.spring.care.matching.dto;
 
 import kr.spring.care.matching.entity.Matching;
-import kr.spring.care.mockdata.entity.Caregiver;
-import kr.spring.care.mockdata.entity.Senior;
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 

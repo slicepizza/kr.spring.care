@@ -19,8 +19,8 @@ import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
-import kr.spring.care.mockdata.entity.Caregiver;
-import kr.spring.care.mockdata.entity.Senior;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Senior;
 
 @Controller
 @RequestMapping("/matching")

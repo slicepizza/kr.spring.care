@@ -20,12 +20,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import kr.spring.care.member.entity.Member;
+import kr.spring.care.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity(name="notice")
-@Getter @Setter
+@Getter
+@Setter
 public class Notice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,7 @@ public class Notice {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private Member member;
+	private User user;
 	
 	@PrePersist
 	public void prePersist() {

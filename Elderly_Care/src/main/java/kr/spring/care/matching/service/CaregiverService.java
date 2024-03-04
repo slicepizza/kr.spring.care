@@ -13,11 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kr.spring.care.matching.dto.CaregiverDetail;
-import kr.spring.care.mockdata.constant.Role;
-import kr.spring.care.mockdata.entity.Caregiver;
-import kr.spring.care.mockdata.entity.User;
-import kr.spring.care.mockdata.repository.CaregiverRepository;
-import kr.spring.care.mockdata.repository.UserRepository;
+import kr.spring.care.user.constant.Role;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.User;
+import kr.spring.care.user.repository.CaregiverRepository;
+import kr.spring.care.user.repository.UserRepository;
 
 @Service
 public class CaregiverService {

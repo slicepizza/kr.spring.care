@@ -15,11 +15,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import kr.spring.care.member.entity.Member;
+import kr.spring.care.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity(name="noticecomment")
 public class NoticeComment {
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,7 @@ public class NoticeComment {
 	//User  ==> userid
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private Member member;
+	private User user;
 	
 	//Notice  ==>Nnum
 	@ManyToOne

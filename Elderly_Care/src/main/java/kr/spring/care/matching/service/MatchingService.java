@@ -15,12 +15,12 @@ import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.repository.MatchingRepository;
-import kr.spring.care.mockdata.entity.Caregiver;
-import kr.spring.care.mockdata.entity.Senior;
-import kr.spring.care.mockdata.entity.User;
-import kr.spring.care.mockdata.repository.CaregiverRepository;
-import kr.spring.care.mockdata.repository.SeniorRepository;
-import kr.spring.care.mockdata.repository.UserRepository;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.entity.User;
+import kr.spring.care.user.repository.CaregiverRepository;
+import kr.spring.care.user.repository.SeniorRepository;
+import kr.spring.care.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

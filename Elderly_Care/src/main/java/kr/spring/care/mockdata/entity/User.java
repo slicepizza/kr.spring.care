@@ -35,7 +35,9 @@ public class User {
     private String phoneNumber;
     private String address;
     private String country;
-
+    private String gender;
+    private String image;
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     

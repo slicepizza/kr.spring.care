@@ -28,6 +28,9 @@ public class MatchingService {
         matching.setCaregiverId(matchingRequestDto.getCaregiverId());
         matching.setStartDate(matchingRequestDto.getStartDate());
         matching.setEndDate(matchingRequestDto.getEndDate());
+        matching.setMatchingCountry(matchingRequestDto.getMatchingCountry());
+        matching.setStartTime(matchingRequestDto.getStartTime());
+        matching.setEndTime(matchingRequestDto.getEndTime());
         matching.setStatus(MatchingStatus.REQUESTED); // 초기 상태 설정
         return matchingRepository.save(matching);
     }

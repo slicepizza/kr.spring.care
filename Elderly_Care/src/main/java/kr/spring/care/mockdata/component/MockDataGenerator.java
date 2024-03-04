@@ -30,6 +30,8 @@ public class MockDataGenerator {
             user.setPhoneNumber("010-0000-" + String.format("%04d", i));
             user.setAddress("Some Address " + i);
             user.setCountry("Country" + i);
+            user.setGender(i % 2 == 0 ? "Male" : "Female");
+            user.setImage("UserImg" + i);
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
             if (i < 10) {
@@ -47,6 +49,7 @@ public class MockDataGenerator {
         // Caregiver 목데이터 생성
         for (int i = 10; i < 20; i++) {
             Caregiver caregiver = new Caregiver();
+            caregiver.setCaregiverName("caregiver" + i);
             caregiver.setCertification("Certification" + i);
             caregiver.setSpecialization("Specialization" + i);
             caregiver.setExperience("Experience" + i);

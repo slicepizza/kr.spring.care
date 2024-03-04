@@ -1,7 +1,9 @@
 package kr.spring.care.matching.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,9 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import kr.spring.care.matching.constant.MatchingStatus;
+import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.repository.MatchingRepository;
+import kr.spring.care.mockdata.entity.Caregiver;
+import kr.spring.care.mockdata.entity.Senior;
+import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.mockdata.repository.CaregiverRepository;
+import kr.spring.care.mockdata.repository.SeniorRepository;
+import kr.spring.care.mockdata.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,7 +28,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MatchingService {
 
+    @Autowired
     private final MatchingRepository matchingRepository;
+    
+    @Autowired
+    private CaregiverRepository caregiverRepository;
+    
+    @Autowired
+    private SeniorRepository seniorRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
     
     // 매칭 생성
     public Matching createMatching(@Valid MatchingRequestDto matchingRequestDto) {
@@ -31,7 +50,7 @@ public class MatchingService {
         matching.setMatchingCountry(matchingRequestDto.getMatchingCountry());
         matching.setStartTime(matchingRequestDto.getStartTime());
         matching.setEndTime(matchingRequestDto.getEndTime());
-        matching.setStatus(MatchingStatus.REQUESTED); // 초기 상태 설정
+        matching.setStatus(matchingRequestDto.getStatus());
         return matchingRepository.save(matching);
     }
 
@@ -69,4 +88,30 @@ public class MatchingService {
         return matchingRepository.findAll(pageable);
     }
 
+    public MatchingDetail getMatchingDetailById(Long matchingId) {
+        Matching matching = matchingRepository.findById(matchingId)
+                .orElseThrow(() -> new NoSuchElementException("해당 매칭을 찾을 수 없습니다: " + matchingId));
+
+        Long caregiverId = matching.getCaregiverId();
+        Caregiver caregiver = null;
+        User caregiverUser = null;
+        if (caregiverId != null) {
+            caregiver = caregiverRepository.findById(caregiverId)
+                    .orElseThrow(() -> new NoSuchElementException("해당 요양보호사를 찾을 수 없습니다: " + caregiverId));
+            caregiverUser = caregiver.getUser();
+        }
+
+        Long seniorId = matching.getSeniorId();
+        Senior senior = null;
+        User seniorUser = null;
+        if (seniorId != null) {
+            senior = seniorRepository.findById(seniorId)
+                    .orElseThrow(() -> new NoSuchElementException("해당 노인을 찾을 수 없습니다: " + seniorId));
+            seniorUser = userRepository.findById(senior.getSeniorId())
+                    .orElseThrow(() -> new NoSuchElementException("해당 노인의 사용자 정보를 찾을 수 없습니다: " + seniorId));
+        }
+
+        return new MatchingDetail(caregiverUser, caregiver, seniorUser, senior, matching);
+    }
+    
 }

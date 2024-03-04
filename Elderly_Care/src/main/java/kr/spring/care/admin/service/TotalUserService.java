@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import kr.spring.care.admin.DTO.UserDTO;
-import kr.spring.care.member.entity.Member;
 import kr.spring.care.mockdata.entity.User;
 
 public interface TotalUserService {

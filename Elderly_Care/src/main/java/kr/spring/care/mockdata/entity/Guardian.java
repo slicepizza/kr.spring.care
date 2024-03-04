@@ -21,6 +21,8 @@ public class Guardian {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long guardianId;
 
+    private String guardianName;
+    
     @OneToOne
     @JoinColumn(name = "senior_id")
     private Senior senior;

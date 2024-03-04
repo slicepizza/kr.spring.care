@@ -49,7 +49,6 @@ public class MockDataGenerator {
         // Caregiver 목데이터 생성
         for (int i = 10; i < 20; i++) {
             Caregiver caregiver = new Caregiver();
-            caregiver.setCaregiverName("caregiver" + i);
             caregiver.setCertification("Certification" + i);
             caregiver.setSpecialization("Specialization" + i);
             caregiver.setExperience("Experience" + i);
@@ -81,6 +80,7 @@ public class MockDataGenerator {
         for (int i = 0; i < seniors.size(); i++) {
             if (seniors.get(i).getHasGuardian()) {
                 Guardian guardian = new Guardian();
+                guardian.setGuardianName("Guard" + i);
                 guardian.setRelationship("Relationship" + i);
                 guardian.setUser(users.get(i)); // User와 연결
                 guardian.setSenior(seniors.get(i)); // 연결된 Senior와 연결

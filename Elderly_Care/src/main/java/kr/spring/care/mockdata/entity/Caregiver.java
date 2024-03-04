@@ -20,7 +20,6 @@ public class Caregiver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long caregiverId;
-    private String caregiverName;
     private String certification;
     private String specialization;
     private String experience;

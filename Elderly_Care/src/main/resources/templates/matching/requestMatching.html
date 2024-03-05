@@ -27,6 +27,11 @@
             overflow-y: auto; /* 세로 스크롤 바 활성화 */
         }
   </style>
+  <script>
+    function submitRequestForm() {
+        document.getElementById('matchingRequestForm').submit();
+    }
+  </script>
 </th:block>
 	
 	<div layout:fragment="content" class="content">
@@ -51,10 +56,14 @@
 	    </div>
 	
 	    <!-- 매칭 요청 폼 -->
-	    <form th:action="@{/matching/request}" method="post" class="card custom-card-body mb-4">
+	    <form id="matchingRequestForm" th:action="@{/matching/request}" method="post" class="card custom-card-body mb-4">
 			<!-- Senior 정보 입력 폼 -->
 			<div class="card-body">
 			    <h3 class="card-title">노인 정보 입력</h3>
+		        <div class="col-md-4 form-group mb-3">
+		            <label for="matchingCountry">지역:</label>
+		            <input type="text" class="form-control" id="matchingCountry" name="matchingCountry" placeholder="지역 입력" required>
+		        </div>
 			    <div class="form-group mb-3">
 			        <label for="health">건강 상태:</label>
                     <textarea id="health" name="health" class="form-control" rows="3" placeholder="건강 상태 입력" required></textarea>
@@ -70,10 +79,6 @@
 		                <option value="false" selected>없음</option>
 		            </select>
 		        </div>
-		        <div class="col-md-4 form-group mb-3">
-		            <label for="matchingCountry">지역:</label>
-		            <input type="text" class="form-control" id="matchingCountry" name="matchingCountry" placeholder="지역 입력" required>
-		        </div>
 			</div>
     
         <div class="card-body">
@@ -81,7 +86,7 @@
             <div class="row">
             </div>
             
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col">
                     <label for="startDate" class="form-label">시작 날짜</label>
                     <input type="date" id="startDate" name="startDate" class="form-control" required />
@@ -92,7 +97,7 @@
                 </div>
             </div>
             
-            <div class="row mt-3">
+            <div class="row mb-3">
                 <div class="col">
                     <label for="startTime" class="form-label">시작 시간</label>
                     <input type="time" id="startTime" name="startTime" class="form-control" required />
@@ -103,7 +108,29 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">매칭 요청</button>
+		    <!-- 매칭 요청 버튼 -->
+		    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmRequestModal">
+		      매칭 요청
+		    </button>
+		
+		    <!-- Modal -->
+		    <div class="modal fade" id="confirmRequestModal" tabindex="-1" aria-labelledby="confirmRequestLabel" aria-hidden="true">
+		      <div class="modal-dialog">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <h5 class="modal-title" id="confirmRequestLabel">매칭 요청 확인</h5>
+		            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		          </div>
+		          <div class="modal-body">
+		            매칭 요청을 하시겠습니까?
+		          </div>
+		          <div class="modal-footer">
+		            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		            <button type="button" class="btn btn-primary" onclick="submitRequestForm()">확인</button>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
         </div>
 	    </form>
 	

@@ -5,6 +5,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}"
 	>
+    
 	<div layout:fragment="content" class="content">
 	    <div class="profile-info" sec:authorize="hasRole('CAREGIVER')">
 	        <h3>내 프로필</h3>
@@ -24,13 +25,16 @@
 	    <div class="job-status" sec:authorize="hasRole('CAREGIVER')"><br></div>
 	
 	    <h2>요양보호사 찾기</h2>
-	    <div class="search-section">
-		    <form action="/matching/findcaregiver" method="get">
-		        <input type="text" name="name" placeholder="이름으로 검색">
-		        <input type="text" name="location" placeholder="지역으로 검색">
-		        <button type="submit" class="btn btn-primary">검색</button>
-		    </form>
-		</div>	
+        <div class="d-md-flex justify-content-md-end">
+            <form class="d-md-flex gap-2" action="/matching/findcaregiver" method="get">
+            	<select class="form-select" name="field">
+            		<option value="name">이름</option>
+            		<option value="country">지역</option>
+            	</select>
+            	<input type="text" class="form-control" name="word" placeholder="글자를 입력하세요">
+            	<button type="submit" class="btn btn-secondary btn-sm col-2">검색</button>
+            </form>
+        </div>
 	
 	    <div th:if="${caregiversPage.hasContent()}">
 	        <table class="table">
@@ -47,7 +51,7 @@
 	            </thead>
 	            <tbody>
 	                <tr th:each="caregiver : ${caregiversPage}">
-	                    <td th:text="${caregiver.user.name}">이름</td>
+	                    <td data-type="name" th:text="${caregiver.user.name}">이름</td>
 	                    <td th:text="${caregiver.user.country}">지역</td>
 	                    <td th:text="${caregiver.caregiver.experience}">경력</td>
 	                    <td th:text="${caregiver.caregiver.certification}">자격증</td>
@@ -61,15 +65,15 @@
             <nav>
                 <ul class="pagination d-flex justify-content-center">
                     <li class="page-item" th:classappend="${caregiversPage.first} ? 'disabled'">
-                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number - 1})}" aria-label="Previous">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number - 1}, field=${field}, word=${word})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:each="pageNum : ${#numbers.sequence(0, caregiversPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == caregiversPage.number} ? 'active'">
-                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${pageNum}, field=${field}, word=${word})}" th:text="${pageNum + 1}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${caregiversPage.last} ? 'disabled'">
-                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number + 1})}" aria-label="Next">
+                        <a class="page-link" th:href="@{/matching/findcaregiver(page=${caregiversPage.number + 1}, field=${field}, word=${word})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -97,7 +101,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li th:each="pageNum : ${#numbers.sequence(0, caregiversPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == caregiversPage.number} ? 'active'">
+                    <li th:each="pageNum : ${#numbers.sequence(0, caregiversPage.totalPages == 0 ? 0 : caregiversPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == caregiversPage.number} ? 'active'">
                         <a class="page-link" th:href="@{/matching/findcaregiver(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${caregiversPage.last} ? 'disabled'">
@@ -108,5 +112,24 @@
                 </ul>
             </nav>
 	    </div>
+	    <script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        maskNames();
+	    });
+        // 페이지가 로드되면 실행될 함수
+        function maskNames() {
+            // 모든 이름을 포함하는 요소를 찾음
+            var nameElements = document.querySelectorAll('td[data-type="name"]');
+            nameElements.forEach(function(elem) {
+                var name = elem.textContent.trim();
+                if (name.length > 0) {
+                    elem.textContent = name.charAt(0) + '*'.repeat(name.length - 1);
+                }
+            });
+        }
+        
+        maskNames();
+    </script>
 	</div>
+
 </html>

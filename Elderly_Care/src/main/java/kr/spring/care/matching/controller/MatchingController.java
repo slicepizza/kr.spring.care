@@ -33,9 +33,21 @@ public class MatchingController {
 
     // 요양보호사 구인 페이지
     @GetMapping("/findcaregiver")
-    public String matchingFindCaregiver(Model model, Pageable pageable) {
-        Page<CaregiverDetail> caregiversPage = caregiverService.findCaregiversPageable(pageable);
-        model.addAttribute("caregiversPage", caregiversPage);
+    public String matchingFindCaregiver(@RequestParam(required = false) String field, 
+            @RequestParam(required = false) String word, 
+            Pageable pageable, Model model) {
+		Page<CaregiverDetail> caregiversPage;
+		
+		if (field != null && word != null && !field.isEmpty() && !word.isEmpty()) {
+		caregiversPage = caregiverService.searchCaregivers(field, word, pageable);
+		} else {
+		caregiversPage = caregiverService.findCaregiversPageable(pageable);
+		}
+		
+		model.addAttribute("caregiversPage", caregiversPage);
+	    model.addAttribute("field", field);
+	    model.addAttribute("word", word);
+
         return "matching/matchingFindCaregiver";
     }
 

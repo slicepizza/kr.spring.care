@@ -1,10 +1,10 @@
 /*슬라이드 쇼 완성 및 케어 섹션추가 + 중복되는 css 정리*/
 html, body {
-	width:100%;
+	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	overflow-x:hidden /*수평 스크롤 막기*/
+	overflow-x: hidden /*수평 스크롤 막기*/
 }
 
 .header {
@@ -19,8 +19,8 @@ html, body {
 
 .header .custom-btn {
 	/* 버튼의 테두리 색상 설정 */
-	background-color: #d591a5; 
-    border-color: #a67488; /* 여기에 원하는 테두리 색상을 지정하세요 */
+	background-color: #d591a5;
+	border-color: #a67488; /* 여기에 원하는 테두리 색상을 지정하세요 */
 }
 
 body {
@@ -40,7 +40,6 @@ body {
 }
 
 /* Media Queries */
-
 @media ( max-width : 1600px) {
 	.care-section {
 		width: 100%; /* 최대 너비를 100%로 설정하여 화면 크기에 맞게 조절합니다. */
@@ -54,181 +53,133 @@ body {
 	}
 }
 
-@media (max-width: 990px) {
-    .sidebar-1,
-    .sidebar-2 {
-        display: none; /* 화면 너비가 990px 이하일 때 sidebar를 숨깁니다. */
-    }
-
-    .content {
-        margin-left: 0; /* sidebar가 사라지면 content의 좌측 여백을 없앱니다. */
-        margin-top: 115px;
-        width: 100%; /* sidebar가 없으므로 content가 전체 너비를 차지하도록 설정합니다. */
-    }
-    
-}
-
-@media (min-width: 991px) {
-    .content {
-        margin-left: 150px; /* 화면 너비가 991px 이상일 때 sidebar의 너비만큼 좌측 마진을 설정합니다. */
-    }
-
-
-.content {
-	margin-top: 115px;
-	margin-left: 150px;
-	margin-right: 20px;
-	position: relative;
-	z-index: 950;
-	overflow-y: auto;
-	width: 100%;
-	height: calc(100vh - 160px);
-}
-
-/* Sidebar */
-.sidebar-1 {
-	background-color :#115370;
-	color: #fff;
-	border-radius: 10px;
-	width: 150px;/*250>150*/
-	position: fixed;
-	height: calc(50% - 200px); /* 화면의 50% 높이에서 위아래 여백을 제외한 영역 차지 */
-	top: 115px;/*header아래에서 시작*/
-	left: 0;
-	margin-bottom: 30px;
-	overflow-y: auto;
-	z-index: 900;
-}
-
-.sidebar-2 {
-	background-color: #1a7494;
-	color: #fff;
-	border-radius: 10px;
-	width: 150px;/*250>150*/
-	position: fixed;
-	height: calc(50% - 75px); /* footer와 겹치지 않도록 조정 */
-	bottom: 130px; /* footer 위에서 시작 */
+@media ( max-width : 990px) {
+	.sidebar-1, .sidebar-2 {
+		display: none; /* 화면 너비가 990px 이하일 때 sidebar를 숨깁니다. */
+	}
+	.content {
+		margin-left: 0; /* sidebar가 사라지면 content의 좌측 여백을 없앱니다. */
+		margin-top: 115px;
+		width: 100%; /* sidebar가 없으므로 content가 전체 너비를 차지하도록 설정합니다. */
+	}
 	
-	left: 0;
-	overflow-y: auto;
-	z-index: 900;
+	.carousel-indicators button.active {
+		background-color: #ab2222; /* 원하는 활성화 색상 지정 */
+	}
+	
 }
 
-.sidebar-1 h2 a, .sidebar-2 h2 a {
-	font-size: 20px;
-	font-family: "Roboto Mono", monospace;
-	font-weight: 600;
+@media ( min-width : 991px) {
+	.content {
+		margin-left: 150px;
+		/* 화면 너비가 991px 이상일 때 sidebar의 너비만큼 좌측 마진을 설정합니다. */
+	}
+	.content {
+		margin-top: 115px;
+		margin-left: 150px;
+		margin-right: 20px;
+		position: relative;
+		z-index: 950;
+		overflow-y: auto;
+		width: 100%;
+		height: calc(100vh - 160px);
+	}
+
+	/*slideshow;;carousel*/
+	.carousel-indicators button.active {/* 활성화된 indicator 색상 변경 */
+		background-color: #ab2222; /* 원하는 활성화 색상 지정 */
+	}
+	.carousel-item img { /* 이전,다음 버튼 색상 변경 */
+		height: 600px; /* 원하는 높이로 조정하세요 */
+	}
+
+	/* Sidebar */
+	.sidebar-1 {
+		background-color: #115370;
+		color: #fff;
+		border-radius: 10px;
+		width: 150px; /*250>150*/
+		position: fixed;
+		height: calc(50% - 200px); /* 화면의 50% 높이에서 위아래 여백을 제외한 영역 차지 */
+		top: 115px; /*header아래에서 시작*/
+		left: 0;
+		margin-bottom: 30px;
+		overflow-y: auto;
+		z-index: 900;
+	}
+	.sidebar-2 {
+		background-color: #1a7494;
+		color: #fff;
+		border-radius: 10px;
+		width: 150px; /*250>150*/
+		position: fixed;
+		height: calc(50% - 75px); /* footer와 겹치지 않도록 조정 */
+		bottom: 130px; /* footer 위에서 시작 */
+		left: 0;
+		overflow-y: auto;
+		z-index: 900;
+	}
+	.sidebar-1 h2 a, .sidebar-2 h2 a {
+		font-size: 20px;
+		font-family: "Roboto Mono", monospace;
+		font-weight: 600;
+	}
+	.sidebar-1 h2 a, .sidebar-1 ul li a, .sidebar-2 h2 a, .sidebar-2 ul li a
+		{
+		color: #fff;
+		text-decoration: none;
+	}
+	.sidebar-1 h2 a:hover, .sidebar-1 ul li a:hover, .sidebar-2 h2 a:hover,
+		.sidebar-2 ul li a:hover {
+		text-decoration: underline;
+	}
+
+	/* Section -- 슬라이드쇼 아래의 services와 portfolio*/
+	.care-section {
+		padding: 6rem 0;
+		max-width: 1600px;
+		margin: auto; /* 가운데 정렬 */
+	}
+
+	/*Services*/
+	#services {
+		background-color: #fff;
+		margin-top: 100px;
+		margin-bottom: 100px;
+	}
+	.col-md-4 {
+		color: #1d9cce;
+		font-size: 20px;
+		font-family: LilitaOne, sans-serif;
+	}
+
+	/*포트폴리오*/
+	#portfolio {
+		background-color: #db8ea2;
+	}
+	.care-section:nth-of-type(2) .text-center .section-heading {
+		color: #fff; /* 원하는 색상 코드로 변경 */
+		font-family: Lilita One, sans-serif; /* 원하는 폰트로 변경 */
+		font-weight: 500;
+		/* 추가적인 스타일링을 여기에 추가할 수 있습니다. */
+	}
+	.care-section:nth-of-type(2) .text-center .section-subheading {
+		color: #fff; /* 원하는 색상 코드로 변경 */
+		font-family: 'Arial', sans-serif; /* 원하는 폰트로 변경 */
+		/* 추가적인 스타일링을 여기에 추가할 수 있습니다. */
+	}
+	.row {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.portfolio-item {
+		margin-bottom: 30px; /* 각 포트폴리오 아이템 간의 간격 조절 */
+		text-align: center;
+	}
+	.portfolio-caption {
+		margin-top: 15px; /* 필요한 경우 상단 여백 조절 */
+	}
 }
-
-.sidebar-1 h2 a, .sidebar-1 ul li a,
-.sidebar-2 h2 a, .sidebar-2 ul li a {
-	color: #fff;
-	text-decoration: none;
-}
-
-.sidebar-1 h2 a:hover, .sidebar-1 ul li a:hover,
-.sidebar-2 h2 a:hover, .sidebar-2 ul li a:hover {
-	text-decoration: underline;
-}
-
-/* Slideshow */
-.slideshow-container {
-	position: relative;
-	width: 100%;
-	max-width: 100%;
-	margin: auto;
-	overflow-x: hidden;
-}
-
-.mySlides {
-	display: none;
-}
-
-.mySlides img {
-	width: 100%;
-	height: 600px;
-	object-fit: cover;
-}
-
-/* Dot */
-.dot-container {
-	position: absolute;
-	bottom: 10px;
-	left: 50%;
-	transform: translateX(-50%);
-	text-align: center;
-}
-
-.dot {
-	height: 15px;
-	width: 15px;
-	margin: 0 2px;
-	background-color: #bbb;
-	border-radius: 50%;
-	display: inline-block;
-	transition: background-color 0.6s ease;
-}
-
-.active {
-	background-color: #717171;
-}
-
-/* Section -- 슬라이드쇼 아래의 services와 portfolio*/
-.care-section {
-	padding: 6rem 0;
-	max-width: 1600px;
-	margin: auto; /* 가운데 정렬 */
-}
-
-/*Services*/
-#services {
-	background-color: #fff;
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
-
-.col-md-4 {
-	color: #1d9cce;
-	font-size: 20px;
-	font-family: LilitaOne, sans-serif;
-}
-
-
-/*포트폴리오*/
-
-#portfolio {
-	background-color: #db8ea2;
-}
-
-.care-section:nth-of-type(2) .text-center .section-heading {
-    color: #fff; /* 원하는 색상 코드로 변경 */
-    font-family: Lilita One, sans-serif; /* 원하는 폰트로 변경 */
-    font-weight: 500;
-    /* 추가적인 스타일링을 여기에 추가할 수 있습니다. */
-}
-
-.care-section:nth-of-type(2) .text-center .section-subheading {
-    color: #fff; /* 원하는 색상 코드로 변경 */
-    font-family: 'Arial', sans-serif; /* 원하는 폰트로 변경 */
-    /* 추가적인 스타일링을 여기에 추가할 수 있습니다. */
-}
-
-.row {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.portfolio-item {
-	margin-bottom: 30px; /* 각 포트폴리오 아이템 간의 간격 조절 */
-	text-align: center;
-}
-
-.portfolio-caption {
-	margin-top: 15px; /* 필요한 경우 상단 여백 조절 */
-}
-
-
-
 /* 이미지 슬라이드에 대한 추가 스타일링은 필요한 경우 여기에 추가하세요 */
 /*좌측 미니 게시판 설정시에 마진이 너무 커서 조정했습니다*/

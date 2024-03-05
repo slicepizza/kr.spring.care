@@ -76,7 +76,7 @@ h1{
 <title>회원 가입 페이지</title>
 <div layout:fragment="content" class="content">
 
-    <form action="/member/register" role="form" method="post"  th:object="${memberFormDto}">
+    <form action="/user/register" role="form" method="post"  th:object="${userFormDto}">
         <div class="form-group">
             <label th:for="name">이름</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력해주세요">

@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -29,8 +30,11 @@ public class Matching {
     @Column(name = "caregiver_id")
     private Long caregiverId;
 
+    private String matchingCountry;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
     private MatchingStatus status;

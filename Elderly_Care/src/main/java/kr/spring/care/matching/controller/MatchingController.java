@@ -1,7 +1,5 @@
 package kr.spring.care.matching.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.matching.dto.CaregiverDetail;
+import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
+import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Senior;
 
 @Controller
 @RequestMapping("/matching")
@@ -32,14 +33,26 @@ public class MatchingController {
 
     // 요양보호사 구인 페이지
     @GetMapping("/findcaregiver")
-    public String matchingFindCaregiver(Model model, Pageable pageable) {
-        Page<CaregiverDetail> caregiversPage = caregiverService.findCaregiversPageable(pageable);
-        model.addAttribute("caregiversPage", caregiversPage);
+    public String matchingFindCaregiver(@RequestParam(required = false) String field, 
+            @RequestParam(required = false) String word, 
+            Pageable pageable, Model model) {
+		Page<CaregiverDetail> caregiversPage;
+		
+		if (field != null && word != null && !field.isEmpty() && !word.isEmpty()) {
+		caregiversPage = caregiverService.searchCaregivers(field, word, pageable);
+		} else {
+		caregiversPage = caregiverService.findCaregiversPageable(pageable);
+		}
+		
+		model.addAttribute("caregiversPage", caregiversPage);
+	    model.addAttribute("field", field);
+	    model.addAttribute("word", word);
+
         return "matching/matchingFindCaregiver";
     }
 
     // 요양보호사 구인 페이지 상세
-    @GetMapping("/detail")
+    @GetMapping("/findcaregiver/detail")
     public String matchingFindCaregiverDetail(@RequestParam Long caregiverId, Model model) {
         CaregiverDetail caregiverDetail = caregiverService.findCaregiverById(caregiverId);
         model.addAttribute("caregiver", caregiverDetail);
@@ -55,10 +68,10 @@ public class MatchingController {
     }
 
     // 요양보호사 구직 페이지 상세
-    @GetMapping("/findjob/{matchingId}")
-    public String matchingFindJobDetail(@PathVariable Long matchingId, Model model) {
-        Matching matching = matchingService.getMatchingById(matchingId);
-        model.addAttribute("matching", matching);
+    @GetMapping("/findjob/detail")
+    public String matchingFindJobDetail(@RequestParam Long matchingId, Model model) {
+        MatchingDetail matchingDetail = matchingService.getMatchingDetailById(matchingId);
+        model.addAttribute("matchingDetail", matchingDetail);
         return "matching/matchingFindJobDetail";
     }
 
@@ -79,8 +92,9 @@ public class MatchingController {
 	     if (bindingResult.hasErrors()) {
 	         return "matching/requestMatching";
 	     }
-	     // 매칭 상태 설정 및 저장
-	     MatchingStatus status = matchingRequestDto.getCaregiverId() != null ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
+	     // 매칭 상태 설정: CaregiverId가 양의 정수인 경우 REQUESTED, 그렇지 않은 경우 POSTED
+	     boolean isCaregiverIdValid = matchingRequestDto.getCaregiverId() != null && matchingRequestDto.getCaregiverId() > 0;
+	     MatchingStatus status = isCaregiverIdValid ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
 	     matchingRequestDto.setStatus(status);
 	     matchingService.createMatching(matchingRequestDto);
 	

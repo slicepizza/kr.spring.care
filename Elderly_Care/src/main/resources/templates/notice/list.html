@@ -30,7 +30,7 @@
         <tr th:each="notice, stat : ${notices.content}">
             <td th:text="${notice.num}"></td> 
             <td><a th:href="@{view/{num}(num=${notice.num})}" th:text="${notice.title}"></a></td>
-            <td th:text="${notice.member.role}"></td>
+            <td th:text="${notice.user.role}"></td>
             <td><span th:text="${#dates.format(notice.regdate, 'yyyy-MM-dd')}"></span></td>
             <td th:text="${notice.hitcount}"></td>
         </tr>

@@ -20,9 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 import kr.spring.care.admin.DTO.MessageResponse;
 import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.service.TotalUserService;
-import kr.spring.care.mockdata.entity.User;
+import kr.spring.care.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RequestMapping("/admin/*")
 @Controller

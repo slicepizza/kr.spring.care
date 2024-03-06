@@ -28,7 +28,7 @@ public class SecurityConfig {
   
   http
         .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/").permitAll()
+        		.requestMatchers("/").permitAll()
                 .requestMatchers("/info").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/matching/findcaregiver", "/matching/findjob").authenticated()

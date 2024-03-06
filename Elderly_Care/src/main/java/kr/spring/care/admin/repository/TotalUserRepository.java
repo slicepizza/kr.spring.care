@@ -14,7 +14,6 @@ public interface TotalUserRepository extends JpaRepository<User, Long>{
 	
 	public Page<User> findByNameContaining(String word, Pageable pageable);
 	public Page<User> findByEmailContaining(String word, Pageable pageable);
-	public Page<User> findByRoleContaining(String word, Pageable pageable);
 	
 	@Query(value = "select count(*) from user where name like CONCAT('%',:word,'%')", nativeQuery = true)
 	public long cntNameSearch(@Param("word") String word);

@@ -100,6 +100,11 @@ public class TotalUserServiceImpl implements TotalUserService{
 		totalUserRepository.save(user);
 	}
 
+	@Override
+	public void deleteUser(long userId) {
+		totalUserRepository.deleteById(userId);
+	}
+
 
 
 	

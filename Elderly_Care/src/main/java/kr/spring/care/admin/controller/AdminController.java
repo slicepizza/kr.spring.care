@@ -127,4 +127,18 @@ public class AdminController {
 		return userId;
 	}
 	
+	// 회원 삭제
+	@DeleteMapping("delUser/{userId}")
+	@ResponseBody
+	public long delUser(@PathVariable("userId") long userId) {
+		System.out.println("아디"+ userId);
+		totalUserService.deleteUser(userId);
+		return userId;
+	}
+	
+	
+	
+	
+	
+	
 }

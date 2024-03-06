@@ -1,6 +1,6 @@
 package kr.spring.care.matching.service;
 
-import java.util.List;
+
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +8,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.repository.MatchingRepository;
+import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.entity.Guardian;
 import kr.spring.care.user.entity.Senior;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user.repository.CaregiverRepository;
+import kr.spring.care.user.repository.GuardianRepository;
 import kr.spring.care.user.repository.SeniorRepository;
 import kr.spring.care.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @Transactional
@@ -29,13 +37,16 @@ import lombok.RequiredArgsConstructor;
 public class MatchingService {
 
     @Autowired
-    private final MatchingRepository matchingRepository;
+    private MatchingRepository matchingRepository;
     
     @Autowired
     private CaregiverRepository caregiverRepository;
     
     @Autowired
     private SeniorRepository seniorRepository;
+
+    @Autowired
+    private GuardianRepository guardianRepository;
     
     @Autowired
     private UserRepository userRepository;
@@ -100,6 +111,70 @@ public class MatchingService {
         }
 
         return new MatchingDetail(caregiverUser, caregiver, seniorUser, senior, matching);
+    }
+
+    public Senior createSenior(MatchingRequestDto matchingRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        User currentUser = userRepository.findByEmail(username);
+        if (currentUser == null) {
+            throw new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + username);
+        }
+
+        currentUser.setRole(Role.SENIOR);
+        userRepository.save(currentUser);
+
+        Senior senior = new Senior();
+        senior.setSeniorName(currentUser.getName());
+        senior.setHealth(matchingRequestDto.getHealth());
+        senior.setRequirements(matchingRequestDto.getRequirements());
+        senior.setHasGuardian(matchingRequestDto.getHasGuardian());
+        senior.setUser(currentUser);
+        senior = seniorRepository.save(senior);
+
+        if (matchingRequestDto.getHasGuardian()) {
+            Guardian guardian = new Guardian();
+            guardian.setGuardianName(matchingRequestDto.getGuardianName());
+            guardian.setUser(currentUser);
+            guardian.setRelationship(matchingRequestDto.getRelationship());
+            guardian.setSenior(senior);
+            guardianRepository.save(guardian);
+        }
+
+        return senior;
+    }
+
+
+    public Guardian createGuardian(MatchingRequestDto matchingRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        User currentUser = userRepository.findByEmail(username);
+        if (currentUser == null) {
+            throw new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + username);
+        }
+
+        currentUser.setRole(Role.GUARDIAN);
+        userRepository.save(currentUser);
+        
+        Guardian guardian = new Guardian();
+        guardian.setGuardianName(currentUser.getName());
+        guardian.setUser(currentUser);
+        guardian.setRelationship(matchingRequestDto.getRelationship());
+
+        Senior senior = new Senior();
+        senior.setSeniorName(matchingRequestDto.getElderlyName());
+        senior.setHealth(matchingRequestDto.getHealth());
+        senior.setRequirements(matchingRequestDto.getRequirements());
+        senior.setHasGuardian(true);
+        senior.setUser(currentUser);
+        senior = seniorRepository.save(senior);
+
+        guardian.setSenior(senior);
+        return guardianRepository.save(guardian);
     }
     
 }

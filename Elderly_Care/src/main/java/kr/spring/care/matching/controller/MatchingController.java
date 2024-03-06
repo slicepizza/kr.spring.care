@@ -1,13 +1,14 @@
 package kr.spring.care.matching.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,15 +20,17 @@ import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
 import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
-import kr.spring.care.user.entity.Caregiver;
+import kr.spring.care.user.constant.Role;
+import kr.spring.care.user.entity.Guardian;
 import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.entity.User;
 
 @Controller
 @RequestMapping("/matching")
 public class MatchingController {
 
     @Autowired
-    MatchingService matchingService;
+    private MatchingService matchingService;
     @Autowired
     private CaregiverService caregiverService;
 
@@ -92,13 +95,25 @@ public class MatchingController {
 	     if (bindingResult.hasErrors()) {
 	         return "matching/requestMatching";
 	     }
-	     // 매칭 상태 설정: CaregiverId가 양의 정수인 경우 REQUESTED, 그렇지 않은 경우 POSTED
-	     boolean isCaregiverIdValid = matchingRequestDto.getCaregiverId() != null && matchingRequestDto.getCaregiverId() > 0;
-	     MatchingStatus status = isCaregiverIdValid ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
-	     matchingRequestDto.setStatus(status);
-	     matchingService.createMatching(matchingRequestDto);
-	
-	     // 처리 후 리디렉션 또는 적절한 페이지로 이동
-	     return "redirect:/";
+
+        // 사용자 역할에 따른 처리
+        String userRole = matchingRequestDto.getUserRole();
+        if (userRole.equals("elderly")) {
+            Senior senior = matchingService.createSenior(matchingRequestDto);
+            matchingRequestDto.setSeniorId(senior.getSeniorId());
+        } else if (userRole.equals("guardian")) {
+            Guardian guardian = matchingService.createGuardian(matchingRequestDto);
+            matchingRequestDto.setSeniorId(guardian.getSenior().getSeniorId());
+        }
+
+        // 매칭 상태 설정: CaregiverId가 양의 정수인 경우 REQUESTED, 그렇지 않은 경우 POSTED
+        boolean isCaregiverIdValid = matchingRequestDto.getCaregiverId() != null && matchingRequestDto.getCaregiverId() > 0;
+        MatchingStatus status = isCaregiverIdValid ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
+        matchingRequestDto.setStatus(status);
+
+        matchingService.createMatching(matchingRequestDto);
+
+        // 처리 후 리디렉션 또는 적절한 페이지로 이동
+        return "redirect:/";
 	 }
 }

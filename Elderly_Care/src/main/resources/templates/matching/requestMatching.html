@@ -57,9 +57,37 @@
 	
 	    <!-- 매칭 요청 폼 -->
 	    <form id="matchingRequestForm" th:action="@{/matching/request}" method="post" class="card custom-card-body mb-4">
-			<!-- Senior 정보 입력 폼 -->
 			<div class="card-body">
-			    <h3 class="card-title">노인 정보 입력</h3>
+			    <h3 class="card-title">사용자 역할 선택</h3>
+			    <div class="col-md-4 form-group mb-3">
+			        <label for="userRole">당신은:</label>
+			        <select class="form-select" id="userRole" name="userRole">
+			            <option value="" disabled selected></option>
+			            <option value="elderly">노인 본인</option>
+			            <option value="guardian">보호자</option>
+			        </select>
+			    </div>
+			</div>
+			<!-- Senior 정보 입력 폼 -->
+			<div class="card-body" id="elderlyInfo" style="display: none;">
+			    <h3 class="card-title">정보 입력</h3>
+		        <div id="guardianFields" style="display:none;">
+		            <div class="col-md-4 form-group mb-3">
+		                <label for="relationship">노인과의 관계:</label>
+		                <input type="text" class="form-control" id="relationship" name="relationship" placeholder="관계 입력">
+		            </div>
+		            <div class="col-md-4 form-group mb-3">
+		                <label for="elderlyName">노인 이름:</label>
+		                <input type="text" class="form-control" id="elderlyName" name="elderlyName" placeholder="노인 이름 입력">
+		            </div>
+		            <div class="col-md-4 form-group mb-3">
+		                <label for="elderlyGender">노인 성별:</label>
+		                <select class="form-select" id="elderlyGender" name="elderlyGender">
+		                    <option value="male">남성</option>
+		                    <option value="female">여성</option>
+		                </select>
+		            </div>
+		        </div>
 		        <div class="col-md-4 form-group mb-3">
 		            <label for="matchingCountry">지역:</label>
 		            <input type="text" class="form-control" id="matchingCountry" name="matchingCountry" placeholder="지역 입력" required>
@@ -72,12 +100,26 @@
 			        <label for="requirements">요구 사항:</label>
                     <textarea id="requirements" name="requirements" class="form-control" rows="3" placeholder="요구 사항 입력" required></textarea>
 			    </div>
-		        <div class="col-md-4 form-group mb-3">
-		            <label for="hasGuardian">보호자 유무:</label>
-		            <select class="form-select" id="hasGuardian" name="hasGuardian">
-		                <option value="true">있음</option>
-		                <option value="false" selected>없음</option>
-		            </select>
+			    <!-- 보호자 유무 선택 (초기에는 숨김) -->
+			    <div id="guardianDetails" style="display: none;">
+			        <div class="col-md-4 form-group mb-3">
+			            <label for="hasGuardian">보호자 유무:</label>
+			            <select class="form-select" id="hasGuardian" name="hasGuardian">
+			                <option value="true">있음</option>
+			                <option value="false" selected>없음</option>
+			            </select>
+			        </div>
+			    </div>
+		        <!-- 보호자 정보 입력 필드 (초기에는 숨김) -->
+		        <div id="guardianInfo" style="display: none;">
+		            <div class="col-md-4 form-group mb-3">
+		                <label for="guardianName">보호자 이름:</label>
+		                <input type="text" class="form-control" id="guardianName" name="guardianName" placeholder="보호자 이름 입력">
+		            </div>
+		            <div class="col-md-4 form-group mb-3">
+		                <label for="relationship">본인과의 관계:</label>
+		                <input type="text" class="form-control" id="relationship" name="relationship" placeholder="관계 입력">
+		            </div>
 		        </div>
 			</div>
     
@@ -132,6 +174,35 @@
 		      </div>
 		    </div>
         </div>
+		<script>
+		    document.getElementById('userRole').addEventListener('change', function () {
+		        var role = this.value;
+		        var elderlyInfo = document.getElementById('elderlyInfo');
+		        var guardianFields = document.getElementById('guardianFields');
+		        var guardianDetails = document.getElementById('guardianDetails');
+		        var guardianInfo = document.getElementById('guardianInfo');
+		        var hasGuardian = document.getElementById('hasGuardian');
+
+		        elderlyInfo.style.display = 'block';
+		
+		        if (role === 'guardian') {
+		            guardianFields.style.display = 'block';
+		            guardianDetails.style.display = 'none';
+		            guardianInfo.style.display = 'none';
+		        } else {
+		            guardianFields.style.display = 'none';
+		            guardianDetails.style.display = 'block';
+		            guardianInfo.style.display = 'none';
+		            hasGuardian.value = 'false';
+		        }
+		    });
+		
+		    document.getElementById('hasGuardian').addEventListener('change', function() {
+		        var guardianInfo = document.getElementById('guardianInfo');
+		        guardianInfo.style.display = this.value === 'true' ? 'block' : 'none';
+		    });
+		</script>
+
 	    </form>
 	
 	</div>

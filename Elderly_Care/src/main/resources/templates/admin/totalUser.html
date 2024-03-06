@@ -186,6 +186,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
 document.getElementById("roleSelectForm").addEventListener("submit", function(e){
 	e.preventDefault();
+	if(!confirm("권한을 변경하시겠습니까?")){
+		return false;
+	}
+	
 	const userId = document.querySelector(".modal-title").getAttribute("data-userid");
 	const selectedRole = document.getElementById("roleSelect").value;
 	console.log(userId);
@@ -216,6 +220,7 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
 		})
 		.then(data => {
             // 성공적인 응답 후 모달 창을 닫고 페이지를 새로 고침합니다.
+            alert("권한이 변경되었습니다.");
             $('#myModal').modal('hide'); // Bootstrap 5의 경우
             location.reload(); // 페이지 새로 고침
         })

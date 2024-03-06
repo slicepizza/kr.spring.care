@@ -31,33 +31,43 @@ public class NoticeController {
 //	@PreAuthorize("isAuthenticated()")
 	//글 작성 폼으로
 	@GetMapping("insert")
-	public String insert() {
+	public String insert(Model model) {
+		model.addAttribute("admin", noticeService.searchAdmin());
+		System.out.println("어드민"+ noticeService.searchAdmin());
 		return "notice/insert";
 	}
 
-	// 글추가
+	// 글추가 후 리스트
 	@GetMapping("/notice/insertlist") // Notice =>title/writer(????)/content
 	public String insert(Notice notice) {
-		log.info("wwwwww");
 		noticeService.insert(notice);
 		return "redirect:list";
 	}
 
 	
-	// 전체보기(페이징+검색) ===> 페이징정보 + 데이터(Notice 정보)
-	@GetMapping("list")
-	public String list(Model model,
-			@PageableDefault(size = 5, sort = "num", direction = Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String field,
-			@RequestParam(required = false, defaultValue = "") String word) {
-		Page<Notice> lists = noticeService.findAll(field, word, pageable);
-		long count = noticeService.count(field, word);
-
-		model.addAttribute("count", count);
-		model.addAttribute("notices", lists);
-
-		return "notice/list";
-	}
+	// 공지사항 페이지(페이징)
+	   @GetMapping("notice/list")
+	   public String userListPaging(Model model,
+	         @PageableDefault(page = 1) Pageable pageable,
+	         @RequestParam(required = false, defaultValue = "")String field,
+	         @RequestParam(required = false, defaultValue = "")String word) {
+	      Page<Notice> alluser = noticeService.userPaging(pageable, field, word);
+//	      long allCount = noticeService.countAllUser();
+//	      long count = noticeService.countUser(field, word);
+	      
+	      int blockLimit = 5;
+	      int startPage = (((int)Math.ceil((double)pageable.getPageNumber() / blockLimit)) -1) * blockLimit +1;   
+	      int endPage = Math.min((startPage + blockLimit -1), alluser.getTotalPages());   
+	      
+	      model.addAttribute("notices", alluser);
+	      model.addAttribute("startPage", startPage);
+	      model.addAttribute("endPage", endPage);
+//	      model.addAttribute("AlluserCnt", allCount);
+//	      model.addAttribute("userCnt", count);
+	      
+	      
+	      return "notice/list";
+	   }
 
 	// 상세보기
 	@GetMapping("view/{num}")
@@ -66,27 +76,31 @@ public class NoticeController {
 		return "notice/view";
 	}
 
-	// 삭제
-	@DeleteMapping("delete/{num}")
-	@ResponseBody
-	public long delete(@PathVariable long num) {
-		noticeService.delete(num);
-		return num;
-	}
-
-	// 수정폼
-	@GetMapping("update/{num}")
-	public String update(@PathVariable long num, Model model) {
-		model.addAttribute("notice", noticeService.view(num));
-		return "notice/update";
-	}
-
-	// 수정
-	@PutMapping("update")
-	@ResponseBody
-	public long update(@RequestBody Notice notice) {
-		noticeService.update(notice);
-		return notice.getNum();
-	}
+	//게시글 삭제
+		@DeleteMapping("delete/{num}")
+		@ResponseBody
+		public long delete(@PathVariable long num) {
+			noticeService.delete(num);
+			log.info("delete");
+			return num;
+		}
+		
+		//게시글 수정 폼
+		@GetMapping("noticeupdate/{num}")
+		public String update(@PathVariable long num, Model model) {
+			model.addAttribute("notice", noticeService.view(num));
+			return "notice/update";
+		}
+		
+		//수정
+		@GetMapping("update")
+		public String update(Notice notice) {
+			System.out.println("업뎃넘"+ notice.getNum());
+			System.out.println("업뎃제목"+ notice.getTitle());
+			System.out.println("업뎃내용"+ notice.getContent());
+			log.info("업뎃"+ notice);
+			noticeService.noticeupdate(notice);
+			return "notice/list";
+		}
 
 }

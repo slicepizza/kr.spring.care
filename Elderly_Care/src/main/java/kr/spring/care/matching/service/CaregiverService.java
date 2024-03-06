@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,22 +28,6 @@ public class CaregiverService {
     public CaregiverService(CaregiverRepository caregiverRepository, UserRepository userRepository) {
         this.caregiverRepository = caregiverRepository;
         this.userRepository = userRepository;
-    }
-
-    public List<CaregiverDetail> findAllCaregivers() {
-        List<User> caregiverUsers = userRepository.findByRole(Role.CAREGIVER);
-        List<CaregiverDetail> caregiverDetails = new ArrayList<>();
-
-        for (User user : caregiverUsers) {
-            Optional<Caregiver> caregiverOpt = caregiverRepository.findById(user.getUserId());
-            if (caregiverOpt.isPresent()) {
-                Caregiver caregiver = caregiverOpt.get();
-                CaregiverDetail detail = new CaregiverDetail(user, caregiver);
-                caregiverDetails.add(detail);
-            }
-        }
-
-        return caregiverDetails;
     }
 
 	public CaregiverDetail findCaregiverById(Long caregiverId) {
@@ -74,6 +59,48 @@ public class CaregiverService {
 	        .collect(Collectors.toList());
 
 	    // Page<CaregiverDetail> 객체를 생성합니다.
-	    return new PageImpl<>(caregiverDetails, pageable, caregiverUsersPage.getTotalElements());
+	    long halfTotalElements = caregiverUsersPage.getTotalElements() / 2;
+	    return new PageImpl<>(caregiverDetails, pageable, halfTotalElements);
 	}
+	
+    // 검색 기능을 위한 메소드 추가
+    public Page<CaregiverDetail> searchCaregivers(String field, String keyword, Pageable pageable) {
+        Page<User> usersPage;
+        Stream<User> userStream;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            // 키워드가 없는 경우에는 단순히 역할에 따라 필터링
+            usersPage = userRepository.findByRole(Role.CAREGIVER, pageable);
+            userStream = usersPage.stream();
+        } else if ("name".equals(field)) {
+            // 이름으로 검색
+            usersPage = userRepository.findByNameContaining(keyword, pageable);
+            userStream = usersPage.stream().filter(user -> user.getRole() == Role.CAREGIVER);
+            // 여기서 필요한 경우 역할로 추가 필터링
+        } else if ("email".equals(field)) {
+            // 이메일로 검색
+            usersPage = userRepository.findByEmailContaining(keyword, pageable);
+            userStream = usersPage.stream().filter(user -> user.getRole() == Role.CAREGIVER);
+            // 여기서 필요한 경우 역할로 추가 필터링
+        } else if ("country".equals(field)) {
+            // 지역으로 검색
+            usersPage = userRepository.findByCountryContaining(keyword, pageable);
+            userStream = usersPage.stream().filter(user -> user.getRole() == Role.CAREGIVER);
+        } else {
+            usersPage = userRepository.findByRole(Role.CAREGIVER, pageable);
+            userStream = usersPage.stream();
+        }
+
+        // User 스트림을 CaregiverDetail 리스트로 변환
+        List<CaregiverDetail> caregiverDetails = userStream
+            .map(user -> {
+                Optional<Caregiver> caregiverOpt = caregiverRepository.findById(user.getUserId());
+                return caregiverOpt.map(caregiver -> new CaregiverDetail(user, caregiver)).orElse(null);
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+
+        return new PageImpl<>(caregiverDetails, pageable, usersPage.getTotalElements());
+    }
+
 }

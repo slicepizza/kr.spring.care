@@ -39,22 +39,23 @@
 	    <a th:href="@{/matching/request}" class="btn btn-primary">매칭 신청</a>
     </div>
     <!-- 페이지네이션 -->
-    <nav>
-        <ul class="pagination d-flex justify-content-center">
-            <li class="page-item" th:classappend="${matchingsPage.first} ? 'disabled'">
-                <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number - 1})}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li th:each="pageNum : ${#numbers.sequence(0, matchingsPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == matchingsPage.number} ? 'active'">
-                <a class="page-link" th:href="@{/matching/findjob(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${matchingsPage.last} ? 'disabled'">
-                <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number + 1})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+<nav>
+    <ul class="pagination d-flex justify-content-center">
+        <li class="page-item" th:classappend="${matchingsPage.first} ? 'disabled'">
+            <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number - 1})}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(0, matchingsPage.totalPages == 0 ? 0 : matchingsPage.totalPages - 1)}" class="page-item" th:classappend="${pageNum == matchingsPage.number} ? 'active'">
+            <a class="page-link" th:href="@{/matching/findjob(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
+        </li>
+        <li class="page-item" th:classappend="${matchingsPage.last} ? 'disabled'">
+            <a class="page-link" th:href="@{/matching/findjob(page=${matchingsPage.number + 1})}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 </div>
 </html>

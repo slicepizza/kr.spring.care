@@ -71,18 +71,6 @@ public class MatchingService {
         existingMatching.setStatus(matching.getStatus());
         return matchingRepository.save(existingMatching);
     }
-
-    // 매칭 취소
-    public void cancelMatching(Long matchingId) {
-        Matching matching = matchingRepository.findById(matchingId)
-                .orElseThrow(() -> new EntityNotFoundException("Matching not found: " + matchingId));
-        matching.setStatus(MatchingStatus.CANCELLED); // 상태를 취소로 변경
-        matchingRepository.save(matching);
-    }
-
-    public List<Matching> findAllMatchings() {
-        return matchingRepository.findAll();
-    }
     
     public Page<Matching> findMatchingsPageable(Pageable pageable) {
         return matchingRepository.findAll(pageable);

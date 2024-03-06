@@ -10,6 +10,13 @@ html {
 	border-color: #a67488; /* 여기에 원하는 테두리 색상을 지정하세요 */
 }
 
+.header .nav-item .nav-link {
+	font-family: "Jua", sans-serif;
+	font-size: 24px;
+	font-weight: 400;
+	font-style: normal;
+	
+}
 
 body {
 	min-height: 100%;

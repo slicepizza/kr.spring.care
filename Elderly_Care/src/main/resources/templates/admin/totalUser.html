@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2" th:text="'회원관리('+ ${userCnt} +'/'+ ${AlluserCnt} +')'">회원관리</h1>
-                <form class="d-flex justify-content-between" action="/admin/totUser" method="get">
+                <form class="d-md-flex gap-2" action="/admin/totUser" method="get">
                 	<select class="form-select form-select" name="field">
                 		<option value="name">이름</option>
                 		<option value="email">이메일</option>
@@ -148,11 +148,14 @@
         </div>
 
 <script>
+// 모달 상세정보
 document.addEventListener("DOMContentLoaded", function(){
 	document.querySelectorAll(".user-detail-btn").forEach(item => {
 		item.addEventListener("click", event => {
 			const button = event.target.closest(".user-detail-btn");
 			const userId = button.getAttribute("data-userid");
+			document.querySelector(".modal-title").setAttribute("data-userid", userId);
+			
 			fetch(`/admin/getUserInfo?userId=${userId}`)
 			.then(response => response.json())
 			.then(data => {
@@ -163,6 +166,15 @@ document.addEventListener("DOMContentLoaded", function(){
 					`<p>UserEmail : ${data.email}</p>`+
 					`<p>Created_at : ${data.createdAt}</p>`+
 					`<p>Role : ${data.role}</p>`;
+					
+				const roleSelect = document.getElementById("roleSelect");
+                for (let i = 0; i < roleSelect.options.length; i++) {
+                    if (roleSelect.options[i].value === data.role) {
+                        roleSelect.options[i].selected = true;
+                        break; // 매칭되는 첫 번째 옵션을 선택하고 반복 종료
+                    }
+                }
+					
 			}).catch(error => {
 				console.error("Error fetching user details:", error);
 			})
@@ -170,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	})
 })
 
+// 모달 권한변경
 document.getElementById("roleSelectForm").addEventListener("submit", function(e){
 	e.preventDefault();
 	const userId = document.querySelector(".modal-title").getAttribute("data-userid");

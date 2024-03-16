@@ -21,36 +21,8 @@
 <!-- fabicon 에러해결용 -->
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <body>
-	<!-- 사이드바 및 메인 콘텐츠 -->
+	<!-- 메인 콘텐츠 -->
 	<div layout:fragment="content" class="content">
-		<div class="sidebar-1">
-			<nav class="navbar-nav bg-gradient-primary sidebar-dark accordion"
-				id="accordionSidebar1">
-				<div class="noticeboard-section">
-					<h2>
-						<a href="#noticeboard">공지사항</a>
-					</h2>
-					<ul>
-						<li><a href="#noticeboard1">공지사항 1</a></li>
-						<li><a href="#noticeboard2">공지사항 2</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		<div class="sidebar-2">
-			<nav class="navbar-nav bg-gradient-primary sidebar-dark accordion"
-				id="accordionSidebar2">
-				<div class="freeboard-section">
-					<h2>
-						<a href="#freeboard">자유게시판</a>
-					</h2>
-					<ul>
-						<li><a href="#freeboard1">게시글 1</a></li>
-						<li><a href="#freeboard2">게시글 2</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
 		<!-- 메인 콘텐츠 : 비주얼 이미지 슬라이드 -->
 		<div id="carouselExampleIndicators" class="carousel slide"
 			data-bs-ride="carousel" data-bs-interval="3000">
@@ -64,7 +36,7 @@
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item active" >
+				<div class="carousel-item active">
 					<img src="/img/care1.png" class="d-block w-100" alt="...">
 				</div>
 				<div class="carousel-item">
@@ -85,7 +57,22 @@
 				<span class="visually-hidden">다음</span>
 			</button>
 		</div>
-			<section class="care-section bg-light" id="services">
+		<!-- 공지사항, 자유게시판 -->
+		<div class="main-board">
+			<h1>
+				<a href="/notice/list">공지사항</a>
+			</h1>
+			<hr>
+			<ul class="board-list">
+				<!-- NoticeController에서 전달된 공지사항 목록을 출력합니다. -->
+				<li th:each="notice : ${notices}" class="board-item"><a
+					th:href="@{'/notice/view/' + ${notice.num}}" class="board-link">
+						<span th:text="${notice.title}"></span> - <span
+						th:text="${notice.content}"></span>
+				</a></li>
+			</ul>
+		</div>
+		<section class="care-section bg-light" id="services">
 			<div class="container">
 				<div class="text-center">
 					<h2 class="section-heading text-uppercase">요양보호사</h2>

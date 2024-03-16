@@ -6,6 +6,7 @@ import lombok.Setter;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import kr.spring.care.matching.constant.MatchingStatus;
 
 import java.time.LocalDate;
@@ -36,9 +37,18 @@ public class MatchingRequestDto {
     private LocalTime endTime;
 
     private MatchingStatus status;
-
-    // 노인 관련 추가 필드
-    private String seniorHealth;
-    private String seniorRequirements;
-    private Boolean seniorHasGuardian;
+    
+    private String userRole;
+    
+    // Senior 관련 필드
+    private String health;
+    private String seniorName;
+    private String requirements;
+    private Boolean hasGuardian;
+    
+    // Guardian 관련 필드
+    private String guardianName;
+    private String relationship;
+    private String elderlyName;
+    private String elderlyGender;
 }

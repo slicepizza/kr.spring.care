@@ -9,9 +9,9 @@
     <table class="table">
         <thead>
             <tr>
+                <th>지역</th>
                 <th>구직기간</th>
                 <th>업무시간</th>
-                <th>지역</th>
                 <th>상태</th>
                 <th>상세정보</th>
                 <th sec:authorize="hasRole('CAREGIVER')">매칭</th>
@@ -19,9 +19,9 @@
         </thead>
         <tbody>
             <tr th:each="matching : ${matchingsPage}">
+	            <td th:text="${matching.matchingCountry}">지역</td>
                 <td><span th:text="${matching.startDate} + ' ~ '"></span><span th:text="${matching.endDate}"></span></td>
                 <td><span th:text="${matching.startTime} + ' ~ '"></span><span th:text="${matching.endTime}"></span></td>
-	            <td th:text="${matching.matchingCountry}">지역</td>
                 <td th:text="${matching.status.toString() == 'POSTED' ? '구직 중' : 
                               matching.status.toString() == 'REQUESTED' ? '요청 중' : 
                               matching.status.toString() == 'IN_PROGRESS' ? '진행 중' : 

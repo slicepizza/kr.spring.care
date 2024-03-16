@@ -1,5 +1,6 @@
 package kr.spring.care.user.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,8 @@ public class Senior {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seniorId;
+
+    private String seniorName;
     private String health;
     private String requirements;
     private Boolean hasGuardian;
@@ -29,6 +32,6 @@ public class Senior {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "senior")
+    @OneToOne(mappedBy = "senior", cascade = CascadeType.REMOVE)
     private Guardian guardian;
 }

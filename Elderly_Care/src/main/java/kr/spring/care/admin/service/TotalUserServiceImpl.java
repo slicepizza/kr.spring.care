@@ -97,6 +97,12 @@ public class TotalUserServiceImpl implements TotalUserService{
 		User user = optionalUser.get();
 		user.setRole(Role.valueOf(role));
 		totalUserRepository.save(user);
+
+	}
+
+	@Override
+	public void deleteUser(long userId) {
+		totalUserRepository.deleteById(userId);
 	}
 
 

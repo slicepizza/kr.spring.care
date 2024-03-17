@@ -55,7 +55,8 @@ public class AdminController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("AlluserCnt", allCount);
 		model.addAttribute("userCnt", count);
-		
+		model.addAttribute("field", field);
+	    model.addAttribute("word", word);
 		
 		return "admin/totalUser";
 	}

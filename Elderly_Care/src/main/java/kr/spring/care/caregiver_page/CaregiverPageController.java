@@ -1,4 +1,4 @@
-package kr.spring.care.caregiver_page.controller;
+package kr.spring.care.caregiver_page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -78,77 +78,77 @@
                 </table>
             </div>
             
-            <!-- 페이징 -->
-            <div class="container mt-3">
-            <ul class="pagination justify-content-center">
-			    <li class="page-item">
-			    	<a 
-			    	th:href="@{/admin/totUser(page=1)}">
-			    	<span aria-hidden="true">&laquo;&nbsp;</span>
-			    	</a>
-			    </li>
-			    <li class="page-item">
-				    <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number})}">
-				    이전&nbsp;
-				    </a>
-			    </li>
-				    <li class="page-item">
-				    	<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-		            	<span th:if="${page == allUser.number + 1}" th:text="${page}"></span>
-		            	<span th:unless="${page == allUser.number + 1}">
-		            		<a th:href="@{/admin/totUser(page=${page})}" th:text="${page}"></a>
-		            	</span>
-		            </span>
-				    </li>
-			    <li class="page-item">
-				    <a  th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2})}">
-				    &nbsp;다음</a>
-			    </li>
-			    <li class="page-item">
-				    <a  th:href="@{/admin/totUser(page=${allUser.totalPages})}">
-				    &nbsp;&raquo;</a>
-			    </li>
-		    </ul>
-		    </div>
+     <!-- 페이징 -->
+     <div class="container mt-3">
+	    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
+            <button class="btn btn-outline-primary" th:disabled="${allUser.first}"
+                th:onclick="|location.href='@{/admin/totUser(page=1, field=${field}, word=${word})}'|">&laquo;</button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
+            <button class="btn btn-outline-primary" th:disabled="${allUser.first}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.number}, field=${field}, word=${word})}'|">이전</button>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <button class="btn btn-outline-primary" 
+                th:classappend="${page == allUser.number + 1} ? 'active' : ''" 
+                th:onclick="|location.href='@{/admin/totUser(page=${page}, field=${field}, word=${word})}'|" 
+                th:text="${page}">
+            </button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
+            <button class="btn btn-outline-primary" th:disabled="${allUser.last}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.number + 2}, field=${field}, word=${word})}'|">다음</button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
+            <button class="btn btn-outline-primary" th:disabled="${allUser.last}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.totalPages}, field=${field}, word=${word})}'|">&raquo;</button>
+        </li>
+    </ul>
+	</div>
             
-            <!-- 모달 -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-              aria-labelledby="myModalLabel" aria-hidden="true">
-            	<div class="modal-dialog" role="document">
-            		<div class="modal-content">
-            			<!-- 모달 header -->
-            			<div class="modal-header">
-            				<h5 class="modal-title" id="myModalLabel" data-userid="${user.userId}">상세정보</h5>
-            				<button type="button" class="btn-close" data-bs-dismiss="modal"
-            				  aria-label="Close"></button>
-            			</div>
-            			
-            			<!-- 모달 body -->
-            			<div class="modal-body">
-	                       
-            			</div>
-            			<!-- 모달 footer -->
-            			<div class="modal-footer">
-            				<form id="roleSelectForm">
-            					<label for="roleSelect">Role:</label>
-            					<select id="roleSelect" name="role">
-            						<option value="USER">USER</option>
-            						<option value="CAREGIVER">CAREGIVER</option>
-            						<option value="SENIOR">SENIOR</option>
-            						<option value="GUARDIAN">GUARDIAN</option>
-            					</select>
-            					<button type="submit" class="btn btn-primary">권한변경</button>
-            				</form>
-            				
-            				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-            			</div>
-            		</div>
-            	</div>  
-            </div>
-            			
-            		</div>
-            	</div>  
-        </div>
+       <!-- 모달 -->
+       <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+       	<div class="modal-dialog" role="document">
+       		<div class="modal-content">
+       			<!-- 모달 header -->
+       			<div class="modal-header">
+       				<h5 class="modal-title" id="myModalLabel" data-userid="${user.userId}">상세정보</h5>
+       				<button type="button" class="btn-close" data-bs-dismiss="modal"
+       				  aria-label="Close"></button>
+       			</div>
+       			
+       			<!-- 모달 body -->
+       			<div class="modal-body">
+                   
+       			</div>
+       			<!-- 모달 footer -->
+       			<div class="modal-footer">
+       				<form id="roleSelectForm">
+       					<label for="roleSelect">Role:</label>
+       					<select id="roleSelect" name="role">
+       						<option value="USER">USER</option>
+       						<option value="CAREGIVER">CAREGIVER</option>
+       						<option value="SENIOR">SENIOR</option>
+       						<option value="GUARDIAN">GUARDIAN</option>
+       					</select>
+       					<button type="submit" class="btn btn-primary">권한변경</button>
+       				</form>
+       				
+       				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+       			</div>
+       		</div>
+       	</div>  
+       </div>
+    			
+		</div>
+	</div>  
+</div>
+
+<script th:inline="javascript">
+
+</script>
 
 <script>
 // 모달 상세정보

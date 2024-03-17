@@ -33,7 +33,7 @@
           
           <!-- 노인/보호자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('USER')">
-            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
+            <a class="nav-link" th:href="@{/userPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">마이페이지</a>
           </li>
            <li class="nav-item" sec:authorize="hasRole('SENIOR')">
 

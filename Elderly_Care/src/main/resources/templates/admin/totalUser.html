@@ -82,30 +82,30 @@
             <div class="container mt-3">
             <ul class="pagination justify-content-center">
 			    <li class="page-item">
-			    	<a 
-			    	th:href="@{/admin/totUser(page=1)}">
+			    	<a th:href="@{/admin/totUser(page=1, field=${field}, word=${word})}">
 			    	<span aria-hidden="true">&laquo;&nbsp;</span>
 			    	</a>
 			    </li>
 			    <li class="page-item">
-				    <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number})}">
+				    <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number-1}, field=${field}, word=${word})}">
 				    이전&nbsp;
 				    </a>
 			    </li>
 				    <li class="page-item">
 				    	<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-		            	<span th:if="${page == allUser.number + 1}" th:text="${page}"></span>
+		            	<span th:if="${page == allUser.number + 1}" th:text="${page}">
+		            	</span>
 		            	<span th:unless="${page == allUser.number + 1}">
-		            		<a th:href="@{/admin/totUser(page=${page})}" th:text="${page}"></a>
+		            		<a th:href="@{/admin/totUser(page=${page}, field=${field}, word=${word})}" th:text="${page}"></a>
 		            	</span>
 		            </span>
 				    </li>
 			    <li class="page-item">
-				    <a  th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2})}">
+				    <a th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2}, field=${field}, word=${word})}">
 				    &nbsp;다음</a>
 			    </li>
 			    <li class="page-item">
-				    <a  th:href="@{/admin/totUser(page=${allUser.totalPages})}">
+				    <a th:href="@{/admin/totUser(page=${allUser.totalPages}, field=${field}, word=${word})}">
 				    &nbsp;&raquo;</a>
 			    </li>
 		    </ul>

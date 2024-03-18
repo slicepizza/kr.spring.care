@@ -42,12 +42,13 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
       );
   
-  http
-        .exceptionHandling(exceptionHandling -> exceptionHandling
-            .authenticationEntryPoint(new CustomEntryPoint())
-        );
-
-  return http.build();
+	  http
+	        .exceptionHandling(exceptionHandling -> exceptionHandling
+	            .authenticationEntryPoint(new CustomEntryPoint())
+	        );
+	
+	
+	  return http.build();
 }
 
     @Bean

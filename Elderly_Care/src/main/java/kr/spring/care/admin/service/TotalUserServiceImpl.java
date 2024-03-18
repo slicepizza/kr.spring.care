@@ -37,7 +37,6 @@ public class TotalUserServiceImpl implements TotalUserService{
 		}
 		Page<UserDTO> UserDTOs = allUserPages.map(
 				allUserPage -> new UserDTO(allUserPage));
-		System.out.println("유저dto"+ UserDTOs);
 		return UserDTOs;
 	}
 	
@@ -98,6 +97,7 @@ public class TotalUserServiceImpl implements TotalUserService{
 		User user = optionalUser.get();
 		user.setRole(Role.valueOf(role));
 		totalUserRepository.save(user);
+
 	}
 
 	@Override

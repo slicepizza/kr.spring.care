@@ -71,6 +71,18 @@
 						th:text="${notice.content}"></span>
 				</a></li>
 			</ul>
+			<h1>
+				<a href="/board/boardlist">자유게시판</a>
+			</h1>
+			<hr>
+			<ul class="board-list">
+				<!-- NoticeController에서 전달된 공지사항 목록을 출력합니다. -->
+				<li th:each="board : ${board}" class="board-item"><a
+					th:href="@{'/board/view/' + ${board.num}}" class="board-link">
+						<span th:text="${board.title}"></span> - <span
+						th:text="${board.content}"></span>
+				</a></li>
+			</ul>
 		</div>
 		<section class="care-section bg-light" id="services">
 			<div class="container">

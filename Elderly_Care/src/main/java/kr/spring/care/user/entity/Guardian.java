@@ -1,6 +1,7 @@
 package kr.spring.care.user.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,10 +25,12 @@ public class Guardian {
 
     private String guardianName;
     
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "senior_id")
     private Senior senior;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

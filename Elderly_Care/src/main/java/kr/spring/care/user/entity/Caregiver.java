@@ -1,5 +1,7 @@
 package kr.spring.care.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Caregiver {
     private int experienceYears;
     private String availableHours;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;

@@ -27,6 +27,8 @@ public interface TotalUserService {
 	// 권한 변경(모달)
 	public void updateRole(long userId, String role);
 	
-
+	// 유저 삭제
 	public void deleteUser(long userId);
+	
+
 }

@@ -2,10 +2,7 @@ package kr.spring.care.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-<<<<<<< HEAD
-import jakarta.persistence.CascadeType;
-=======
->>>>>>> refs/remotes/origin/main
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

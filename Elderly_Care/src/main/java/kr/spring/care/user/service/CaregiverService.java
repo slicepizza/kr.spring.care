@@ -1,4 +1,4 @@
-package kr.spring.care.matching.service;
+package kr.spring.care.user.service;
 
 import java.util.ArrayList;
 import java.util.List;

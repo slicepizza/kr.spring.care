@@ -35,6 +35,7 @@ public class Senior {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "senior", cascade = CascadeType.REMOVE)
     private Guardian guardian;
 }

@@ -18,10 +18,10 @@ import kr.spring.care.matching.dto.CaregiverDetail;
 import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
-import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
 import kr.spring.care.user.entity.Guardian;
 import kr.spring.care.user.entity.Senior;
+import kr.spring.care.user.service.CaregiverService;
 
 @RestController
 @RequestMapping("/m/matching")

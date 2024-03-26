@@ -56,8 +56,8 @@
 	                    <td th:text="${caregiver.caregiver.experience}">경력</td>
 	                    <td th:text="${caregiver.caregiver.certification}">자격증</td>
 	                    <td th:text="${caregiver.caregiver.availableHours}">이용 가능 시간</td>
-						<td><a th:href="@{/matching/findcaregiver/detail(caregiverId=${caregiver.user.userId})}" class="btn btn-info">상세 보기</a></td>
-	                    <td><a th:href="@{/matching/request(caregiverId=${caregiver.user.userId})}" class="btn btn-primary">요청</a></td>
+						<td><a th:href="@{/matching/findcaregiver/detail(caregiverId=${caregiver.caregiver.caregiverId})}" class="btn btn-info">상세 보기</a></td>
+	                    <td><a th:href="@{/matching/request(caregiverId=${caregiver.caregiver.caregiverId})}" class="btn btn-primary">요청</a></td>
 	                </tr>
 	            </tbody>
 	        </table>

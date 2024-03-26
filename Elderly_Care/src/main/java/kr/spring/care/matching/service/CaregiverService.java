@@ -46,21 +46,20 @@ public class CaregiverService {
     }
 
 	public Page<CaregiverDetail> findCaregiversPageable(Pageable pageable) {
-	    // 사용자 리포지토리를 사용하여 요양보호사 역할을 가진 사용자의 페이지를 가져옵니다.
-	    Page<User> caregiverUsersPage = userRepository.findByRole(Role.CAREGIVER, pageable);
+	    // 요양보호사 리포지토리를 사용하여 요양보호사 페이지를 가져옵니다.
+	    Page<Caregiver> caregiversPage = caregiverRepository.findAll(pageable);
 
-	    // 각 User 객체를 CaregiverDetail 객체로 변환합니다.
-	    List<CaregiverDetail> caregiverDetails = caregiverUsersPage.stream()
-	        .map(user -> {
-	            Optional<Caregiver> caregiverOpt = caregiverRepository.findById(user.getUserId());
-	            return caregiverOpt.map(caregiver -> new CaregiverDetail(user, caregiver)).orElse(null);
+	    // 각 Caregiver 객체를 CaregiverDetail 객체로 변환합니다.
+	    List<CaregiverDetail> caregiverDetails = caregiversPage.stream()
+	        .map(caregiver -> {
+	            User user = caregiver.getUser();
+	            return user != null ? new CaregiverDetail(user, caregiver) : null;
 	        })
 	        .filter(Objects::nonNull)
 	        .collect(Collectors.toList());
 
 	    // Page<CaregiverDetail> 객체를 생성합니다.
-	    long halfTotalElements = caregiverUsersPage.getTotalElements() / 2;
-	    return new PageImpl<>(caregiverDetails, pageable, halfTotalElements);
+	    return new PageImpl<>(caregiverDetails, pageable, caregiversPage.getTotalElements());
 	}
 	
     // 검색 기능을 위한 메소드 추가

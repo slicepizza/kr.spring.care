@@ -4,8 +4,8 @@ package kr.spring.care.admin.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 
 public interface TotalUserService {
 	

@@ -1,11 +1,10 @@
-package kr.spring.care.user_page.service;
+package kr.spring.care.senior_page.service;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
 
-public interface UserPageService {
+public interface SeniorPageService {
 
 	public User getUser(String email);
 	
@@ -15,8 +14,6 @@ public interface UserPageService {
 	
 	public void editPw(User user);
 	
-	//
 	
-	public void regUSer(UserDTO user);
 	
 }

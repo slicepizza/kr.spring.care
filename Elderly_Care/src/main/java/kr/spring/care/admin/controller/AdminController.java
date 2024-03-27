@@ -20,10 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import kr.spring.care.admin.DTO.CaregiverDTO;
 import kr.spring.care.admin.DTO.MessageResponse;
-import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.service.CareBoardService;
 import kr.spring.care.admin.service.TotalUserService;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/admin/*")

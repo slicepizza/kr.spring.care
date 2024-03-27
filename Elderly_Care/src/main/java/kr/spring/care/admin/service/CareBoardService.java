@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import kr.spring.care.admin.DTO.CaregiverDTO;
-import kr.spring.care.admin.DTO.UserDTO;
+import kr.spring.care.user_page.dto.UserDTO;
 
 
 public interface CareBoardService {

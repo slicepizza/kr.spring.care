@@ -11,10 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import kr.spring.care.admin.DTO.CaregiverDTO;
-import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.repository.CareBoardRepository;
 import kr.spring.care.user.entity.Caregiver;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @Service

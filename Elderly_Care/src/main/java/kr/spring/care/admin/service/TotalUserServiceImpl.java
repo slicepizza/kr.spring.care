@@ -11,10 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.repository.TotalUserRepository;
 import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @Service

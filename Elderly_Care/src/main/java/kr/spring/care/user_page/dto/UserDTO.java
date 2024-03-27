@@ -1,12 +1,14 @@
-package kr.spring.care.admin.DTO;
+package kr.spring.care.user_page.dto;
 
 import java.time.LocalDateTime;
 
 import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserDTO {
 
 	private Long userId;

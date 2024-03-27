@@ -1,4 +1,4 @@
-package kr.spring.care.user_page.service;
+package kr.spring.care.senior_page.service;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserPageServiceImpl implements UserPageService{
+public class SeniorPageServiceImpl implements SeniorPageService{
 
 	private final UserPageRepository userPageRepository;
 	private final PasswordEncoder passwordEncoder; 
@@ -50,12 +50,6 @@ public class UserPageServiceImpl implements UserPageService{
 		userPageRepository.save(bfUser);
 	}
 
-	@Override
-	public void regUSer(UserDTO user) {
-		User u = new User();
-		u.setEmail(user.getEmail());
-		u.setName(user.getName());
-		userPageRepository.save(u);
-	}
+	
 
 }

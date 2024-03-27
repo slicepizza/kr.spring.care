@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import kr.spring.care.user.dto.UserFormDto;
@@ -26,7 +27,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        // "user/userLogin"은 로그인 페이지의 뷰 파일 경로입니다.
         return "user/userLogin";
     }
     
@@ -34,13 +34,23 @@ public class UserController {
 	public String joinCheck() {
 		return "user/userJoinCheck";
 	}
+    @GetMapping("/joinChoose")
+	public String joinChoose() {
+		return "user/userChoose";
+	}
 
+    // @GetMapping("/register")
+    // public String register(Model model) {
+    //     model.addAttribute("userFormDto", new UserFormDto());
+    //     return "user/userForm";
+    // }
     @GetMapping("/register")
-    public String userForm(Model model) {
+    public String userForm(Model model, @RequestParam(required = false) String userType) {
         model.addAttribute("userFormDto", new UserFormDto());
+        model.addAttribute("userType", userType);
         return "user/userForm";
     }
-	
+    
 	@GetMapping("/login/requireLogin")
 	public String requireLogin(Model model) {
 		model.addAttribute("loginErrorMsg", "로그인이 필요한 기능입니다");
@@ -68,7 +78,6 @@ public class UserController {
         if (result.hasErrors()) {
             return "user/userForm";
         }
-
         try {
             User user = User.createUser(userFormDto, passwordEncoder);
             userService.saveUser(user);

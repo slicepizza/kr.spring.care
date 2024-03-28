@@ -69,12 +69,18 @@
 
 // 나의 정보 수정
 $(document).on("click", "#edit", function(){
+	console.log("컨펌 전");
+	if(!confirm("회원 정보를 변경하시겠습니까?")){
+		return false
+	}
+	console.log("컨펌 후");
 	var loginId = /*[[${loginId}]]*/ 'defaultUserId'
 	var emailValue = /*[[${myInfo.email}]]*/ 'defaultEmail';
-	var genderValue = $("input[name='gender']:checked").val(); 
+	var genderValue = $("input[name='gender']:checked").val();
     var nameValue = $("input[name='name']").val(); 
     var addressValue = $("input[name='address']").val(); 
     var phoneNumberValue = $("input[name='phoneNumber']").val();
+    
     
 	var editData = {
 		"userId": loginId,

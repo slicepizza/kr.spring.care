@@ -89,6 +89,10 @@
 
 // 나의 정보 수정
 $(document).on("click", "#edit", function(){
+	if(!confirm("회원 정보를 변경하시겠습니까?")){
+		return false
+	}
+	// 기본사항
 	var loginId = /*[[${loginId}]]*/ 'defaultUserId'
 	var emailValue = /*[[${myInfo.email}]]*/ 'defaultEmail';
 	var genderValue = $("input[name='gender']:checked").val(); 
@@ -96,13 +100,18 @@ $(document).on("click", "#edit", function(){
     var addressValue = $("input[name='address']").val(); 
     var phoneNumberValue = $("input[name='phoneNumber']").val();
     
-	var editData = {
+    // 특정사항
+    var hasGuarValue = $("input[name='hasGuardian']:checked").val(); 
+	console.log(hasGuarValue);
+    
+    var editData = {
 		"userId": loginId,
 		"email": emailValue,
 		"gender": genderValue,
 		"name": nameValue,
 		"address": addressValue,
-		"phoneNumber": phoneNumberValue 
+		"phoneNumber": phoneNumberValue,
+		"hasGuardian": hasGuarValue
 	}
 	var csrfToken = $("meta[name='_csrf']").attr("content");
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");

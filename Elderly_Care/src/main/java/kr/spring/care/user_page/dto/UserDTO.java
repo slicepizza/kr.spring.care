@@ -19,8 +19,11 @@ public class UserDTO {
 	private String gender;
 	private Role role;
 	private String country;
+	private Boolean hasGuardian;
+	private String image;
 	
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	
 	public UserDTO(User entity) {
 		this.userId = entity.getUserId();

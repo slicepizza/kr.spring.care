@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class GlobalControllerAdvice {
 
 	private final UserPageService userPageService;
-	private final SeniorPageRepository seniorPageRepository;
 	
 	@ModelAttribute("loginId")
 	public Long userId() {

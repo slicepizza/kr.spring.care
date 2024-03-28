@@ -24,16 +24,25 @@ public class SeniorPageServiceImpl implements SeniorPageService{
 	
 	@Override
 	public UserDTO myInfo(long userId) {
+		System.out.println("사용자아뒤"+ userId);
 		Optional<User> userOptional = userPageRepository.findById(userId);
 		return userOptional.map(UserDTO::new).orElse(null); 
 	}
 	
 	@Override
 	public SeniorDTO seniorInfo(long userId) {
-		Optional<Senior> seniorOptional = seniorPageRepository.findById(userId);
-		SeniorDTO s = seniorOptional.map(SeniorDTO::new).orElse(null);
-		System.out.println("시니어 "+ s.getHealth() + s.getSeniorName() + s.getRequirements() + s.getHasGuardian());
-		return seniorOptional.map(SeniorDTO::new).orElse(null);
+		 Senior senior = seniorPageRepository.findByUserId(userId);
+		    if (senior != null) {
+		        // Senior 객체가 존재하는 경우, SeniorDTO 객체 생성
+		        SeniorDTO s = new SeniorDTO(senior);
+		        // 로그 출력
+		        System.out.println("시니어 " + s.getUser().getUserId() + s.getHealth() + s.getSeniorName() + s.getRequirements() + s.getHasGuardian());
+		        // 생성된 SeniorDTO 객체 반환
+		        return s;
+		    } else {
+		        // Senior 객체가 존재하지 않는 경우, null 반환
+		        return null;
+		    }
 	}
 
 

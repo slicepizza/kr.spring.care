@@ -82,30 +82,30 @@
      <div class="container mt-3">
 	    <ul class="pagination justify-content-center">
         <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
-            <button class="btn btn-outline-primary" th:disabled="${allUser.first}"
+            <button class="pagination-btn" th:disabled="${allUser.first}"
                 th:onclick="|location.href='@{/admin/totUser(page=1, field=${field}, word=${word})}'|">&laquo;</button>
         </li>
         <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
-            <button class="btn btn-outline-primary" th:disabled="${allUser.first}"
+            <button class="pagination-btn" th:disabled="${allUser.first}"
                 th:onclick="|location.href='@{/admin/totUser(page=${allUser.number}, field=${field}, word=${word})}'|">이전</button>
         </li>
         <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <button class="btn btn-outline-primary" 
+            <button class="pagination-btn" 
                 th:classappend="${page == allUser.number + 1} ? 'active' : ''" 
                 th:onclick="|location.href='@{/admin/totUser(page=${page}, field=${field}, word=${word})}'|" 
                 th:text="${page}">
             </button>
         </li>
         <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
-            <button class="btn btn-outline-primary" th:disabled="${allUser.last}"
+            <button class="pagination-btn" th:disabled="${allUser.last}"
                 th:onclick="|location.href='@{/admin/totUser(page=${allUser.number + 2}, field=${field}, word=${word})}'|">다음</button>
         </li>
         <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
-            <button class="btn btn-outline-primary" th:disabled="${allUser.last}"
+            <button class="pagination-btn" th:disabled="${allUser.last}"
                 th:onclick="|location.href='@{/admin/totUser(page=${allUser.totalPages}, field=${field}, word=${word})}'|">&raquo;</button>
         </li>
-    </ul>
-	</div>
+	    </ul>
+	  </div>
             
        <!-- 모달 -->
        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -146,10 +146,6 @@
 	</div>  
 </div>
 
-<script th:inline="javascript">
-
-</script>
-
 <script>
 // 모달 상세정보
 document.addEventListener("DOMContentLoaded", function(){
@@ -157,17 +153,25 @@ document.addEventListener("DOMContentLoaded", function(){
 		item.addEventListener("click", event => {
 			const button = event.target.closest(".user-detail-btn");
 			const userId = button.getAttribute("data-userid");
-			document.querySelector(".modal-title").setAttribute("data-userid", userId);
+			/* document.querySelector(".modal-title").setAttribute("data-userid", userId); */
 			
 			fetch(`/admin/getUserInfo?userId=${userId}`)
 			.then(response => response.json())
 			.then(data => {
+				const date = new Date(data.createdAt);
+
+				const formattedDate = date.getFullYear() + '-' +
+				                      ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+				                      ('0' + date.getDate()).slice(-2) + ' ' +
+				                      ('0' + date.getHours()).slice(-2) + ':' +
+				                      ('0' + date.getMinutes()).slice(-2);
+				                      
 				document.querySelector(".modal-title").textContent = `${data.name} 님의 상세정보`;			
 				document.querySelector(".modal-body").innerHTML = 
 					`<p>ID : ${data.userId}</p>`+
 					`<p>Name : ${data.name}</p>`+
 					`<p>UserEmail : ${data.email}</p>`+
-					`<p>Created_at : ${data.createdAt}</p>`+
+					`<p>Created_at : ${formattedDate}</p>`+
 					`<p>Role : ${data.role}</p>`;
 					
 				const roleSelect = document.getElementById("roleSelect");
@@ -186,79 +190,6 @@ document.addEventListener("DOMContentLoaded", function(){
 })
 
 // 모달 권한변경
-document.getElementById("roleSelectForm").addEventListener("submit", function(e){
-	e.preventDefault();
-	const userId = document.querySelector(".modal-title").getAttribute("data-userid");
-	const selectedRole = document.getElementById("roleSelect").value;
-	console.log(userId);
-	
-	if (userId !== null && userId !== undefined) {
-		fetch(`/admin/updateRole?userId=${userId}&role=${selectedRole}`, {
-			method: "post",
-			headers:{
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				userId: userId,
-				role: selectedRole
-			})
-		})
-		.then(response => {
-			if(!response.ok){
-				throw new Error("Network response was not ok");
-			}
-			return response.json();
-		})
-		.then(data => {
-			console.log(data);
-		})
-		.catch(error => {
-			console.error("Failed to update role:", error);
-		});
-	} else {
-		console.error("User ID is null or undefined");
-	}
-})
-
-		
-		
-		
-		
-
-
-document.addEventListener("DOMContentLoaded", function(){
-	document.querySelectorAll(".user-detail-btn").forEach(item => {
-		item.addEventListener("click", event => {
-			const button = event.target.closest(".user-detail-btn");
-			const userId = button.getAttribute("data-userid");
-			
-			document.querySelector(".modal-title").setAttribute("data-userid", userId);
-			
-			fetch(`/admin/getUserInfo?userId=${userId}`)
-			.then(response => response.json())
-			.then(data => {
-				document.querySelector(".modal-title").textContent = `${data.name} 님의 상세정보`;			
-				document.querySelector(".modal-body").innerHTML = 
-					`<p>ID : ${data.userId}</p>`+
-					`<p>Name : ${data.name}</p>`+
-					`<p>UserEmail : ${data.email}</p>`+
-					`<p>Created_at : ${data.createdAt}</p>`+
-					`<p>Role : ${data.role}</p>`;
-					
-					const roleSelect = document.getElementById("roleSelect");
-	                for (let i = 0; i < roleSelect.options.length; i++) {
-	                    if (roleSelect.options[i].value === data.role) {
-	                        roleSelect.options[i].selected = true;
-	                        break; // 매칭되는 첫 번째 옵션을 선택하고 반복 종료
-	                    }
-	                }
-			}).catch(error => {
-				console.error("Error fetching user details:", error);
-			})
-		})
-	})
-})
-
 document.getElementById("roleSelectForm").addEventListener("submit", function(e){
 	e.preventDefault();
 	if(!confirm("권한을 변경하시겠습니까?")){
@@ -313,7 +244,7 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
 	/* 회원 삭제 -> 참조 키에서 restrict 를 cascade 로 변경해야 삭제 가능*/
 	$(document).on("click", "#dropBtn", function(){
 		const userId = $(this).data("id");
-		alert(userId +"번을 삭제하시겠습니까?");
+		alert(userId +"번을 추방하시겠습니까?");
 		
 		var csrfToken = $("meta[name='_csrf']").attr("content");
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -326,11 +257,11 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
             },
 		})
 		.done(function(resp){
-			alert(resp +"번 삭제 성공");
+			alert(resp +"번 추방 성공");
 			location.href = "/admin/totUser";
 		})
 		.fail(function(e){
-			alert("실패");
+			alert("추방 실패");
 		})
 	})
 

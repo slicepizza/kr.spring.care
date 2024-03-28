@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/userLayout}">
+	layout:decorate="~{layouts/userElseLayout}">
 
 <div layout:fragment="content" class="content">
 	<div class="container py-5">
@@ -22,6 +22,15 @@
 					        <input type="radio" id="male" name="gender" th:value="Male" th:text="남성" th:checked="${myInfo.gender == 'Male'}" >
 					        
 					        <input type="radio" id="female" name="gender" th:value="Female" th:text="여성" th:checked="${myInfo.gender == 'Female'}" >
+					    </div>
+					</div>
+					<div class="input-group">
+					    <label class="input-label" for="hasGuardian"></label>
+					    <div class="radio-group">
+					    	<span>*보호자 유무 </span>
+					        <input type="radio"  name="hasGuardian" th:value="true" th:text="있음" th:checked="${seniorInfo == 'true'}" >
+					        
+					        <input type="radio"  name="hasGuardian" th:value="false" th:text="없음" th:checked="${seniorInfo == 'false'}" >
 					    </div>
 					</div>
                     <div class="input-group">
@@ -45,6 +54,17 @@
 	                    <strong>연락처</strong><input type="text" class="underline-input" name="phoneNumber" 
 	                    th:value="${myInfo.phoneNumber != null ? myInfo.phoneNumber : ''}" placeholder="연락처" />
                     </div>
+                    <!-- 특정 정보 -->
+                    <div class="input-group">
+	                    <strong>건강상태</strong><input type="text" class="underline-input" name="health" 
+	                    th:value="${seniorInfo.health != null ? seniorInfo.health : ''}" placeholder="건강상태" />
+                    </div>
+                    <div class="input-group">
+	                    <strong>요구사항</strong><input type="text" class="underline-input" name="requirements" 
+	                    th:value="${seniorInfo.requirements != null ? seniorInfo.requirements : ''}" placeholder="요구사항" />
+                    </div>
+                    
+                    <!-- 비밀번호 -->
                     <div class="input-group">
 	                    <strong>비밀번호</strong><input type="password" class="underline-input" name="password" placeholder="새 비밀번호" />
 					</div>
@@ -72,21 +92,26 @@ $(document).on("click", "#edit", function(){
 	if(!confirm("회원 정보를 변경하시겠습니까?")){
 		return false
 	}
+	// 기본사항
 	var loginId = /*[[${loginId}]]*/ 'defaultUserId'
 	var emailValue = /*[[${myInfo.email}]]*/ 'defaultEmail';
-	var genderValue = $("input[name='gender']:checked").val();
+	var genderValue = $("input[name='gender']:checked").val(); 
     var nameValue = $("input[name='name']").val(); 
     var addressValue = $("input[name='address']").val(); 
     var phoneNumberValue = $("input[name='phoneNumber']").val();
     
+    // 특정사항
+    var hasGuarValue = $("input[name='hasGuardian']:checked").val(); 
+	console.log(hasGuarValue);
     
-	var editData = {
+    var editData = {
 		"userId": loginId,
 		"email": emailValue,
 		"gender": genderValue,
 		"name": nameValue,
 		"address": addressValue,
-		"phoneNumber": phoneNumberValue 
+		"phoneNumber": phoneNumberValue,
+		"hasGuardian": hasGuarValue
 	}
 	var csrfToken = $("meta[name='_csrf']").attr("content");
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");

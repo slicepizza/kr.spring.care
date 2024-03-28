@@ -20,10 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import kr.spring.care.admin.DTO.CaregiverDTO;
 import kr.spring.care.admin.DTO.MessageResponse;
-import kr.spring.care.admin.DTO.UserDTO;
 import kr.spring.care.admin.service.CareBoardService;
 import kr.spring.care.admin.service.TotalUserService;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/admin/*")
@@ -68,12 +68,11 @@ public class AdminController {
 		return "redirect:/admin/totUser";
 	}
 	
-	// 회원 상세정보(모달창)
+	// 모든회원 상세정보(모달창)
 	@GetMapping("getUserInfo")
 	@ResponseBody
 	public UserDTO userView(@RequestParam long userId) {
 
-//		System.out.println("유저아디"+ userId);
 		UserDTO userDTO = totalUserService.userView(userId);
 		if(userDTO != null) {
 			return userDTO;
@@ -109,14 +108,15 @@ public class AdminController {
 		int blockLimit = 5;
 		int startPage = (((int)Math.ceil((double)pageable.getPageNumber() / blockLimit)) -1) * blockLimit +1;   
 		int endPage = Math.min((startPage + blockLimit -1), allCare.getTotalPages());	
-		System.out.println("케어"+ allCare);
 		model.addAttribute("allCare", allCare);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("AllCareCnt", allCount);
 		model.addAttribute("careCnt", count);
-			
-			return "admin/careBoard";
+		model.addAttribute("field", field);
+		model.addAttribute("word", word);
+		
+		return "admin/careBoard";
 	}
 	
 	// 요양보호사 리스트 삭제
@@ -136,7 +136,20 @@ public class AdminController {
 		return userId;
 	}
 	
-	
+	// 요양보호사 구인정보(모달창)
+	@GetMapping("getCareInfo")
+	@ResponseBody
+	public CaregiverDTO careView(@RequestParam long userId) {
+		System.out.println("케어아뒤"+ userId);
+		CaregiverDTO caregiverDTO = careBoardService.careView(userId);
+		if(caregiverDTO != null) {
+			System.out.println("요양보호"+ caregiverDTO);
+			return caregiverDTO;
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		}
+		
+	}
 	
 	
 	

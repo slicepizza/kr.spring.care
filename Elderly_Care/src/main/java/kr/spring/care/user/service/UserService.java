@@ -6,23 +6,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import kr.spring.care.user.service.UserService;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
 @Transactional
-@Log4j2
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-
+	
+	@Autowired
 	private final UserRepository userRepository;
 
 	public User saveUser(User user) {
@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
 		}
 
 		List<SimpleGrantedAuthority> authorities = Collections
-				.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+				.singletonList(new SimpleGrantedAuthority(user.getRole().toString()));
 
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
 	}

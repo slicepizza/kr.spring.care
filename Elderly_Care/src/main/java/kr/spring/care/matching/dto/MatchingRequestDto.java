@@ -6,7 +6,6 @@ import lombok.Setter;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import kr.spring.care.matching.constant.MatchingStatus;
 
 import java.time.LocalDate;

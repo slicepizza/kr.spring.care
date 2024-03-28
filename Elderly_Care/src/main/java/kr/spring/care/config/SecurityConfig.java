@@ -40,15 +40,17 @@ public class SecurityConfig {
                 .requestMatchers("/js/**").permitAll() //js를 사용할경우 적용
                 .requestMatchers("/notice/**").permitAll() // 공지사항
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/mobile/userPage/**").permitAll()
                 .anyRequest().authenticated()
       );
   
-  http
-        .exceptionHandling(exceptionHandling -> exceptionHandling
-            .authenticationEntryPoint(new CustomEntryPoint())
-        );
-
-  return http.build();
+	  http
+	        .exceptionHandling(exceptionHandling -> exceptionHandling
+	            .authenticationEntryPoint(new CustomEntryPoint())
+	        );
+	
+	
+	  return http.build();
 }
 
     @Bean

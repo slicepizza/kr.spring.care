@@ -74,15 +74,19 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("userFormDto") UserFormDto userFormDto,
                                BindingResult result,
-                               Model model) {
+                               Model model,
+                               @RequestParam(required = false) String userType) {
         if (result.hasErrors()) {
+            model.addAttribute("errorMessage", "입력 정보를 확인해주세요");
+            model.addAttribute("userType", userType);
             return "user/userForm";
         }
         try {
             User user = User.createUser(userFormDto, passwordEncoder);
             userService.saveUser(user);
         } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("errorMessage", "입력 정보를 확인해주세요");
+            model.addAttribute("userType", userType);
             return "user/userForm";
         }
         return "redirect:/user/login";

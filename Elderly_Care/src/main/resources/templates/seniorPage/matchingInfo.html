@@ -1,8 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/userLayout}">
+	layout:decorate="~{layouts/userElseLayout}">
 
 <div layout:fragment="content" class="content">
-	<h2>매칭정보 페이지</h2>
+	<!-- 과거 매칭 -->
+	<div class="container mt-5">
+    <h2>매칭 이력</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">요양보호사 이름</th>
+            <th scope="col">매칭 날짜</th>
+            <th scope="col">상태</th>
+            <th scope="col">상세 정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="matching : ${matchings}">
+            <th scope="row" th:text="${matching.index}">1</th>
+            <td th:text="${matching.caregiverName}">김요양</td>
+            <td th:text="${matching.date}">2024-03-28</td>
+            <td th:text="${matching.status}">활성</td>
+            <td><a th:href="@{/details(matchingId=${matching.id})}">보기</a></td>
+        </tr>
+        </tbody>
+    </table>
+	</div>
+	<!-- 현재 매칭 -->
+	<div class="container mt-5">
+    <h2>매칭 이력</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">요양보호사 이름</th>
+            <th scope="col">매칭 날짜</th>
+            <th scope="col">상태</th>
+            <th scope="col">상세 정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="matching : ${matchings}">
+            <th scope="row" th:text="${matching.index}">1</th>
+            <td th:text="${matching.caregiverName}">김요양</td>
+            <td th:text="${matching.date}">2024-03-28</td>
+            <td th:text="${matching.status}">활성</td>
+            <td><a th:href="@{/details(matchingId=${matching.id})}">보기</a></td>
+        </tr>
+        </tbody>
+    </table>
+	</div>
 <div>

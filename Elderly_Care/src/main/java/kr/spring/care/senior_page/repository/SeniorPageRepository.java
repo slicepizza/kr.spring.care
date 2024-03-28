@@ -8,5 +8,5 @@ import kr.spring.care.user.entity.User;
 
 public interface SeniorPageRepository extends JpaRepository<Senior, Long>{
 
-	User findByEmail(String email);
+//	User findByEmail(String email);
 }

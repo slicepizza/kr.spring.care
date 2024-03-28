@@ -5,6 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import kr.spring.care.senior_page.repository.SeniorPageRepository;
+import kr.spring.care.senior_page.service.SeniorPageService;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class GlobalControllerAdvice {
 
 	private final UserPageService userPageService;
+	private final SeniorPageRepository seniorPageRepository;
 	
 	@ModelAttribute("loginId")
 	public Long userId() {
@@ -22,7 +25,7 @@ public class GlobalControllerAdvice {
 		// 여기서 authentication.getPrincipal()이 "anonymousUser" 문자열일 수 있으므로 이를 체크합니다.
         if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
             
-        	// authentication.getName()<- 이메일 을 통해 사용자 식별 정보를 얻습니다.
+        	// authentication.getName()<- 이메일을 통해 사용자 식별 정보를 얻습니다.
             User user = userPageService.getUser(authentication.getName());
             
             // user가 null이 아닐 경우에만 userId를 반환합니다.
@@ -35,4 +38,6 @@ public class GlobalControllerAdvice {
         System.out.println("로그인유저: -1L");
         return -1L;
     }
+	
+	
 }

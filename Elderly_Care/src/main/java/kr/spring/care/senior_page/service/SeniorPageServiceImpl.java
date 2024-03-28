@@ -6,6 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.care.senior_page.dto.SeniorDTO;
+import kr.spring.care.senior_page.repository.SeniorPageRepository;
+import kr.spring.care.user.entity.Senior;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
 import kr.spring.care.user_page.repository.UserPageRepository;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class SeniorPageServiceImpl implements SeniorPageService{
 
 	private final UserPageRepository userPageRepository;
+	private final SeniorPageRepository seniorPageRepository; 
 	private final PasswordEncoder passwordEncoder; 
 	
 	@Override
@@ -23,12 +27,15 @@ public class SeniorPageServiceImpl implements SeniorPageService{
 		Optional<User> userOptional = userPageRepository.findById(userId);
 		return userOptional.map(UserDTO::new).orElse(null); 
 	}
-
+	
 	@Override
-	public User getUser(String email) {
-		return userPageRepository.findByEmail(email);
-		 
+	public SeniorDTO seniorInfo(long userId) {
+		Optional<Senior> seniorOptional = seniorPageRepository.findById(userId);
+		SeniorDTO s = seniorOptional.map(SeniorDTO::new).orElse(null);
+		System.out.println("시니어 "+ s.getHealth() + s.getSeniorName() + s.getRequirements() + s.getHasGuardian());
+		return seniorOptional.map(SeniorDTO::new).orElse(null);
 	}
+
 
 	@Override
 	@Transactional
@@ -49,6 +56,11 @@ public class SeniorPageServiceImpl implements SeniorPageService{
 		bfUser.setPassword(afPw);
 		userPageRepository.save(bfUser);
 	}
+
+	
+
+
+	
 
 	
 

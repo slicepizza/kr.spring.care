@@ -10,22 +10,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.care.senior_page.dto.SeniorDTO;
+import kr.spring.care.senior_page.service.SeniorPageService;
 import kr.spring.care.user.entity.User;
+import kr.spring.care.user_page.dto.UserDTO;
 import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/userPage/*")
+@RequestMapping("/seniorPage/*")
 @Controller
 @RequiredArgsConstructor
 public class SeniorPageController {
 	
 	private final UserPageService userPageService;
+	private final SeniorPageService seniorPageService; 
 	
 	// 기본사항(User) 정보
 	@GetMapping("myinfo/{id}")
 	public String myinfo(@PathVariable("id") long userId, Model model) {
-		model.addAttribute("myInfo", userPageService.myInfo(userId));
-		return "userPage/myinfo";
+		UserDTO userInfo = userPageService.myInfo(userId);
+		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);
+		model.addAttribute("myInfo", userInfo);
+		model.addAttribute("seniorInfo", seniorInfo);
+		return "seniorPage/myinfo";
 	}
 	
 	// 특정사항(Senior) 정보
@@ -49,7 +56,7 @@ public class SeniorPageController {
 	
 	@GetMapping("matchingInfo")
 	public String matchingInfo() {
-		return "userPage/matchingInfo";
+		return "seniorPage/matchingInfo";
 	}
 	
 	

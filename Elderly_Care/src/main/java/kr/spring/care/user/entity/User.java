@@ -74,13 +74,26 @@ public class User {
         user.setPassword(passwordEncoder.encode(userFormDto.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
-        Senior senior = new Senior();
-        senior.setSeniorName(userFormDto.getSeniorName());
-        senior.setHasGuardian(userFormDto.getHasGuardian());
-        senior.setRequirements(userFormDto.getRequirements());
-        senior.setHealth(userFormDto.getHealth());
-        senior.setUser(user);
-        user.setSenior(senior);
+        if (userFormDto.getCertification() == null) {
+            Senior senior = new Senior();
+            senior.setSeniorName(userFormDto.getSeniorName());
+            senior.setHasGuardian(userFormDto.getHasGuardian());
+            senior.setRequirements(userFormDto.getRequirements());
+            senior.setHealth(userFormDto.getHealth());
+            senior.setUser(user);
+            user.setSenior(senior);
+    
+            if (userFormDto.getHasGuardian() != null && !userFormDto.getGuardianName().isEmpty()) {
+                Guardian guardian = new Guardian();
+                guardian.setGuardianName(userFormDto.getGuardianName());
+                guardian.setGuardianPhoneNumber(userFormDto.getGuardianPhoneNumber());
+                guardian.setRelationship(userFormDto.getRelationship());
+                guardian.setSenior(senior);
+                guardian.setUser(user);
+                user.setGuardian(guardian);
+            }
+        }
+
         if (userFormDto.getCertification() != null && !userFormDto.getCertification().isEmpty()) {
             Caregiver caregiver = new Caregiver();
             caregiver.setCertification(userFormDto.getCertification());
@@ -90,15 +103,6 @@ public class User {
             caregiver.setAvailableHours(userFormDto.getAvailableHours());
             caregiver.setUser(user); 
             user.setCaregiver(caregiver);
-        }
-        if (userFormDto.getHasGuardian() != null && !userFormDto.getGuardianName().isEmpty()) {
-            Guardian guardian = new Guardian();
-            guardian.setGuardianName(userFormDto.getGuardianName());
-            guardian.setGuardianPhoneNumber(userFormDto.getGuardianPhoneNumber());
-            guardian.setRelationship(userFormDto.getRelationship());
-            guardian.setSenior(senior);
-            guardian.setUser(user);
-            user.setGuardian(guardian);
         }
     	return user;
     }

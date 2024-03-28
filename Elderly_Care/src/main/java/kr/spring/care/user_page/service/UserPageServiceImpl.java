@@ -50,4 +50,13 @@ public class UserPageServiceImpl implements UserPageService{
 		userPageRepository.save(bfUser);
 	}
 
+	@Override
+	public void saveUser(UserDTO user) {
+		User u = new User();
+		u.setName(user.getName());
+		u.setEmail(user.getEmail());
+		u.setPhoneNumber(user.getPhoneNumber());
+		userPageRepository.save(u);
+	}
+
 }

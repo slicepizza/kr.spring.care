@@ -15,4 +15,7 @@ public interface UserPageService {
 	
 	public void editPw(User user);
 	
+	//
+	public void saveUser(UserDTO user);
+	
 }

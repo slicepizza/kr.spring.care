@@ -24,11 +24,11 @@ public class UserDTO {
 		this.userId = entity.getUserId();
 		this.name = entity.getName();
 		this.email = entity.getEmail();
-		this.address = entity.getAddress();
-		this.gender = entity.getGender();
+//		this.address = entity.getAddress();
+//		this.gender = entity.getGender();
 		this.phoneNumber = entity.getPhoneNumber();
-		this.role = entity.getRole();
-		this.createdAt = entity.getCreatedAt();
+//		this.role = entity.getRole();
+//		this.createdAt = entity.getCreatedAt();
 	}
 	
 }

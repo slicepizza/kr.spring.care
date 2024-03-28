@@ -24,6 +24,8 @@ public class Guardian {
     private Long guardianId;
 
     private String guardianName;
+    private String guardianPhoneNumber;
+    private String relationship;
     
     @JsonIgnore
     @OneToOne
@@ -35,6 +37,5 @@ public class Guardian {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String relationship;
     
 }

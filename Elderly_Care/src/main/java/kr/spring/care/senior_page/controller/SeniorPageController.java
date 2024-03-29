@@ -1,6 +1,5 @@
 package kr.spring.care.senior_page.controller;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,27 +24,25 @@ public class SeniorPageController {
 	private final UserPageService userPageService;
 	private final SeniorPageService seniorPageService; 
 	
-	// 기본사항(User) 정보
+	// 기본사항(User) + 특정사항(Senior) 정보
 	@GetMapping("myinfo/{id}")
 	public String myinfo(@PathVariable("id") long userId, Model model) {
-		UserDTO userInfo = userPageService.myInfo(userId);
+		UserDTO userInfo = seniorPageService.myInfo(userId);
 		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);
 		model.addAttribute("myInfo", userInfo);
 		model.addAttribute("seniorInfo", seniorInfo);
 		return "seniorPage/myinfo";
 	}
 	
-	// 특정사항(Senior) 정보
-	
-	
-	
+	// 회원정보 수정
 	@PutMapping("edit")
 	@ResponseBody
-	public String edit(@RequestBody User user) {
-		userPageService.editUser(user);
-		return user.getEmail();
+	public String edit(@RequestBody UserDTO userDTO) {
+		seniorPageService.editUser(userDTO);
+		return userDTO.getEmail();
 	}
 	
+	// 비밀번호 변경
 	@PutMapping("editPw")
 	@ResponseBody
 	public String editPw(@RequestBody User user) {

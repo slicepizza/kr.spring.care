@@ -12,7 +12,7 @@ public interface UserPageService {
 	
 	public UserDTO myInfo(long userId);
 	
-	public void editUser(User user);
+	public void editUser(UserDTO userDTO);
 	
 	public void editPw(User user);
 	

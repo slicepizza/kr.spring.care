@@ -29,13 +29,15 @@
 				<textarea class="form-control" rows="7" id="content" name="content"
 					readonly="readonly" th:text="${board.content}"></textarea>
 			</div>
+			
 
 
 			<!-- 게시글 수정, 삭제, 뒤로가기 버튼 -->
 			<div>
 				<div class="text-end">
 					<button type="button" class="btn btn-secondary btn-sm"
-						id="btnUpdate" onclick="updateBoard()">수정</button>
+						id="btnUpdate" onclick="updateBoard()"
+						>수정</button>
 					<button type="button" class="btn btn-danger btn-sm" id="btnDelete"
 						onclick="deleteBoard()">삭제</button>
 					<button type="button" class="btn btn-success btn-sm" id="btnDelete"
@@ -109,7 +111,7 @@
 
 				// 댓글 작성
 				function postComment() {
-					var boardNum = document.getElementById("num").getAttribute(
+					var boardNum  = document.getElementById("num").getAttribute(
 							"data-board-num");
 					var boardUserId = document.getElementById("writer")
 							.getAttribute("data-board-user-id");

@@ -10,6 +10,8 @@ import kr.spring.care.user.entity.User;
 
 public interface SeniorPageRepository extends JpaRepository<Senior, Long>{
 
-	@Query(value = "select * from senior where user_id = :userId", nativeQuery = true)
-	Senior findByUserId(long userId);
+//	@Query(value = "select * from senior where user_id = :userId", nativeQuery = true)
+//	Senior findByUserId(long userId);
+	
+	Optional<Senior> findByUserUserId(Long userId);
 }

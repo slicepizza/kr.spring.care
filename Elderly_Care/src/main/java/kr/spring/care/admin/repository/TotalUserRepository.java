@@ -12,6 +12,7 @@ import kr.spring.care.user.entity.User;
 
 public interface TotalUserRepository extends JpaRepository<User, Long>{
 	
+
 	public Page<User> findByNameContaining(String word, Pageable pageable);
 	public Page<User> findByEmailContaining(String word, Pageable pageable);
 	

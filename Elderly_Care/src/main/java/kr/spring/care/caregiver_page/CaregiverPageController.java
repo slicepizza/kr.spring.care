@@ -1,4 +1,4 @@
-package kr.spring.care.caregiver_page.controller;
+package kr.spring.care.caregiver_page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/caregiverPage/*")
 @Controller
 public class CaregiverPageController {
-	
-	@GetMapping("mypage")
-	public String mypage() {
-		return "caregiverPage/mypage";
-	}
 	
 	@GetMapping("matchingInfo")
 	public String matchingInfo() {

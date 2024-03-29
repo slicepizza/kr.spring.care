@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
 		}
 
 		List<SimpleGrantedAuthority> authorities = Collections
-				.singletonList(new SimpleGrantedAuthority(user.getRole().toString()));
+				.singletonList(new SimpleGrantedAuthority("ROLE_"+user.getRole().toString()));
 
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
 	}

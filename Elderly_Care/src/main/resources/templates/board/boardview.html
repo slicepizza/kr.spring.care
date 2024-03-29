@@ -21,7 +21,7 @@
 			<div class="mb-3">
 				<label for="writer">작성자:</label> <input type="text"
 					class="form-control" id="writer" th:value="${board.user.name}"
-					th:data-board-user-id="${board.user.userId}" readonly="readonly"
+					 readonly="readonly"
 					name="writer">
 			</div>
 			<div class="mb-3 mt-3">
@@ -35,9 +35,11 @@
 			<div>
 				<div class="text-end">
 					<button type="button" class="btn btn-secondary btn-sm"
-						id="btnUpdate" onclick="updateBoard()">수정</button>
+						id="btnUpdate" onclick="updateBoard()"
+						th:if="${board.user.userId == loginId}">수정</button>
 					<button type="button" class="btn btn-danger btn-sm" id="btnDelete"
-						onclick="deleteBoard()">삭제</button>
+						onclick="deleteBoard()"
+						th:if="${board.user.userId == loginId}">삭제</button>
 					<button type="button" class="btn btn-success btn-sm" id="btnDelete"
 						onclick="goBack()">뒤로가기</button>
 				</div>
@@ -83,9 +85,6 @@
 			<script type="text/javascript">
 				// 게시글 수정
 				function updateBoard() {
-					if (!confirm('수정하시겠습니까?')) {
-						return false;
-					}
 					var boardNum = document.getElementById("num").getAttribute(
 							"data-board-num");
 					location.href = "/board/boardupdate/" + boardNum;
@@ -106,13 +105,14 @@
 				function goBack() {
 					location.href = "/board/boardlist";
 				}
-
+				console.log("${loginId}")
+				
 				// 댓글 작성
 				function postComment() {
 					var boardNum = document.getElementById("num").getAttribute(
 							"data-board-num");
-					var boardUserId = document.getElementById("writer")
-							.getAttribute("data-board-user-id");
+					var boardUserId = "${loginId}"
+					
 					var comment = document.getElementById("msg").value;
 					var csrfToken = $("meta[name='_csrf']").attr("content");
 					var csrfHeader = $("meta[name='_csrf_header']").attr(

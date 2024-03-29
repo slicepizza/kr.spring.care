@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import kr.spring.care.board.model.Comment;
 
 
+
 @Repository
 public interface CommentRepository 
 	extends JpaRepository<Comment, Long>{
@@ -25,4 +26,5 @@ public interface CommentRepository
 		@Query( "select sc from comment  sc where sc.board.num=?1")
 		public List<Comment> findByBnum(Long bnum);
 
+		
 }

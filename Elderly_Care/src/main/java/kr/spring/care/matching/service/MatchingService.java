@@ -127,7 +127,7 @@ public class MatchingService {
         userRepository.save(currentUser);
 
         Senior senior = new Senior();
-        senior.setSeniorName(currentUser.getName());
+        // senior.setSeniorName(currentUser.getName());
         senior.setHealth(matchingRequestDto.getHealth());
         senior.setRequirements(matchingRequestDto.getRequirements());
         senior.setHasGuardian(matchingRequestDto.getHasGuardian());
@@ -166,7 +166,7 @@ public class MatchingService {
         guardian.setRelationship(matchingRequestDto.getRelationship());
 
         Senior senior = new Senior();
-        senior.setSeniorName(matchingRequestDto.getElderlyName());
+        // senior.setSeniorName(matchingRequestDto.getElderlyName());
         senior.setHealth(matchingRequestDto.getHealth());
         senior.setRequirements(matchingRequestDto.getRequirements());
         senior.setHasGuardian(true);

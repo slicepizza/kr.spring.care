@@ -1,8 +1,6 @@
 package kr.spring.care.matching.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -18,12 +16,10 @@ import kr.spring.care.matching.dto.CaregiverDetail;
 import kr.spring.care.matching.dto.MatchingDetail;
 import kr.spring.care.matching.dto.MatchingRequestDto;
 import kr.spring.care.matching.entity.Matching;
-import kr.spring.care.matching.service.CaregiverService;
 import kr.spring.care.matching.service.MatchingService;
-import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.Guardian;
 import kr.spring.care.user.entity.Senior;
-import kr.spring.care.user.entity.User;
+import kr.spring.care.user.service.CaregiverService;
 
 @Controller
 @RequestMapping("/matching")
@@ -36,7 +32,8 @@ public class MatchingController {
 
     // 요양보호사 구인 페이지
     @GetMapping("/findcaregiver")
-    public String matchingFindCaregiver(@RequestParam(required = false) String field, 
+    public String matchingFindCaregiver(
+    		@RequestParam(required = false) String field, 
             @RequestParam(required = false) String word, 
             Pageable pageable, Model model) {
 		Page<CaregiverDetail> caregiversPage;

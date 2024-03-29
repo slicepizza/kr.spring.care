@@ -40,7 +40,7 @@ public class BoardController {
 //		return "board/boardlist";
 //	}
 	
-	// 공지사항 페이지(페이징)
+	// 게시판 페이지(페이징)
 	   @GetMapping("board/boardlist")
 	   public String userListPaging(Model model,
 	         @PageableDefault(page = 1) Pageable pageable,
@@ -56,6 +56,8 @@ public class BoardController {
 	      
 	      model.addAttribute("boards", alluser);
 	      model.addAttribute("startPage", startPage);
+	      
+	      
 	      model.addAttribute("endPage", endPage);
 //	      model.addAttribute("AlluserCnt", allCount);
 //	      model.addAttribute("userCnt", count);
@@ -67,8 +69,7 @@ public class BoardController {
 	
 	//글작성 폼
 	@GetMapping("write")
-	public String write(Model model) {
-//		model.addAttribute("userId", boardService.);
+	public String write() {
 		return "board/write";
 	}
 	

@@ -34,12 +34,11 @@ public class SeniorPageController {
 		return "seniorPage/myinfo";
 	}
 	
-	// 회원정보 수정
-	@PutMapping("edit")
-	@ResponseBody
-	public String edit(@RequestBody UserDTO userDTO) {
-		seniorPageService.editUser(userDTO);
-		return userDTO.getEmail();
+	
+	public String edit(@RequestBody UserDTO user) {
+		userPageService.editUser(user);
+		System.out.println("유저메일"+user.getEmail());
+		return user.getEmail();
 	}
 	
 	// 비밀번호 변경

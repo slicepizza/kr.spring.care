@@ -28,12 +28,23 @@ public class UserPageController {
 		return "userPage/myinfo";
 	}
 	
-	@PutMapping("edit")
-	@ResponseBody
-	public String edit(@RequestBody UserDTO user) {
-		userPageService.editUser(user);
-		return user.getEmail();
-	}
+
+//	@PutMapping("edit")
+//	@ResponseBody
+//	public String edit(@RequestBody User user) {
+////	    User u = userPageService.getUser(user.getEmail());
+//	        userPageService.editUser(user); // 수정된 User 엔티티 저장
+//	    
+//	    return user.getEmail(); // 수정 후 응답
+//	}
+
+	
+//	@PutMapping("edit")
+//	@ResponseBody
+//	public String edit(@RequestBody User user) {
+//		userPageService.editUser(user);
+//		return user.getEmail();
+//	}
 	
 	@PutMapping("editPw")
 	@ResponseBody

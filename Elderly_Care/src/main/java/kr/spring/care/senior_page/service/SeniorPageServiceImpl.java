@@ -52,8 +52,8 @@ public class SeniorPageServiceImpl implements SeniorPageService{
 		bfUser.setPhoneNumber(userDTO.getPhoneNumber());
 		Senior bfSenior = seniorPageRepository.findByUserUserId(userDTO.getUserId()).get();
 		bfSenior.setHasGuardian(userDTO.getHasGuardian());
-		bfSenior.setHealth(userDTO.getHealth());
-		bfSenior.setRequirements(userDTO.getRequirements());
+//		bfSenior.setHealth(userDTO.getHealth());
+//		bfSenior.setRequirements(userDTO.getRequirements());
 		bfUser.setSenior(bfSenior);
 		userPageRepository.save(bfUser);
 	}

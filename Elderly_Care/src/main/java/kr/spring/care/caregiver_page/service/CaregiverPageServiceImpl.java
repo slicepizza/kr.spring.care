@@ -53,12 +53,12 @@ public class CaregiverPageServiceImpl implements CaregiverPageService{
 		bfUser.setName(userDTO.getName());
 		bfUser.setPhoneNumber(userDTO.getPhoneNumber());
 		Caregiver bfCare = caregiverPageRepository.findByUser_userId(userDTO.getUserId()).get();
-		bfCare.setAvailableHours(userDTO.getAvailableHours());
-		bfCare.setCertification(userDTO.getCertification());
-		bfCare.setExperience(userDTO.getExperience());
-		bfCare.setExperienceYears(userDTO.getExperienceYears());
-		bfCare.setSpecialization(userDTO.getSpecialization());
-//		userPageRepository.save(bfCare);
+//		bfCare.setAvailableHours(userDTO.getAvailableHours());
+//		bfCare.setCertification(userDTO.getCertification());
+//		bfCare.setExperience(userDTO.getExperience());
+//		bfCare.setExperienceYears(userDTO.getExperienceYears());
+//		bfCare.setSpecialization(userDTO.getSpecialization());
+////		userPageRepository.save(bfCare);
 	}
 
 	@Override

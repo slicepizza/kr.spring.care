@@ -34,12 +34,13 @@ public class UserPageServiceImpl implements UserPageService{
 
 	@Override
 	@Transactional
-	public void editUser(UserDTO userDTO) {
-		User bfUser = userPageRepository.findById(userDTO.getUserId()).get();
-		bfUser.setAddress(userDTO.getAddress());
-		bfUser.setGender(userDTO.getGender());
-		bfUser.setName(userDTO.getName());
-		bfUser.setPhoneNumber(userDTO.getPhoneNumber());
+
+	public void editUser(UserDTO user) {
+		User bfUser = userPageRepository.findById(user.getUserId()).get();
+		bfUser.setAddress(user.getAddress());
+		bfUser.setGender(user.getGender());
+		bfUser.setName(user.getName());
+		bfUser.setPhoneNumber(user.getPhoneNumber());
 		userPageRepository.save(bfUser);
 	}
 
@@ -52,7 +53,7 @@ public class UserPageServiceImpl implements UserPageService{
 		userPageRepository.save(bfUser);
 	}
 
-	@Override
+
 	public void regUSer(UserDTO user) {
 		User u = new User();
 		u.setEmail(user.getEmail());

@@ -12,10 +12,12 @@ public interface UserPageService {
 	
 	public UserDTO myInfo(long userId);
 	
-	public void editUser(UserDTO userDTO);
+
+	public void editUser(UserDTO user);
 	
 	public void editPw(User user);
 	
+
 	
 	///// 테스트용
 	public void regUSer(UserDTO user);

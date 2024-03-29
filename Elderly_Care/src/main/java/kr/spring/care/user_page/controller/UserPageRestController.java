@@ -1,4 +1,4 @@
-package kr.spring.care.admin.controller;
+package kr.spring.care.user_page.controller;
 
 import java.util.HashMap;
 import java.util.Map;

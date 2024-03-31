@@ -1,6 +1,5 @@
 package kr.spring.care.senior_page.dto;
 
-import kr.spring.care.user.entity.Caregiver;
 import kr.spring.care.user.entity.Guardian;
 import kr.spring.care.user.entity.Senior;
 import kr.spring.care.user.entity.User;

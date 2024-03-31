@@ -44,9 +44,9 @@ body {
 }
 
 
-#nameModal:hover{
-	background-color: #B0E0E6;
-}
+/* #nameModal:hover{
+	background-color: #F4C430;
+} */
 
 #auth:hover {
     background-color: #90EE90 !important; /* 배경색 설정 */
@@ -93,7 +93,7 @@ body {
 }
 
 #nameModal:hover{
-	background-color: #B0E0E6;
+	background-color: #FFFFE0;
 }
 
 #authBtn:hover {

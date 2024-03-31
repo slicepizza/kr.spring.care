@@ -181,5 +181,59 @@ strong {
     }
 }
 
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
+  /* 제목 스타일 */
+  .table th {
+    background-color: #f2f2f2;
+  }
+
+  /* 지난 매칭 스타일 */
+  .past-matching .table th {
+    background-color: #d9ead3; /* 연두색 */
+  }
+
+  /* 현재 매칭 스타일 */
+  .current-matching .table th {
+    background-color: #cfe2f3; /* 연한 파랑색 */
+  }
+
+  /* 매칭 결과에 따른 글자 색 */
+  .table td.status-completed {
+    color: green; /* 완료 - 녹색 */
+    font-weight: bold;
+  }
+  
+  .table td.status-cancelled {
+    color: red; /* 취소 - 빨간색 */
+    font-weight: bold;
+  }
+  
+  .table td.status-posted,
+  .table td.status-requested,
+  .table td.status-in-progress {
+    color: blue; /* 구직중, 요청중, 진행중 - 파란색 */
+    font-weight: bold;
+  }
+  
+  /* 테이블 테두리 스타일 */
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+.table th, 
+.table td {
+  text-align: center; /* 테이블 헤더와 셀 내용을 가운데 정렬합니다 */
+}
+
+.table th:nth-child(2), /* 테이블 헤더에서 요양 보호사 이름 열 */
+.table td:nth-child(2) { /* 테이블 데이터에서 요양 보호사 이름 열 */
+  width: 150px; /* 원하는 너비로 설정하세요 */
+  /* 필요에 따라 추가적인 스타일을 적용할 수 있습니다 */
+}
+  
         

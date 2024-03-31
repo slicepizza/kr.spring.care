@@ -2,6 +2,7 @@ package kr.spring.care.board.controller;
 
 import kr.spring.care.board.model.Board;
 import kr.spring.care.board.model.Comment;
+import kr.spring.care.board.model.CommentResponse;
 import kr.spring.care.board.service.CommentService;
 import kr.spring.care.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -21,28 +22,27 @@ public class CommentController {
     private final CommentService commentService;
 
     // 댓글 전체 보기
+//    @GetMapping("/list/{num}")
+//    public List<Comment> listComments(@PathVariable long num) {
+//        List<Comment> commentList = commentService.list(num);
+//        long count = commentService.count(num);
+//        System.out.println("댓글"+commentList.get(0).getContent());
+//        return commentList;
+//    }
+    
     @GetMapping("/list/{num}")
-    public String listComments(@PathVariable long num, Model model) {
+    public ResponseEntity<CommentResponse> listComments(@PathVariable long num) {
         List<Comment> commentList = commentService.list(num);
         long count = commentService.count(num);
-        model.addAttribute("commentList", commentList);
-        model.addAttribute("count", count);
-        return "commentList";
+
+        CommentResponse response = new CommentResponse(commentList, count);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 댓글 추가
     @PostMapping("create")
-    public ResponseEntity<String> createComment(@RequestBody Comment comment
-	/*
-	 * @RequestParam("boardNum") long boardNum, @RequestParam("comment") String
-	 * commentText,
-	 * 
-	 * @RequestParam("userId") long userId
-	 */
-                                            ) {
-    	System.out.println("댓글: "+comment.getContent());
-    	System.out.println("댓글넘: "+comment.getBoard().getNum());
-    	System.out.println("댓글넘2: "+comment.getUser().getUserId());
+    public ResponseEntity<String> createComment(@RequestBody Comment comment) {
     	Comment comment2 = new Comment();
     	Board board = new Board();
     	board.setNum(comment.getBoard().getNum());
@@ -55,6 +55,13 @@ public class CommentController {
         commentService.insert(comment);
         return new ResponseEntity<String>("Comment added successfully", HttpStatus.OK);
     }
+    
+    // 댓글 수정
+    @PutMapping("update")
+    public ResponseEntity<String> updateComment(@RequestBody Comment comment){
+    	commentService.update(comment);
+    	return new ResponseEntity<>("Comment updated successfully", HttpStatus.OK); //응답상태와 문자열을 반환
+    }
 
     // 댓글 삭제
     @DeleteMapping("/delete/{cnum}")
@@ -62,4 +69,8 @@ public class CommentController {
         commentService.delete(cnum);
         return new ResponseEntity<>("Comment deleted successfully", HttpStatus.OK);
     }
+    
+    
+    
+    
 }

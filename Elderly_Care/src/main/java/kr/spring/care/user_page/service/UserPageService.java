@@ -11,7 +11,6 @@ public interface UserPageService {
 	public User getUser(String email);
 	
 	public UserDTO myInfo(long userId);
-	
 
 	public void editUser(UserDTO user);
 	

@@ -20,13 +20,13 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lilita+One&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
 	rel="stylesheet">
-<link th:href="@{/css/userLayout.css}" rel="stylesheet">
+<link th:href="@{/css/userElseLayout.css}" rel="stylesheet">
 
 <th:block layout:fragment="script"></th:block>
 <th:block layout:fragment="css"></th:block>
 </head>
 <body>
-	<div th:replace="~{fragments/seniorHeader::header}"></div>
+	<div th:replace="~{fragments/caregiverHeader::header}"></div>
 
 	<div layout:fragment="content" class="content"></div>
 

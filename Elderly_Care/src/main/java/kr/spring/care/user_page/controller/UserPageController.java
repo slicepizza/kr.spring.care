@@ -28,6 +28,7 @@ public class UserPageController {
 		return "userPage/myinfo";
 	}
 	
+
 //	@PutMapping("edit")
 //	@ResponseBody
 //	public String edit(@RequestBody User user) {

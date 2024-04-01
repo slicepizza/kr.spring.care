@@ -1,4 +1,4 @@
-package kr.spring.care.senior_page.controller;
+package kr.spring.care.caregiver_page.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,65 +13,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.care.admin.DTO.CaregiverDTO;
+import kr.spring.care.caregiver_page.service.CaregiverPageService;
 import kr.spring.care.matching.constant.MatchingStatus;
-import kr.spring.care.senior_page.dto.GuardianDTO;
 import kr.spring.care.senior_page.dto.MatchingDTO;
-import kr.spring.care.senior_page.dto.SeniorDTO;
-import kr.spring.care.senior_page.service.SeniorPageService;
-import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
-import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/seniorPage/*")
+@RequestMapping("/caregiverPage/*")
 @Controller
 @RequiredArgsConstructor
-public class SeniorPageController {
+public class CaregiverPageController {
 	
-	private final UserPageService userPageService;
-	private final SeniorPageService seniorPageService; 
+	private final CaregiverPageService caregiverPageService;
 	
-	// 기본사항(User) + 특정사항(Senior) 정보
+	// 기본사항(User) + 특정사항(Caregiver) 정보
 	@GetMapping("myinfo/{id}")
 	public String myinfo(@PathVariable("id") long userId, Model model) {
-		UserDTO userInfo = seniorPageService.myInfo(userId);
-		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);
-		GuardianDTO guardianInfo = seniorPageService.guardianInfo(userId);
-		if (guardianInfo == null) {
-			guardianInfo = new GuardianDTO(); // GuardInfo는 당신의 객체 타입
-		    // 필요하다면 기본값 설정
-			guardianInfo.setGuardianName("");
-			guardianInfo.setGuardianPhoneNumber("");
-			guardianInfo.setRelationship("");
-		}
+		UserDTO userInfo = caregiverPageService.myInfo(userId);
+		CaregiverDTO caregiverInfo = caregiverPageService.caregiverInfo(userId);
 		model.addAttribute("myInfo", userInfo);
-		model.addAttribute("seniorInfo", seniorInfo);
-		model.addAttribute("guardInfo" ,guardianInfo);
-		return "seniorPage/myinfo";
+		model.addAttribute("caregiverInfo", caregiverInfo);
+		return "caregiverPage/myinfo";
 	}
 	
-	// 회원정보 수정
 	@PutMapping("edit")
 	@ResponseBody
 	public String edit(@RequestBody UserDTO userDTO) {
-		seniorPageService.editUser(userDTO);
+		caregiverPageService.editUser(userDTO);
+		System.out.println();
 		return userDTO.getEmail();
 	}
 	
-	// 비밀번호 변경
-	@PutMapping("editPw")
-	@ResponseBody
-	public String editPw(@RequestBody User user) {
-		userPageService.editPw(user);
-		return "success";
-	}
+	
 	
 	@GetMapping("matchingInfo/{id}")
 	public String matchingInfo(@PathVariable long id, Model model) {
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 	    
-	    List<MatchingDTO> allMatchings = seniorPageService.matchingInfo(id);
+	    List<MatchingDTO> allMatchings = caregiverPageService.matchingInfo(id);
 	    
 	    // 변환 작업을 여기에서 수행
 	    List<MatchingDTO> formattedMatchings = allMatchings.stream().map(matching -> {
@@ -102,26 +83,8 @@ public class SeniorPageController {
 	            .collect(Collectors.toList());
 	    model.addAttribute("matchings", filteredMatchings);
 	    model.addAttribute("matchings2", filteredMatchings2);
-
-	    return "seniorPage/matchingInfo";
+		return "caregiverPage/matchingInfo";
 	}
-	
-	
-
-	
-	
-	/*
-	 * @GetMapping("matchingInfo/{id}") public String matchingInfo(@PathVariable
-	 * long id ,Model model) { List<MatchingDTO> matchingInfo =
-	 * seniorPageService.matchingInfo(id);
-	 * 
-	 * model.addAttribute("matchings", matchingInfo); model.addAttribute("isEmpty",
-	 * matchingInfo.isEmpty()); matchingInfo.forEach(matching ->
-	 * System.out.println(matching)); // List<CaregiverDTO> careInfo =
-	 * seniorPageService.careInfo(); return "seniorPage/matchingInfo"; }
-	 */
-	
-	
 	
 	
 }

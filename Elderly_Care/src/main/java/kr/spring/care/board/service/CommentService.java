@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 		
 		//댓글전체보기
 	   public List<Comment> list(long bnum){
-		   return commentRepository.findByBnum(bnum);
+		   return commentRepository.findByBoard_num(bnum);
 		
 	   }
 		
@@ -38,6 +38,19 @@ import lombok.RequiredArgsConstructor;
 				                               comment2.getBoard().getNum(),
 				                               comment2.getUser().getUserId());  // 만든 함수
 		}
+	    
+	    // 댓글 수정
+	    public void update(Comment comment) {
+	    	// 변수 comment에 있는 cnum을 통해 수정 전 db의 데이터를 가져 옴
+	    	Comment bfCm = commentRepository.findById(comment.getCnum()).get(); 
+	    	
+	    	// 수정 전 데이터를 가진 객체에 수정 할 데이터를 setter 를 통해서 저장 
+	    	bfCm.setContent(comment.getContent());
+	    	
+	    	// 수정 된 데이터를 가진 객체를 db 에 insert
+	    	commentRepository.save(bfCm);
+	    }
+	   
 		//댓글삭제
 		@Transactional
 		public void delete(long cnum) {

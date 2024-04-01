@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.care.senior_page.repository.SeniorPageRepository;
+import kr.spring.care.user.entity.Senior;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
 import kr.spring.care.user_page.repository.UserPageRepository;
@@ -32,6 +34,7 @@ public class UserPageServiceImpl implements UserPageService{
 
 	@Override
 	@Transactional
+
 	public void editUser(UserDTO user) {
 		User bfUser = userPageRepository.findById(user.getUserId()).get();
 		bfUser.setAddress(user.getAddress());

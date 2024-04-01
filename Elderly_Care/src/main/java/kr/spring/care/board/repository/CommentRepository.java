@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 import kr.spring.care.board.model.Comment;
 
 
-
-@Repository
-public interface CommentRepository 
-	extends JpaRepository<Comment, Long>{
+//@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long>{
 		
 		//댓글추가
 		@Modifying
@@ -23,8 +21,8 @@ public interface CommentRepository
 		
 		//JPQL(Java Persistence Query Language : 엔티티 객체를 중심)
 		//@Query(value= "select * from tbl_comment4  where bnum=?1", nativeQuery=true) 
-		@Query( "select sc from comment  sc where sc.board.num=?1")
-		public List<Comment> findByBnum(Long bnum);
+//		@Query( "select sc from comment  sc where sc.board.num=?1")
+		public List<Comment> findByBoard_num(Long bnum);
 
 		
 }

@@ -48,7 +48,7 @@
                            
                             
                             <td th:text="${user.email}">email</td>
-                            <td th:text="${user.createdAt}">created_at</td>
+                            <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}">created_at</td>
                             <!-- <td th:text="${user.isAgreeEvent()}">agree_event</td> -->
                             <td th:text="${user.role}">role</td>
                             <td>    

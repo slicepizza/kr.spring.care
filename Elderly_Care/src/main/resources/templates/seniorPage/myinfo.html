@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/userElseLayout}">
+	layout:decorate="~{layouts/seniorLayout}">
 
 <div layout:fragment="content" class="content">
 	<div class="container py-5">
@@ -14,7 +14,8 @@
                     </div>
                     <p class="text-center text-muted mb-3" id="email" th:text="${myInfo.email}">user@example.com</p>
                     
-					<div class="centered-container">                   
+					<div class="centered-container">
+					                   
                     <!-- 사용자 정보 -->
                     <div class="input-group">
 					    <label class="input-label" for="gender"></label>
@@ -28,9 +29,9 @@
 					    <label class="input-label" for="hasGuardian"></label>
 					    <div class="radio-group">
 					    	<span>*보호자 유무 </span>
-					        <input type="radio"  name="hasGuardian" th:value="true" th:text="있음" th:checked="${seniorInfo == 'true'}" >
+					        <input type="radio"  name="hasGuardian" th:value="true" th:text="있음" th:checked="${seniorInfo.hasGuardian == true}" >
 					        
-					        <input type="radio"  name="hasGuardian" th:value="false" th:text="없음" th:checked="${seniorInfo == 'false'}" >
+					        <input type="radio"  name="hasGuardian" th:value="false" th:text="없음" th:checked="${seniorInfo.hasGuardian == false}" >
 					    </div>
 					</div>
                     <div class="input-group">
@@ -54,6 +55,7 @@
 	                    <strong>연락처</strong><input type="text" class="underline-input" name="phoneNumber" 
 	                    th:value="${myInfo.phoneNumber != null ? myInfo.phoneNumber : ''}" placeholder="연락처" />
                     </div>
+                    
                     <!-- 특정 정보 -->
                     <div class="input-group">
 	                    <strong>건강상태</strong><input type="text" class="underline-input" name="health" 
@@ -63,6 +65,21 @@
 	                    <strong>요구사항</strong><input type="text" class="underline-input" name="requirements" 
 	                    th:value="${seniorInfo.requirements != null ? seniorInfo.requirements : ''}" placeholder="요구사항" />
                     </div>
+                    
+                    <!-- 보호자 정보 -->
+                    <div class="input-group guardian-info" style="display:none;" >
+	                    <strong>보호자 이름</strong><input type="text" class="underline-input" name="guardianName" 
+	                    th:value="${guardInfo.guardianName != null ? guardInfo.guardianName : ''}" placeholder="보호자 이름" />
+                    </div>
+                    <div class="input-group guardian-info" style="display:none;" >
+	                    <strong>보호자 연락처</strong><input type="text" class="underline-input" name="guardianPhoneNumber" 
+	                    th:value="${guardInfo.guardianPhoneNumber != null ? guardInfo.guardianPhoneNumber : ''}" placeholder="보호자 연락처" />
+                    </div>
+                    <div class="input-group guardian-info" style="display:none;">
+	                    <strong>보호자와의 관계</strong><input type="text" class="underline-input" name="relationship" 
+	                    th:value="${guardInfo.relationship != null ? guardInfo.relationship : ''}" placeholder="보호자와의 관계" />
+                    </div>
+                    
                     
                     <!-- 비밀번호 -->
                     <div class="input-group">
@@ -101,8 +118,15 @@ $(document).on("click", "#edit", function(){
     var phoneNumberValue = $("input[name='phoneNumber']").val();
     
     // 특정사항
+    var healthValue = $("input[name='health']").val();
+    var requireValue = $("input[name='requirements']").val();
     var hasGuarValue = $("input[name='hasGuardian']:checked").val(); 
-	console.log(hasGuarValue);
+    
+    // 보호자 사항
+    var gNameValue = $("input[name='guardianName']").val();
+    var gPhValue = $("input[name='guardianPhoneNumber']").val();
+    var gRelValue = $("input[name='relationship']").val();
+    
     
     var editData = {
 		"userId": loginId,
@@ -111,14 +135,19 @@ $(document).on("click", "#edit", function(){
 		"name": nameValue,
 		"address": addressValue,
 		"phoneNumber": phoneNumberValue,
-		"hasGuardian": hasGuarValue
+		"health": healthValue,
+		"requirements": requireValue,
+		"hasGuardian": hasGuarValue,
+		"guardianName": gNameValue,
+		"guardianPhoneNumber": gPhValue,
+		"relationship": gRelValue
 	}
 	var csrfToken = $("meta[name='_csrf']").attr("content");
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	
     $.ajax({
 		type: "PUT",
-		url: "/userPage/edit",
+		url: "/seniorPage/edit",
 		contentType: "application/json",
 		data: JSON.stringify(editData),
 		/* dataType: "json", */
@@ -127,7 +156,7 @@ $(document).on("click", "#edit", function(){
         }
 	})
 	.done(function(resp){
-		alert("'"+resp+"'님의 정보 수정완료!");
+		alert(resp+"님의 정보 수정완료!");
 		
 	})
 	.fail(function(e){
@@ -173,6 +202,27 @@ $(document).on("click", "#editPw", function(){
 		$("input[name='passwordConfirm']").val("");
 	})
 })
+
+$(document).ready(function() {
+    // 페이지 로드 시 보호자 정보 입력 칸의 초기 상태 설정
+    updateGuardianInfoVisibility();
+
+    // "보호자 유무" 라디오 버튼의 상태 변경 감지
+    $("input[name='hasGuardian']").change(function() {
+        updateGuardianInfoVisibility();
+    });
+
+    function updateGuardianInfoVisibility() {
+        // "있음"이 선택되었는지 확인
+        if ($("input[name='hasGuardian']:checked").val() === 'true') {
+            // "있음" 선택 시, 보호자 정보 입력 칸 표시
+            $(".guardian-info").show();	// .slideDown();
+        } else {
+            // "없음" 선택 시, 보호자 정보 입력 칸 숨김
+            $(".guardian-info").hide();	// .slideUp();
+        }
+    }
+});
 
 
 </script>	

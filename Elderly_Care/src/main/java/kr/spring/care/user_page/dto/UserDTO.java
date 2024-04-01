@@ -20,12 +20,29 @@ public class UserDTO {
 	private Role role;
 	private String country;
 	private String image;
-	
-	private Boolean hasGuardian;
-	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
+	// senior
+	private String seniorName;
+    private String health;
+    private String requirements;
+    private Boolean hasGuardian;
+    
+    // caregiver
+    private String caregiverName;
+    private String experience;
+    private String certification;
+    private String availableHours;
+    private String specialization;
+    private int experienceYears;
+    
+    // guardian
+    private String guardianName;
+    private String guardianPhoneNumber;
+    private String relationship;
+    
+    
 	public UserDTO(User entity) {
 		this.userId = entity.getUserId();
 		this.name = entity.getName();
@@ -34,8 +51,16 @@ public class UserDTO {
 		this.gender = entity.getGender();
 		this.phoneNumber = entity.getPhoneNumber();
 		this.role = entity.getRole();
-		this.createdAt = entity.getCreatedAt();
+		this.country = entity.getCountry();
 		this.image = entity.getImage();
+		this.createdAt = entity.getCreatedAt();
+		this.updatedAt = entity.getUpdatedAt();
+		
+//		this.seniorName = entity.getSenior().getSeniorName();
+//		this.health = entity.getSenior().getHealth();
+//		this.requirements = entity.getSenior().getRequirements();
+//		this.hasGuardian = entity.getSenior().getHasGuardian();
+				
 	}
 	
 }

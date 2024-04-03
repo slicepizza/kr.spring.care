@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/matching/findcaregiver", "/matching/findjob").authenticated()
                 .requestMatchers("/matching/**").permitAll()
-                .requestMatchers("/m/matching/**").permitAll()
+                .requestMatchers("/m/**").permitAll()
                 .requestMatchers("/item/**").permitAll() //데이터베이스 권한
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/img/**").permitAll()

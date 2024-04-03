@@ -48,7 +48,9 @@ public class SecurityConfig {
 	        .exceptionHandling(exceptionHandling -> exceptionHandling
 	            .authenticationEntryPoint(new CustomEntryPoint())
 	        );
-	
+	  
+	  http
+	    .csrf(csrf -> csrf.disable());
 	
 	  return http.build();
 }

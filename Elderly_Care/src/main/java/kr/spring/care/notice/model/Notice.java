@@ -52,11 +52,19 @@ public class Notice {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@PrePersist
-	public void prePersist() {
-		this.hitcount = this.hitcount == null ? 0 : this.hitcount;
-		this.replycnt = this.replycnt == null ? 0 : this.replycnt;
-	}
+	/*
+	 * @PrePersist public void prePersist() { this.hitcount = this.hitcount == null
+	 * ? 0 : this.hitcount; this.replycnt = this.replycnt == null ? 0 :
+	 * this.replycnt; }
+	 */
+	public Notice() {
+        this.title = "제목 없음";
+        this.writer = "익명";
+        this.content = "내용 없음";
+        this.regdate = new Date();
+        this.hitcount = 0L;
+        this.replycnt = 0L;
+    }
 	
 
 }

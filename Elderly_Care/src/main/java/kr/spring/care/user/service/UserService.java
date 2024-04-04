@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import kr.spring.care.user.service.UserService;
+import kr.spring.care.user.dto.LoginResponseDto;
 import kr.spring.care.user.entity.User;
 import kr.spring.care.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,4 +58,12 @@ public class UserService implements UserDetailsService {
 		}
 		return true;
 	}
+    
+    public LoginResponseDto mobileLogin(User user, PasswordEncoder passwordEncoder) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+        if (foundUser != null && passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
+            return new LoginResponseDto(foundUser.getEmail(), foundUser.getRole());
+        }
+        return null;
+    }
 }

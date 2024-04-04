@@ -6,8 +6,10 @@ import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class UserDTO {
 
@@ -18,18 +20,21 @@ public class UserDTO {
 	private String address;
 	private String gender;
 	private Role role;
+	private String roleStr;
 	private String country;
 	private String image;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
 	// senior
+	private Long seniorId;
 	private String seniorName;
     private String health;
     private String requirements;
     private Boolean hasGuardian;
     
     // caregiver
+    private Long caregiverId;
     private String caregiverName;
     private String experience;
     private String certification;
@@ -38,6 +43,7 @@ public class UserDTO {
     private int experienceYears;
     
     // guardian
+    private Long guardianId;
     private String guardianName;
     private String guardianPhoneNumber;
     private String relationship;

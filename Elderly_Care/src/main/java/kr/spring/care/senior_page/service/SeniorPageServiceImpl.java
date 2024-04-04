@@ -59,26 +59,45 @@ public class SeniorPageServiceImpl implements SeniorPageService {
 	@Transactional
 	public void editUser(UserDTO userDTO) {
 		User bfUser = userPageRepository.findById(userDTO.getUserId())
-				.orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
+				.orElseThrow(() -> new NoSuchElementException("해당 user 를 찾을 수 없습니다."));
 		// 사용자 정보 업데이트 로직...
 		bfUser.setAddress(userDTO.getAddress());
 		bfUser.setGender(userDTO.getGender());
 		bfUser.setName(userDTO.getName());
 		bfUser.setPhoneNumber(userDTO.getPhoneNumber());
 		
-		Senior bfSenior = seniorPageRepository.findByUserUserId(userDTO.getUserId()).get();
-		bfSenior.setHasGuardian(userDTO.getHasGuardian());
-		bfSenior.setHealth(userDTO.getHealth());
-		bfSenior.setRequirements(userDTO.getRequirements());
+		Optional<Senior> optionalSenior = seniorPageRepository.findByUserUserId(userDTO.getUserId());
+		if(optionalSenior.isPresent()) {
+			Senior bfSenior = optionalSenior.get();
+			bfSenior.setHasGuardian(userDTO.getHasGuardian());
+			bfSenior.setHealth(userDTO.getHealth());
+			bfSenior.setRequirements(userDTO.getRequirements());
+			bfUser.setSenior(bfSenior);
+		}
+	
+		// 보호자 정보가 없는 경우를 처리하기 위한 수정
+		// 보호자가 null 일때 insert?
+	    Optional<Guardian> optionalGuardian = guardianPageRepository.findByUser_UserId(userDTO.getUserId());
+	    if (optionalGuardian.isPresent()) {
+	        Guardian bfGuard = optionalGuardian.get();
+	        
+	        bfGuard.setGuardianName(userDTO.getGuardianName());
+	        bfGuard.setGuardianPhoneNumber(userDTO.getGuardianPhoneNumber());
+	        bfGuard.setRelationship(userDTO.getRelationship());
+	        bfUser.setGuardian(bfGuard);
+	    }else {
+	    	Guardian guard = new Guardian();
+	    	guard.setGuardianName(userDTO.getGuardianName());
+	    	guard.setGuardianPhoneNumber(userDTO.getGuardianPhoneNumber());
+	    	guard.setRelationship(userDTO.getRelationship());
+	    	guard.setUser(bfUser);
+	    	guard.setSenior(optionalSenior.get());
+	    	
+	    	guardianPageRepository.save(guard);
+	    }
+	    // 없을 경우에는 보호자 정보를 업데이트하지 않음
+	    userPageRepository.save(bfUser);
 		
-		Guardian bfGuard = guardianPageRepository.findByUser_UserId(userDTO.getUserId()).get();
-		bfGuard.setGuardianName(userDTO.getGuardianName());
-		bfGuard.setGuardianPhoneNumber(userDTO.getGuardianPhoneNumber());
-		bfGuard.setRelationship(userDTO.getRelationship());
-		
-		bfUser.setSenior(bfSenior);
-		bfUser.setGuardian(bfGuard);
-		userPageRepository.save(bfUser);
 	}
 
 	@Override
@@ -109,19 +128,5 @@ public class SeniorPageServiceImpl implements SeniorPageService {
 		}).collect(Collectors.toList());
 	}
 
-	
-
-	
-//	 @Override public List<MatchingDTO> matchingInfo(long userId) { Senior senior
-//	 = seniorPageRepository.findByUserUserId(userId).orElseThrow(() -> new
-//	 NoSuchElementException("Senior not found"));
-//	 
-//	 List<Matching> matchingList =
-//	 matchingRepository.findBySeniorId(senior.getSeniorId()); List<MatchingDTO>
-//	 matLiDTO = matchingList.stream() .map(matching -> new MatchingDTO(matching))
-//	 .collect(Collectors.toList());
-//	 
-//	 return matLiDTO; }
-	 
 
 }

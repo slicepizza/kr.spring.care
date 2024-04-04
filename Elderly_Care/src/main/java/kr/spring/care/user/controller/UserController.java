@@ -38,12 +38,7 @@ public class UserController {
 	public String joinChoose() {
 		return "user/userChoose";
 	}
-
-    // @GetMapping("/register")
-    // public String register(Model model) {
-    //     model.addAttribute("userFormDto", new UserFormDto());
-    //     return "user/userForm";
-    // }
+    
     @GetMapping("/register")
     public String userForm(Model model, @RequestParam(required = false) String userType) {
         model.addAttribute("userFormDto", new UserFormDto());

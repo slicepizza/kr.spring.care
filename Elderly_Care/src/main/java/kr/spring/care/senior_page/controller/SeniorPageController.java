@@ -4,6 +4,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.senior_page.dto.GuardianDTO;
 import kr.spring.care.senior_page.dto.MatchingDTO;
@@ -24,7 +29,7 @@ import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/seniorPage/*")
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class SeniorPageController {
 	
@@ -32,7 +37,7 @@ public class SeniorPageController {
 	private final SeniorPageService seniorPageService; 
 	
 	// 기본사항(User) + 특정사항(Senior) 정보
-	@GetMapping("myinfo/{id}")
+	@GetMapping("serniorInfo/{id}")
 	public String myinfo(@PathVariable("id") long userId, Model model) {
 		UserDTO userInfo = seniorPageService.myInfo(userId);
 		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);

@@ -55,8 +55,6 @@ public class SecurityConfig {
         .permitAll() // 공지사항
         .requestMatchers("/admin/**")
         .hasRole("ADMIN")
-        .requestMatchers("/mobile/userPage/**")
-        .permitAll()
         .anyRequest()
         .authenticated()
     );

@@ -24,8 +24,9 @@ import kr.spring.care.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="board")
-@Getter @Setter
+@Entity(name = "board")
+@Getter
+@Setter
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,26 +36,24 @@ public class Board {
 	private String content;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="regdate")
+	@Column(name = "regdate")
 	private Date regdate;
 	private Long hitcount;
 	private Long replycnt;
-	
-	//댓글
-	@OneToMany(mappedBy = "board", 
-			cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+
+	// 댓글
+	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("board")
 //	private List<Comment> comments;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	//조회수
-	@PrePersist
-	public void prePersist() {
-		this.hitcount = this.hitcount == null ? 0 : this.hitcount;
-		this.replycnt = this.replycnt == null ? 0 : this.replycnt;
-	}
-	
+
+	// 조회수
+
+	@PrePersist public void prePersist() { this.hitcount = this.hitcount == null
+	 ? 0 : this.hitcount; this.replycnt = this.replycnt == null ? 0 :
+	  this.replycnt; }
+
 }

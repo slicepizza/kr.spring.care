@@ -32,14 +32,6 @@ import lombok.extern.log4j.Log4j2;
 public class BoardController {
 	private final BoardService boardService;
 	
-//	//전체보기
-//	@GetMapping("boardlist")
-//	public String boardlist(Model model) {
-//		model.addAttribute("boardlist", boardService.boardlist());
-//		model.addAttribute("count", boardService.count());
-//		return "board/boardlist";
-//	}
-	
 	// 게시판 페이지(페이징)
 	   @GetMapping("board/boardlist")
 	   public String userListPaging(Model model,

@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.care.board.model.Board;
+import kr.spring.care.board.model.BoardDTO;
 import kr.spring.care.board.repository.BoardRepository;
+import kr.spring.care.main.controller.GlobalControllerAdvice;
 import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.Caregiver;
 import kr.spring.care.user.entity.User;
@@ -30,7 +32,8 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class BoardService {
 	private final UserRepository userRepository; 
-	private final BoardRepository boardRepository; 
+	private final BoardRepository boardRepository;
+	private final GlobalControllerAdvice globalControllerAdvice; 
 	
 //	public User searchUser() {
 //		userRepository.
@@ -40,7 +43,7 @@ public class BoardService {
 	@Transactional
 	public void write(Board board) {
 		User writer = userRepository.searchUserID(board.getWriter());
-		System.out.println("작성자아디"+writer );
+		System.out.println("작성자아디"+globalControllerAdvice.userId());
 		board.setUser(writer);
 		boardRepository.save(board);
 	}
@@ -86,7 +89,6 @@ public class BoardService {
 	@Transactional
 	public void delete(long num) {
 		boardRepository.deleteById(num);
-		log.info("wwww");
 	}
 	
 //	//게시글 수정

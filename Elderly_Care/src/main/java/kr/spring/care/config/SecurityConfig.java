@@ -33,14 +33,13 @@ public class SecurityConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/matching/findcaregiver", "/matching/findjob").authenticated()
                 .requestMatchers("/matching/**").permitAll()
-                .requestMatchers("/m/matching/**").permitAll()
+                .requestMatchers("/m/**").permitAll()
                 .requestMatchers("/item/**").permitAll() //데이터베이스 권한
                 .requestMatchers("/css/**").permitAll()
                 .requestMatchers("/img/**").permitAll()
                 .requestMatchers("/js/**").permitAll() //js를 사용할경우 적용
                 .requestMatchers("/notice/**").permitAll() // 공지사항
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/mobile/userPage/**").permitAll()
                 .anyRequest().authenticated()
       );
   
@@ -48,6 +47,7 @@ public class SecurityConfig {
 	        .exceptionHandling(exceptionHandling -> exceptionHandling
 	            .authenticationEntryPoint(new CustomEntryPoint())
 	        );
+	  http.csrf().disable();
 	
 	
 	  return http.build();

@@ -34,9 +34,10 @@ import lombok.RequiredArgsConstructor;
 			  Board b =	boardRepository.findById(comment2.getBoard().getNum()).get();
 	 		  b.setReplycnt(b.getReplycnt()+1);
 	 		  System.out.println(comment2.getContent() + "// " + comment2.getBoard().getNum() +"// " +comment2.getUser().getUserId());
-		   commentRepository.insert(comment2.getContent(),
-				                               comment2.getBoard().getNum(),
-				                               comment2.getUser().getUserId());  // 만든 함수
+//		   commentRepository.insert(comment2.getContent(),
+//				                               comment2.getBoard().getNum(),
+//				                               comment2.getUser().getUserId());  // 만든 함수
+	 		  commentRepository.save(comment2);
 		}
 	    
 	    // 댓글 수정

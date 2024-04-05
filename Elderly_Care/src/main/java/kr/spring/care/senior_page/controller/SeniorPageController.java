@@ -29,7 +29,7 @@ import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/seniorPage/*")
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class SeniorPageController {
 	
@@ -37,7 +37,7 @@ public class SeniorPageController {
 	private final SeniorPageService seniorPageService; 
 	
 	// 기본사항(User) + 특정사항(Senior) 정보
-	@GetMapping("serniorInfo/{id}")
+	@GetMapping("myinfo/{id}")
 	public String myinfo(@PathVariable("id") long userId, Model model) {
 		UserDTO userInfo = seniorPageService.myInfo(userId);
 		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);

@@ -1,8 +1,12 @@
 package kr.spring.care.matching.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,7 +84,7 @@ public class RestMatchingController {
 
 	 // 매칭 요청 처리
 	 @PostMapping("/request")
-	 public ResponseEntity<Void> processRequestMatching(@RequestBody MatchingRequestDto matchingRequestDto, BindingResult bindingResult) {
+	 public ResponseEntity<Map<String, String>> processRequestMatching(@RequestBody MatchingRequestDto matchingRequestDto, BindingResult bindingResult) {
 		    if (bindingResult.hasErrors()) {
 		        return ResponseEntity.badRequest().build();
 		    }
@@ -102,6 +106,8 @@ public class RestMatchingController {
 
 		    matchingService.createMatching(matchingRequestDto);
 
-		    return ResponseEntity.created(null).build();
+		    Map<String, String> response = new HashMap<>();
+		    response.put("message", "Matching request processed successfully");
+		    return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import kr.spring.care.matching.constant.MatchingStatus;
 import kr.spring.care.senior_page.dto.GuardianDTO;
@@ -24,9 +25,10 @@ import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
 import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RequestMapping("/m/seniorPage/*")
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class SeniorPageRestController {
 	
@@ -45,6 +47,7 @@ public class SeniorPageRestController {
 		userInfo.setHealth(seniorInfo.getHealth());
 		userInfo.setRequirements(seniorInfo.getRequirements());
 		userInfo.setHasGuardian(seniorInfo.getHasGuardian());
+		
 		if (guardianInfo == null) {
 			guardianInfo = new GuardianDTO(); // GuardInfo는 당신의 객체 타입
 		    // 필요하다면 기본값 설정

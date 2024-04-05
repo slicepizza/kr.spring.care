@@ -20,15 +20,6 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-
-    // 댓글 전체 보기
-//    @GetMapping("/list/{num}")
-//    public List<Comment> listComments(@PathVariable long num) {
-//        List<Comment> commentList = commentService.list(num);
-//        long count = commentService.count(num);
-//        System.out.println("댓글"+commentList.get(0).getContent());
-//        return commentList;
-//    }
     
     @GetMapping("/list/{num}")
     public ResponseEntity<CommentResponse> listComments(@PathVariable long num) {
@@ -43,15 +34,6 @@ public class CommentController {
     // 댓글 추가
     @PostMapping("create")
     public ResponseEntity<String> createComment(@RequestBody Comment comment) {
-    	Comment comment2 = new Comment();
-    	Board board = new Board();
-    	board.setNum(comment.getBoard().getNum());
-    	comment.setBoard(board);
-    	comment2.setContent(comment.getContent());
-       
-    	User user = new User();
-    	user.setUserId(comment.getUser().getUserId());
-        comment2.setUser(user);
         commentService.insert(comment);
         return new ResponseEntity<String>("Comment added successfully", HttpStatus.OK);
     }

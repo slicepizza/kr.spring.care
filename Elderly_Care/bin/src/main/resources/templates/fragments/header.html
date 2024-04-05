@@ -3,53 +3,63 @@
 
 <div class="header" th:fragment="header">
 
-  <nav class="navbar navbar-expand-lg bg-secondary border-bottom border-body" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg" style="background-color: #0c3549;">
 
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <font style="vertical-align: inherit">
-          <font style="vertical-align: inherit">THE 홈케어</font>
-        </font>
+         <img src="/img/logo2.png" alt="THE 홈케어">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      <button class="navbar-toggler custom-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="탐색 전환">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="/info">THE 홈케어 소개</a>
+            <a class="nav-link" href="/info" style="color: #fff;">THE 홈케어 소개 </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findcaregiver' : '/user/login/requireLogin'}">요양보호사 구인</a>
+            <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findcaregiver' : '/user/login/requireLogin'}" style="color: #fff;">요양보호사 구인</a>
 			    </li>
 		  <li class="nav-item">
-		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/user/login/requireLogin'}">요양보호사 구직</a>
+		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/user/login/requireLogin'}" style="color: #fff;">요양보호사 구직</a>
 		  </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/user/login">로그인</a>
+            <a class="nav-link" href="/user/login" style="color: #fff;">로그인</a>
           </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" href="/user/joinCheck">회원가입</a>
+            <a class="nav-link" href="/user/joinCheck" style="color: #fff;">회원가입</a>
           </li>
           
           <!-- 노인/보호자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('USER')">
-            <a class="nav-link" href="/elderlyUser/mypage">마이페이지</a>
+
+            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
+
           </li>
-          
+           <li class="nav-item" sec:authorize="hasRole('SENIOR')">
+
+            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
+
+          </li><li class="nav-item" sec:authorize="hasRole('GUARDIAN')">
+
+            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
+
+          </li>
           <!-- 요양보호사용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('CAREGIVER')">
-            <a class="nav-link" href="/user/mypage">마이페이지</a>
+
+            <a class="nav-link" href="/caregiverPage/myinfo" style="color: #fff;">마이페이지</a>
+
           </li>
           
           <!-- 관리자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link" href="/admin/mypage">마이페이지</a>
+            <a class="nav-link" href="/admin/careList" style="color: #fff;">마이페이지</a>
           </li>
           
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/user/logout">로그아웃</a>
+            <a class="nav-link" href="/user/logout" style="color: #fff;">로그아웃</a>
           </li>
         </ul>
         <form class="d-flex" role="search">

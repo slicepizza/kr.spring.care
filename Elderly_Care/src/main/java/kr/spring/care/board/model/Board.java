@@ -1,5 +1,6 @@
 package kr.spring.care.board.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;

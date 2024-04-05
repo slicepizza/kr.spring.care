@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.care.board.model.Board;
+import kr.spring.care.board.model.BoardDTO;
 import kr.spring.care.board.repository.BoardRepository;
+import kr.spring.care.main.controller.GlobalControllerAdvice;
 import kr.spring.care.user.constant.Role;
 import kr.spring.care.user.entity.Caregiver;
 import kr.spring.care.user.entity.User;
@@ -30,7 +32,8 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class BoardService {
 	private final UserRepository userRepository; 
-	private final BoardRepository boardRepository; 
+	private final BoardRepository boardRepository;
+	private final GlobalControllerAdvice globalControllerAdvice; 
 	
 //	public User searchUser() {
 //		userRepository.
@@ -40,7 +43,7 @@ public class BoardService {
 	@Transactional
 	public void write(Board board) {
 		User writer = userRepository.searchUserID(board.getWriter());
-		System.out.println("작성자아디"+writer );
+		System.out.println("작성자아디"+globalControllerAdvice.userId());
 		board.setUser(writer);
 		boardRepository.save(board);
 	}
@@ -86,12 +89,38 @@ public class BoardService {
 	@Transactional
 	public void delete(long num) {
 		boardRepository.deleteById(num);
-		log.info("wwww");
 	}
 	
-	//게시글 수정
+//	//게시글 수정
+//	public Board update(Board boardUpdate) {
+//		boardRepository.save(boardUpdate);
+//		return findById(boardUpdate.getNum());
+//	}
+//	
+//	// 수정 findById
+//	public Board findById(Long num) {
+//		Optional<Board> optionalBoard = boardRepository.findById(num);
+//	    if (optionalBoard.isPresent()) {
+//	        Board update = optionalBoard.get();
+//	        update.setTitle(update.getTitle());
+//	        update.setContent(update.getContent());
+//	        update.setRegdate(new Date());
+//	        
+//	        Board board = boardRepository.save(update);
+//	        return board;
+//	        		
+//	    } else {
+//	        // 엔티티를 찾을 수 없는 경우의 처리 (예외 던지기 등)]
+//	        // 여기서 적절한 예외를 던지거나 다른 처리를 할 수 있습니다.
+//	        log.warn("해당 게시글을 찾을 수 없습니다.");
+//	        return null;
+//	    }
+//	}
+	
+
+//게시물 수정	
 	public void boardupdate(Board board) {
-	    // Optional을 사용하여 findById의 결과를 처리
+//	     Optional을 사용하여 findById의 결과를 처리
 	    Optional<Board> optionalBoard = boardRepository.findById(board.getNum());
 	    
 	    if (optionalBoard.isPresent()) {
@@ -114,5 +143,6 @@ public class BoardService {
 	public long count() {
 		return boardRepository.count();
 	}
+
 	
 }

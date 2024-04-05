@@ -32,15 +32,7 @@ import lombok.extern.log4j.Log4j2;
 public class BoardController {
 	private final BoardService boardService;
 	
-//	//전체보기
-//	@GetMapping("boardlist")
-//	public String boardlist(Model model) {
-//		model.addAttribute("boardlist", boardService.boardlist());
-//		model.addAttribute("count", boardService.count());
-//		return "board/boardlist";
-//	}
-	
-	// 공지사항 페이지(페이징)
+	// 게시판 페이지(페이징)
 	   @GetMapping("board/boardlist")
 	   public String userListPaging(Model model,
 	         @PageableDefault(page = 1) Pageable pageable,
@@ -57,6 +49,8 @@ public class BoardController {
 	      model.addAttribute("boards", alluser);
 	      model.addAttribute("startPage", startPage);
 	      model.addAttribute("endPage", endPage);
+	      model.addAttribute("field", field);
+		  model.addAttribute("word", word);
 //	      model.addAttribute("AlluserCnt", allCount);
 //	      model.addAttribute("userCnt", count);
 	      
@@ -67,8 +61,7 @@ public class BoardController {
 	
 	//글작성 폼
 	@GetMapping("write")
-	public String write(Model model) {
-//		model.addAttribute("userId", boardService.);
+	public String write() {
 		return "board/write";
 	}
 	
@@ -102,13 +95,21 @@ public class BoardController {
 	}
 	
 	//수정
-	@GetMapping("update")
-	public String update(Board board) {
-		System.out.println("업뎃넘"+ board.getNum());
-		System.out.println("업뎃제목"+ board.getTitle());
-		System.out.println("업뎃내용"+ board.getContent());
-		log.info("업뎃"+ board);
+//	@PostMapping("boardupdate")
+//	public String update (Board board, Model model) {
+//		Board boardUpdate = boardService.update(board);
+////		System.out.println("업뎃넘"+ board.getNum());
+////		System.out.println("업뎃제목"+ board.getTitle());
+////		System.out.println("업뎃내용"+ board.getContent());
+////		log.info("업뎃"+ board);
+//		return "redirect:/board/" + boardUpdate.getNum();
+//	}
+	
+	//수정
+	@PutMapping("boardupdate")
+	@ResponseBody
+	public Long update(@RequestBody Board board) {
 		boardService.boardupdate(board);
-		return "board/boardlist";
+		return board.getNum();
 	}
 }

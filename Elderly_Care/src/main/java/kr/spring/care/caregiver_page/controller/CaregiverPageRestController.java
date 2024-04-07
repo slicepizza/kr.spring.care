@@ -1,4 +1,4 @@
-package kr.spring.care.senior_page.controller;
+package kr.spring.care.caregiver_page.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,77 +16,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.spring.care.admin.DTO.CaregiverDTO;
+import kr.spring.care.caregiver_page.service.CaregiverPageService;
 import kr.spring.care.matching.constant.MatchingStatus;
-import kr.spring.care.senior_page.dto.GuardianDTO;
 import kr.spring.care.senior_page.dto.MatchingDTO;
 import kr.spring.care.senior_page.dto.MatchingResponse;
-import kr.spring.care.senior_page.dto.SeniorDTO;
-import kr.spring.care.senior_page.service.SeniorPageService;
-import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
-import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
-@RequestMapping("/m/seniorPage/*")
+@RequestMapping("/m/caregiverPage/*")
 @RestController
 @RequiredArgsConstructor
-public class SeniorPageRestController {
+public class CaregiverPageRestController {
 	
-	private final UserPageService userPageService;
-	private final SeniorPageService seniorPageService; 
+	private final CaregiverPageService caregiverPageService;
 	
-	// 기본사항(User) + 특정사항(Senior+guardian) 정보
-	@GetMapping("seniorInfo/{id}")
+	// 기본사항(User) + 특정사항(Caregiver) 정보
+	@GetMapping("caregiverInfo/{id}")
 	public ResponseEntity<UserDTO> myinfo(@PathVariable("id") long userId, Model model) {
-		UserDTO userInfo = seniorPageService.myInfo(userId);
-		SeniorDTO seniorInfo = seniorPageService.seniorInfo(userId);
-		GuardianDTO guardianInfo = seniorPageService.guardianInfo(userId);
+		UserDTO userInfo = caregiverPageService.myInfo(userId);
+		CaregiverDTO caregiverInfo = caregiverPageService.caregiverInfo(userId);
 		
-		userInfo.setRoleStr(userInfo.getRole().toString());
-		userInfo.setSeniorId(seniorInfo.getSeniorId());
-		userInfo.setHealth(seniorInfo.getHealth());
-		userInfo.setRequirements(seniorInfo.getRequirements());
-		userInfo.setHasGuardian(seniorInfo.getHasGuardian());
-		
-		if (guardianInfo == null) {
-			guardianInfo = new GuardianDTO(); // GuardInfo는 당신의 객체 타입
-		    // 필요하다면 기본값 설정
-			guardianInfo.setGuardianName("");
-			guardianInfo.setGuardianPhoneNumber("");
-			guardianInfo.setRelationship("");
+		if(caregiverInfo == null) {
+			caregiverInfo = new CaregiverDTO();
+			caregiverInfo.setAvailableHours("");
+			caregiverInfo.setCertification("");
+			caregiverInfo.setExperience("");
+			caregiverInfo.setExperienceYears(0);
+			caregiverInfo.setSpecialization("");
 		} else {
-			userInfo.setGuardianId(guardianInfo.getGuardianId());
-			userInfo.setGuardianName(guardianInfo.getGuardianName());
-			userInfo.setGuardianPhoneNumber(guardianInfo.getGuardianPhoneNumber());
-			userInfo.setRelationship(guardianInfo.getRelationship());
+			userInfo.setRoleStr(userInfo.getRole().toString());
+			userInfo.setAvailableHours(caregiverInfo.getAvailableHours());
+			userInfo.setCaregiverId(caregiverInfo.getCaregiverId());
+			userInfo.setCertification(caregiverInfo.getCertification());
+			userInfo.setExperience(caregiverInfo.getExperience());
+			userInfo.setExperienceYears(caregiverInfo.getExperienceYears());
+			userInfo.setSpecialization(caregiverInfo.getSpecialization());
 		}
-		return new ResponseEntity<UserDTO>(userInfo, HttpStatus.OK);
+		
+		return new ResponseEntity<UserDTO>(userInfo, HttpStatus.OK); 
 	}
 	
-	// 회원정보 수정
 	@PutMapping("edit")
 	@ResponseBody
 	public String edit(@RequestBody UserDTO userDTO) {
-		seniorPageService.editUser(userDTO);
+		caregiverPageService.editUser(userDTO);
+		System.out.println();
 		return userDTO.getEmail();
 	}
 	
-	// 비밀번호 변경
-	@PutMapping("editPw")
-	@ResponseBody
-	public String editPw(@RequestBody User user) {
-		userPageService.editPw(user);
-		return "success";
-	}
 	
-	// 매칭 정보
+	
 	@GetMapping("matchingInfo/{id}")
 	public ResponseEntity<MatchingResponse> matchingInfo(@PathVariable long id) {
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 	    
-	    List<MatchingDTO> allMatchings = seniorPageService.matchingInfo(id);
+	    List<MatchingDTO> allMatchings = caregiverPageService.matchingInfo(id);
 	    
 	    // 변환 작업을 여기에서 수행
 	    List<MatchingDTO> formattedMatchings = allMatchings.stream().map(matching -> {
@@ -117,26 +103,9 @@ public class SeniorPageRestController {
 	            .collect(Collectors.toList());
 	    
 	    MatchingResponse response = new MatchingResponse(filteredPastMatchings, filteredProgressMatchings);
-
-	    return new ResponseEntity<>(response, HttpStatus.OK);
+	    
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	
-
-	
-	
-	/*
-	 * @GetMapping("matchingInfo/{id}") public String matchingInfo(@PathVariable
-	 * long id ,Model model) { List<MatchingDTO> matchingInfo =
-	 * seniorPageService.matchingInfo(id);
-	 * 
-	 * model.addAttribute("matchings", matchingInfo); model.addAttribute("isEmpty",
-	 * matchingInfo.isEmpty()); matchingInfo.forEach(matching ->
-	 * System.out.println(matching)); // List<CaregiverDTO> careInfo =
-	 * seniorPageService.careInfo(); return "seniorPage/matchingInfo"; }
-	 */
-	
-	
 	
 	
 }

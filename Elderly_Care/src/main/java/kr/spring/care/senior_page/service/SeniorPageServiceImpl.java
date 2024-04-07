@@ -73,6 +73,14 @@ public class SeniorPageServiceImpl implements SeniorPageService {
 			bfSenior.setHealth(userDTO.getHealth());
 			bfSenior.setRequirements(userDTO.getRequirements());
 			bfUser.setSenior(bfSenior);
+		}else {
+			Senior senior = new Senior();
+			senior.setHasGuardian(userDTO.getHasGuardian());
+			senior.setHealth(userDTO.getHealth());
+			senior.setRequirements(userDTO.getRequirements());
+			senior.setUser(bfUser);
+			
+			seniorPageRepository.save(senior);
 		}
 	
 		// 보호자 정보가 없는 경우를 처리하기 위한 수정

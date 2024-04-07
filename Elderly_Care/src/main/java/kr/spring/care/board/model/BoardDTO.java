@@ -23,17 +23,8 @@ public class BoardDTO {
 //	private List<Comment> comments;
 	
 	private User user;
+	private Long userId;
 	
-	public BoardDTO(Board entity) {
-    	this.num = entity.getNum();
-    	this.title = entity.getTitle();
-    	this.writer = entity.getWriter();
-    	this.content = entity.getContent();
-    	this.regdate = entity.getRegdate();
-    	this.hitcount = entity.getHitcount();
-    	this.replycnt = entity.getReplycnt();
-    	this.user = entity.getUser();
-    }
 	
 	
 

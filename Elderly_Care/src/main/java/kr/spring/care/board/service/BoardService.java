@@ -43,7 +43,7 @@ public class BoardService {
 	@Transactional
 	public void write(Board board) {
 		User writer = userRepository.searchUserID(board.getWriter());
-		System.out.println("작성자아디"+globalControllerAdvice.userId());
+//		System.out.println("작성자아디"+globalControllerAdvice.userId());
 		board.setUser(writer);
 		boardRepository.save(board);
 	}

@@ -84,30 +84,28 @@ public class RestMatchingController {
 
 	 // 매칭 요청 처리
 	 @PostMapping("/request")
-	 public ResponseEntity<Map<String, String>> processRequestMatching(@RequestBody MatchingRequestDto matchingRequestDto, BindingResult bindingResult) {
-		    if (bindingResult.hasErrors()) {
-		        return ResponseEntity.badRequest().build();
-		    }
+	    public ResponseEntity<Map<String, String>> processRequestMatchingForMobile(@RequestBody MatchingRequestDto matchingRequestDto, BindingResult bindingResult) {
+	        if (bindingResult.hasErrors()) {
+	            return ResponseEntity.badRequest().build();
+	        }
 
-		    // 사용자 역할에 따른 처리
-		    String userRole = matchingRequestDto.getUserRole();
-		    if (userRole.equals("elderly")) {
-		        Senior senior = matchingService.createSenior(matchingRequestDto);
-		        matchingRequestDto.setSeniorId(senior.getSeniorId());
-		    } else if (userRole.equals("guardian")) {
-		        Guardian guardian = matchingService.createGuardian(matchingRequestDto);
-		        matchingRequestDto.setSeniorId(guardian.getSenior().getSeniorId());
-		    }
+	        String userRole = matchingRequestDto.getUserRole();
+	        if (userRole.equals("SENIOR")) {
+	            Senior senior = matchingService.createSeniorForMobile(matchingRequestDto);
+	            matchingRequestDto.setSeniorId(senior.getSeniorId());
+	        } else if (userRole.equals("GUARDIAN")) {
+	            Guardian guardian = matchingService.createGuardianForMobile(matchingRequestDto);
+	            matchingRequestDto.setSeniorId(guardian.getSenior().getSeniorId());
+	        }
 
-		    // 매칭 상태 설정: CaregiverId가 양의 정수인 경우 REQUESTED, 그렇지 않은 경우 POSTED
-		    boolean isCaregiverIdValid = matchingRequestDto.getCaregiverId() != null && matchingRequestDto.getCaregiverId() > 0;
-		    MatchingStatus status = isCaregiverIdValid ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
-		    matchingRequestDto.setStatus(status);
+	        boolean isCaregiverIdValid = matchingRequestDto.getCaregiverId() != null && matchingRequestDto.getCaregiverId() > 0;
+	        MatchingStatus status = isCaregiverIdValid ? MatchingStatus.REQUESTED : MatchingStatus.POSTED;
+	        matchingRequestDto.setStatus(status);
 
-		    matchingService.createMatching(matchingRequestDto);
+	        matchingService.createMatching(matchingRequestDto);
 
-		    Map<String, String> response = new HashMap<>();
-		    response.put("message", "Matching request processed successfully");
-		    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		}
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Matching request processed successfully");
+	        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	    }
 }

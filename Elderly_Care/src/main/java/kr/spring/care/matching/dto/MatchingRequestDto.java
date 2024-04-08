@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @Setter
 public class MatchingRequestDto {
 
+	private Long userId;
     private Long seniorId;
     private Long caregiverId;
     

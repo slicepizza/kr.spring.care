@@ -2,6 +2,7 @@ package kr.spring.care.matching.service;
 
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -123,6 +124,12 @@ public class MatchingService {
             throw new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + username);
         }
 
+        // 사용자가 이미 Senior로 등록되어 있는지 확인
+        Optional<Senior> existingSenior = seniorRepository.findByUser(currentUser);
+        if (existingSenior.isPresent()) {
+            return existingSenior.get();
+        }
+
         currentUser.setRole(Role.SENIOR);
         userRepository.save(currentUser);
 
@@ -157,6 +164,12 @@ public class MatchingService {
             throw new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + username);
         }
 
+        // 사용자가 이미 Guardian으로 등록되어 있는지 확인
+        Optional<Guardian> existingGuardian = guardianRepository.findByUser(currentUser);
+        if (existingGuardian.isPresent()) {
+            return existingGuardian.get();
+        }
+
         currentUser.setRole(Role.GUARDIAN);
         userRepository.save(currentUser);
         
@@ -171,6 +184,69 @@ public class MatchingService {
         senior.setRequirements(matchingRequestDto.getRequirements());
         senior.setHasGuardian(true);
         senior.setUser(currentUser);
+        senior = seniorRepository.save(senior);
+
+        guardian.setSenior(senior);
+        return guardianRepository.save(guardian);
+    }
+
+    public Senior createSeniorForMobile(MatchingRequestDto matchingRequestDto) {
+        Long userId = matchingRequestDto.getUserId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + userId));
+
+        // 사용자가 이미 Senior로 등록되어 있는지 확인
+        Optional<Senior> existingSenior = seniorRepository.findByUser(user);
+        if (existingSenior.isPresent()) {
+            return existingSenior.get();
+        }
+
+        user.setRole(Role.SENIOR);
+        userRepository.save(user);
+
+        Senior senior = new Senior();
+        senior.setHealth(matchingRequestDto.getHealth());
+        senior.setRequirements(matchingRequestDto.getRequirements());
+        senior.setHasGuardian(matchingRequestDto.getHasGuardian());
+        senior.setUser(user);
+        senior = seniorRepository.save(senior);
+
+        if (matchingRequestDto.getHasGuardian()) {
+            Guardian guardian = new Guardian();
+            guardian.setGuardianName(matchingRequestDto.getGuardianName());
+            guardian.setUser(user);
+            guardian.setRelationship(matchingRequestDto.getRelationship());
+            guardian.setSenior(senior);
+            guardianRepository.save(guardian);
+        }
+
+        return senior;
+    }
+
+    public Guardian createGuardianForMobile(MatchingRequestDto matchingRequestDto) {
+        Long userId = matchingRequestDto.getUserId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다: " + userId));
+        
+        // 사용자가 이미 Guardian으로 등록되어 있는지 확인
+        Optional<Guardian> existingGuardian = guardianRepository.findByUser(user);
+        if (existingGuardian.isPresent()) {
+            return existingGuardian.get();
+        }
+
+        user.setRole(Role.GUARDIAN);
+        userRepository.save(user);
+
+        Guardian guardian = new Guardian();
+        guardian.setGuardianName(user.getName());
+        guardian.setUser(user);
+        guardian.setRelationship(matchingRequestDto.getRelationship());
+
+        Senior senior = new Senior();
+        senior.setHealth(matchingRequestDto.getHealth());
+        senior.setRequirements(matchingRequestDto.getRequirements());
+        senior.setHasGuardian(true);
+        senior.setUser(user);
         senior = seniorRepository.save(senior);
 
         guardian.setSenior(senior);

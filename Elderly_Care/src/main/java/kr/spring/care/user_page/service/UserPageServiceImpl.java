@@ -61,4 +61,10 @@ public class UserPageServiceImpl implements UserPageService{
 		userPageRepository.save(u);
 	}
 
+	@Override
+	public void insertUser(UserDTO user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

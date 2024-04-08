@@ -16,7 +16,8 @@ public interface UserPageService {
 	
 	public void editPw(User user);
 	
-
+	public void insertUser(UserDTO user);
+	
 	
 	///// 테스트용
 	public void regUSer(UserDTO user);

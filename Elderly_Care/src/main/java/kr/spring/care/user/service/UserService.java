@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
     public LoginResponseDto mobileLogin(User user, PasswordEncoder passwordEncoder) {
         User foundUser = userRepository.findByEmail(user.getEmail());
         if (foundUser != null && passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
-            return new LoginResponseDto(foundUser.getEmail(), foundUser.getRole());
+            return new LoginResponseDto(foundUser.getEmail(), foundUser.getRole(), foundUser.getUserId());
         }
         return null;
     }

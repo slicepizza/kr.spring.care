@@ -3,8 +3,12 @@ package kr.spring.care.admin.DTO;
 import kr.spring.care.user.entity.Caregiver;
 import kr.spring.care.user.entity.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@NoArgsConstructor
+@Setter
 public class CaregiverDTO {
 
 	private Long caregiverId;

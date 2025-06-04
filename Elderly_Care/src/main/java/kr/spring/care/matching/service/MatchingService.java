@@ -107,8 +107,11 @@ public class MatchingService {
         if (seniorId != null) {
             senior = seniorRepository.findById(seniorId)
                     .orElseThrow(() -> new NoSuchElementException("해당 노인을 찾을 수 없습니다: " + seniorId));
-            seniorUser = userRepository.findById(senior.getSeniorId())
-                    .orElseThrow(() -> new NoSuchElementException("해당 노인의 사용자 정보를 찾을 수 없습니다: " + seniorId));
+            // Senior 엔티티에서 직접 연관된 User 정보를 가져오도록 수정
+            seniorUser = senior.getUser();
+            if (seniorUser == null) {
+                throw new NoSuchElementException("해당 노인의 사용자 정보를 찾을 수 없습니다: " + seniorId);
+            }
         }
 
         return new MatchingDetail(caregiverUser, caregiver, seniorUser, senior, matching);
